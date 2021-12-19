@@ -8,7 +8,7 @@ log=(/home/$USER/.local/logs/jdautoenc.log)
 echo -e "${yellow}$(date +"%d.%m.%y %T")${white} Starte ${green}startencode.sh${white} Skript" >> "${log[@]}"
 
 if pgrep -f 'jdautoenc.sh' >/dev/null 2>&1; then
-echo -e"${yellow}$(date +"%d.%m.%y %T")${white} Warte auf das beenden vom vorherigen Auto Encode Skript" >> "${log[@]}"
+echo -e "${yellow}$(date +"%d.%m.%y %T")${white} Warte auf das beenden vom vorherigen Auto Encode Skript" >> "${log[@]}"
 fi
 
 while pgrep -f 'jdautoenc.sh' >/dev/null 2>&1
