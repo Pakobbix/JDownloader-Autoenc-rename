@@ -7,6 +7,14 @@ green='\033[0;32m'
 white='\033[0;37m'
 yellow='\033[0;33m' # ${yellow}
 
+################################# WARNUNG!! #################################
+##                                                                         ##
+## Löscht niemals alle Einträge und niemals Insanity (nennt es um).        ##
+## Ansonsten wird der ganze if block unbenutzbar                           ##
+## und das wars mit dem Skript. Falls ich spontan eine Idee haben sollte   ##
+## wie ich das lösen kann, werde ich dies tun, bis dahin lasst den eintrag ##
+##                                                                         ##
+#############################################################################
 
 ## Hier müsst ihr den Pfad zur rename.sh angeben.
 ## Für die nicht so versierten Nutzer $USER entpricht eurem aktuellen nutzer.
