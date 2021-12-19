@@ -34,6 +34,8 @@ do
 sleep 1m
 done
 
+sleep $[ ( $RANDOM % 10 )  + 1 ]s
+
 ## Hier kommt ein neuer Loop für filebot
 ## Bevor wir die Animes und Serien umbennen, überprüfen wir ob ffmpeg noch encoded.
 ## Einfach nur um zu verhindern, dass filebot eine Datei umbennent, die noch encoded wird
