@@ -1,5 +1,9 @@
 # JDownloader-Autoenc-rename
-Linux Skripte zum automatischen encode zu HEVC/AC3 und umbenennen via FileBot
+Linux Skripte zum automatischen encode zu HEVC/AC3 und umbenennen via FileBot.
+
+Ich bin bei weitem kein Profi, und es gibt bestimmt eine MENGE!! die man verbessern könnte.
+
+Außerdem: Diese Skripte sind nur zum Teil Universell. Es kann durchaus zu Problemen kommen und ich werde bestimmt die Ordner/Skript Pfade als comment in das startencode.sh Skript hinzufügen, dass diese dann an die anderen weitergibt, wenn ich die Zeit und lust habe.
 
 Die Skripte hatte ich erstellt, um soviel wie möglich zu automatisieren.
 Bei mir liegen diese alle in ~/.local/scripts/.
