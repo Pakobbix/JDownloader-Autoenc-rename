@@ -13,3 +13,6 @@ Sobald alle Dateien die jdautoenc.sh im entpackten ordner gefunden hat encoded s
 Das rename.sh Skript überprüft wieder erstmal, ob noch eines der anderen beiden Skripte gestartet wurde, und wartet auf die Beendigung.
 
 Dann fängt das Skript an, die dateien im encoded Ordner umzubenennen.
+
+
+Und da ich so eine faule Sau bin, gibts noch ein addrename und removerename Skript. Durch diese beiden ist es relativ einfach neue rename optionen hinzuzufügen oder alte zu löschen.
