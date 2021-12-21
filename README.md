@@ -20,3 +20,11 @@ Dann fängt das Skript an, die dateien im encoded Ordner umzubenennen.
 
 
 Und da ich so eine faule Sau bin, gibts noch ein addrename und removerename Skript. Durch diese beiden ist es relativ einfach neue rename optionen hinzuzufügen oder alte zu löschen.
+
+Im JDownloader (falls ihr my.jdownloader.org nutzt, fügt einfach den Codeblock in das Scripts Feld und ändert den Pfad (/home/hhofmann/.local/scripts/) eurem Pfad entsprechend an :
+
+```` 
+```
+[{"eventTrigger":"ON_ARCHIVE_EXTRACTED", "enabled":true, "name":"AutoENC", "script":"var script = '/home/hhofmann/.local/scripts/startencode.sh'\n\nvar path = archive.getFolder()\nvar name = archive.getName()\nvar label = archive.getDownloadLinks() && archive.getDownloadLinks()[0].getPackage().getComment() ? archive.getDownloadLinks()[0].getPackage().getComment() : 'N/A'\n\nvar command = [script, path, name, label, 'ARCHIVE_EXTRACTED']\n\nlog(command)\nlog(callSync(command))\n", "eventTriggerSettings":{"isSynchronous":false}, "id":1639245703676}]
+```
+````
