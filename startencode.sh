@@ -2,8 +2,10 @@
 
 green='\033[0;32m'
 white='\033[0;37m'
+yellow='\033[0;33m' # ${yellow}
 
-log=(/home/$USER/.local/logs/jdautoenc.log)
+
+log=(~/.local/logs/jdautoenc.log)
 
 echo -e "${yellow}$(date +"%d.%m.%y %T")${white} Starte ${green}startencode.sh${white} Skript" >> "${log[@]}"
 
@@ -16,4 +18,4 @@ do
 sleep 1m
 done
 
-/bin/bash /home/$USER/.local/scripts/jdautoenc.sh &
+/bin/bash ~/.local/scripts/jdautoenc.sh &

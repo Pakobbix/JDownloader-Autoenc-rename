@@ -14,7 +14,7 @@ out=(/mnt/Medien/encode/)
 
 ## Log file Output
 
-log=(/home/$USER/.local/logs/jdautoenc.log)
+log=(~/.local/logs/jdautoenc.log)
 
 ## Script start
 
@@ -34,13 +34,13 @@ do
 sleep 1m
 done
 
-sleep $[ ( $RANDOM % 10 )  + 1 ]s
-
 ## Hier kommt ein neuer Loop für filebot
 ## Bevor wir die Animes und Serien umbennen, überprüfen wir ob ffmpeg noch encoded.
 ## Einfach nur um zu verhindern, dass filebot eine Datei umbennent, die noch encoded wird
 ## und bei zuvielen Dateien mehrere filebot Prozesse versuchen die selbe Datei umzubenennen
 ## (unwahrscheinlich aber lieber vorsichtig als nachher blöd dazustehen)
+
+sleep $[ ( $RANDOM % 10 )  + 1 ]s
 
 for v in "${out[@]}"*.mkv
 do
@@ -48,24 +48,9 @@ do
   if [[ "${v,,}" == *"insanity"* ]] # insanity
    then # insanity
     filebot -rename "$v" --db TheTVDB -non-strict --lang German --format "/mnt/Medien/Animes/{n} ({y})/Season {s}/{n} - {s00e00} - {t}" --q 407682 >> "${log[@]}" # insanity
-  elif [[ "${v,,}" == *"cerberus"* ]] # cerberus
-   then # cerberus
-    filebot -rename "$v" --db TheTVDB -non-strict --lang German --format "/mnt/Medien/Animes/{n} ({y})/Season {s}/{n} - {s00e00} - {t}" --q 306847 >> "${log[@]}" # cerberus
-  elif [[ "${v,,}" == *"chain"*"chronicle"* ]] # chain chronicle
-   then # chain chronicle
-    filebot -rename "$v" --db TheTVDB -non-strict --lang German --format "/mnt/Medien/Animes/{n} ({y})/Season {s}/{n} - {s00e00} - {t}" --q 314031 >> "${log[@]}" # chain chronicle
-  elif [[ "${v,,}" == *"gin"*"guardian"* ]] # gin guardian
-   then # gin guardian
-    filebot -rename "$v" --db TheTVDB -non-strict --lang German --format "/mnt/Medien/Animes/{n} ({y})/Season {s}/{n} - {s00e00} - {t}" --q 324710 >> "${log[@]}" # gin guardian
-  elif [[ "${v,,}" == *"xuan"*"yuan"* ]] # xuan yuan
-   then # xuan yuan
-    filebot -rename "$v" --db TheTVDB -non-strict --lang German --format "/mnt/Medien/Animes/{n} ({y})/Season {s}/{n} - {s00e00} - {t}" --q 353579 >> "${log[@]}" # xuan yuan
   elif [[ "${v,,}" == *"banished"*"party"* ]] # banished party
    then # banished party
     filebot -rename "$v" --db TheTVDB -non-strict --lang German --format "/mnt/Medien/Animes/{n} ({y})/Season {s}/{n} - {s00e00} - {t}" --q 400573 >> "${log[@]}" # banished party
-  elif [[ "${v,,}" == *"fruit"*"evolution"* ]] # fruit evolution
-   then # fruit evolution
-    filebot -rename "$v" --db TheTVDB -non-strict --lang German --format "/mnt/Medien/Animes/{n} ({y})/Season {s}/{n} - {s00e00} - {t}" --q 402636 >> "${log[@]}" # fruit evolution
   elif [[ "${v,,}" == *"mushoku"*"tensei"* ]] # mushoku tensei
    then # mushoku tensei
     filebot -rename "$v" --db TheTVDB -non-strict --lang German --format "/mnt/Medien/Animes/{n} ({y})/Season {s}/{n} - {s00e00} - {t}" --q 371310 >> "${log[@]}" # mushoku tensei
@@ -96,7 +81,7 @@ do
     echo -e "${yellow}$(date +"%d.%m.%y %T")${white} ${red}Um Fehler bei der Automatisierten Umbennenung zu verhindern, werden wenn nur Filme automatisch umbennant${white}"
     echo -e "${yellow}$(date +"%d.%m.%y %T")${white} ${red}Überprüfe nun anhand der Länge des Videos ob es ein Film ist. Ansonsten Script beenden${white}"
     }  >> "${log[@]}"
-    duration=$(ffprobe -hide_banner -loglevel error -v quiet -stats -i "$v" -show_entries format=duration -v quiet -of csv="p=0" | sed -e 's/\.[0-9][0-9][0-9][0-9][0-9][0-9]//g')
+    duration=$(ffprobe -hide_banner -loglevel error -v quiet -stats -i "$v" -show_entries format=duration -v quiet -of csv="p=0" | sed -e 's/\..*//g')
     if [ "$duration" -gt "4000" ]
      then # ignore
       echo -e "${yellow}$(date +"%d.%m.%y %T")${white} ${purple}$v${white} ist ein Film, extrahiere Namen für Ordner" >> "${log[@]}"
