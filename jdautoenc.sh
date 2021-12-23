@@ -20,12 +20,6 @@ lblue='\033[1;34m' # ${lblue}
 cyan='\033[0;36m' # ${cyan}
 purple='\033[0;35m' # ${purple}
 
-## Leider kann JDownloader nicht unterscheiden zwischen Paket fertig entpackt und ein archiv innerhalb eines Paketes entpackt.
-## Daher erstellen wir eine Condition zum überprüfen, ob ffmpeg nicht vielleicht schon läuft durch ein früher ausgeführtes Skript.
-## Damit wir aber auch die neuen Dateien encoden und nicht nur die ersten, beenden wir nicht das Skript, sondern warten einfach,
-## bis das alte Skript fertig ist. Danach erst lassen wir den Loop im neueren Skript durchlaufen und durch die Löschung der Dateien,
-## sollte es keine Doppelten Dateien geben.
-
 echo -e "${yellow}$(date +"%d.%m.%y %T")${white} Starte ${green}JDautoenc.sh${white} Skript" >> "${log[@]}"
 
 find -L "${entpackt[@]}" -name '*.mkv' -or -name '*.mp4' | while IFS= read -r i
