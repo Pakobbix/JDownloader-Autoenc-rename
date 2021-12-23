@@ -47,16 +47,14 @@ find -L "${entpackt[@]}" -name '*.mkv' -or -name '*.mp4' | while IFS= read -r i;
       echo -e "${yellow}$(date +"%d.%m.%y %T")${white} Wenn Audio Codec eac3 oder dts dann Convertiere ${purple}""$clear""${white} und Audio Codec zu HEVC AC3" >>"${log[@]}"
       if [ "$acodec" = "eac3" ] || [ "$acodec" = "dts" ]; then
         echo -e "${yellow}$(date +"%d.%m.%y %T")${white} ${blue}Anime${white} ${purple}""$clear""${white} Encode von ""${vcodec^^}"" & ""${acodec^^}"" zu HEVC & AC3" >>"${log[@]}"
-        ffmpeg -hide_banner -v quiet -stats -nostdin -hwaccel cuda -hwaccel_output_format cuda -i "$i" -c:v hevc_nvenc -preset fast -b:v 1400k -c:a ac3 -map 0 -c:s copy "${out[*]}""${fertig%.*}.mkv" >>"${log[@]}" 2>&1
-        echo -e "${yellow}$(date +"%d.%m.%y %T")${white} ${red}Lösche${white} ${purple}""$clear""${white}" >>"${log[@]}"
-        if [ -f "${out[*]}""${fertig%.*}.mkv" ]; then
+        if ffmpeg -hide_banner -v quiet -stats -nostdin -hwaccel cuda -hwaccel_output_format cuda -i "$i" -c:v hevc_nvenc -preset fast -b:v 1400k -c:a ac3 -map 0 -c:s copy "${out[*]}""${fertig%.*}.mkv" >>"${log[@]}" 2>&1; then
+          echo -e "${yellow}$(date +"%d.%m.%y %T")${white} ${red}Lösche${white} ${purple}""$clear""${white}" >>"${log[@]}"
           rm -f "$i" >>"${log[@]}"
         fi
       else
         echo -e "${yellow}$(date +"%d.%m.%y %T")${white} ${blue}Anime${white} ${purple}""$clear""${white} Encode von ""${vcodec^^}"" zu HEVC" >>"${log[@]}"
-        ffmpeg -hide_banner -v quiet -stats -nostdin -hwaccel cuda -hwaccel_output_format cuda -i "$i" -c:v hevc_nvenc -preset fast -b:v 1400k -c:a copy -map 0 -c:s copy "${out[*]}""${fertig%.*}.mkv" >>"${log[@]}" 2>&1
-        echo -e "${yellow}$(date +"%d.%m.%y %T")${white} ${red}Lösche${white} ${purple}""$clear""${white}" >>"${log[@]}"
-        if [ -f "${out[*]}""${fertig%.*}.mkv" ]; then
+        if ffmpeg -hide_banner -v quiet -stats -nostdin -hwaccel cuda -hwaccel_output_format cuda -i "$i" -c:v hevc_nvenc -preset fast -b:v 1400k -c:a copy -map 0 -c:s copy "${out[*]}""${fertig%.*}.mkv" >>"${log[@]}" 2>&1; then
+          echo -e "${yellow}$(date +"%d.%m.%y %T")${white} ${red}Lösche${white} ${purple}""$clear""${white}" >>"${log[@]}"
           rm -f "$i" >>"${log[@]}"
         fi
       fi
@@ -65,9 +63,8 @@ find -L "${entpackt[@]}" -name '*.mkv' -or -name '*.mp4' | while IFS= read -r i;
       echo -e "${yellow}$(date +"%d.%m.%y %T")${white} ${purple}""$clear""${white} ist bereits HEVC, Überprüfe Audio Codec. Wenn in eac3 oder dts dann Encode Audio zu AC3" >>"${log[@]}"
       if [ "$acodec" = "eac3" ] || [ "$acodec" = "dts" ]; then
         echo -e "${yellow}$(date +"%d.%m.%y %T")${white} ${purple}""$clear""${white} Encode von ""${acodec^^}"" zu AC3" >>"${log[@]}"
-        ffmpeg -hide_banner -v quiet -stats -nostdin -hwaccel cuda -hwaccel_output_format cuda -i "$i" -c:v copy -preset fast -b:v 1400k -c:a ac3 -map 0 -c:s copy "${out[*]}""${fertig%.*}.mkv" >>"${log[@]}" 2>&1
-        echo -e "${yellow}$(date +"%d.%m.%y %T")${white} ${red}Lösche${white} ${purple}""$clear""${white}" >>"${log[@]}"
-        if [ -f "${out[*]}""${fertig%.*}.mkv" ]; then
+        if ffmpeg -hide_banner -v quiet -stats -nostdin -hwaccel cuda -hwaccel_output_format cuda -i "$i" -c:v copy -preset fast -b:v 1400k -c:a ac3 -map 0 -c:s copy "${out[*]}""${fertig%.*}.mkv" >>"${log[@]}" 2>&1; then
+          echo -e "${yellow}$(date +"%d.%m.%y %T")${white} ${red}Lösche${white} ${purple}""$clear""${white}" >>"${log[@]}"
           rm -f "$i" >>"${log[@]}"
         fi
       else
@@ -86,19 +83,15 @@ find -L "${entpackt[@]}" -name '*.mkv' -or -name '*.mp4' | while IFS= read -r i;
       acodec=$(ffprobe -hide_banner -loglevel error -select_streams a:0 -show_entries stream=codec_name -of default=nw=1:nk=1 "$i")
       echo -e "${yellow}$(date +"%d.%m.%y %T")${white} Wenn Audio Codec eac3 oder dts dann Convertiere Video und Audio Codec zu HEVC ac3" >>"${log[@]}"
       if [ "$acodec" = "eac3" ] || [ "$acodec" = "dts" ]; then
-        {
-          echo -e "${yellow}$(date +"%d.%m.%y %T")${white} ${lblue}Serie${white} ${purple}""$clear""${white} Encode von ""${vcodec^^}"" & ""${acodec^^}"" zu HEVC 1700k & AC3"
-          ffmpeg -hide_banner -v quiet -stats -nostdin -hwaccel cuda -hwaccel_output_format cuda -i "$i" -c:v hevc_nvenc -preset fast -b:v 1700k -c:a ac3 -map 0 -c:s copy "${out[*]}""${fertig%.*}.mkv" >>"${log[@]}" 2>&1
+        echo -e "${yellow}$(date +"%d.%m.%y %T")${white} ${lblue}Serie${white} ${purple}""$clear""${white} Encode von ""${vcodec^^}"" & ""${acodec^^}"" zu HEVC 1700k & AC3" >>"${log[@]}"
+        if ffmpeg -hide_banner -v quiet -stats -nostdin -hwaccel cuda -hwaccel_output_format cuda -i "$i" -c:v hevc_nvenc -preset fast -b:v 1700k -c:a ac3 -map 0 -c:s copy "${out[*]}""${fertig%.*}.mkv" >>"${log[@]}" 2>&1; then
           echo -e "${yellow}$(date +"%d.%m.%y %T")${white} ${red}Lösche${white} ${purple}""$clear""${white}"
-        } >>"${log[@]}"
-        if [ -f "${out[*]}""${fertig%.*}.mkv" ]; then
           rm -f "$i" >>"${log[@]}"
         fi
       else
         echo -e "${yellow}$(date +"%d.%m.%y %T")${white} ${lblue}Serie${white} ""$fertig"" Encode von ""${vcodec^^}"" zu HEVC 1700k" >>"${log[@]}"
-        ffmpeg -hide_banner -v quiet -stats -nostdin -hwaccel cuda -hwaccel_output_format cuda -i "$i" -c:v hevc_nvenc -preset fast -b:v 1700k -c:a copy -map 0 -c:s copy "${out[*]}""${fertig%.*}.mkv" >>"${log[@]}" 2>&1
-        echo -e "${yellow}$(date +"%d.%m.%y %T")${white} ${red}Lösche${white} ${purple}""$clear""${white}" >>"${log[@]}"
-        if [ -f "${out[*]}""${fertig%.*}.mkv" ]; then
+        if ffmpeg -hide_banner -v quiet -stats -nostdin -hwaccel cuda -hwaccel_output_format cuda -i "$i" -c:v hevc_nvenc -preset fast -b:v 1700k -c:a copy -map 0 -c:s copy "${out[*]}""${fertig%.*}.mkv" >>"${log[@]}" 2>&1; then
+          echo -e "${yellow}$(date +"%d.%m.%y %T")${white} ${red}Lösche${white} ${purple}""$clear""${white}" >>"${log[@]}"
           rm -f "$i" >>"${log[@]}"
         fi
       fi
@@ -108,9 +101,8 @@ find -L "${entpackt[@]}" -name '*.mkv' -or -name '*.mp4' | while IFS= read -r i;
       echo -e "${yellow}$(date +"%d.%m.%y %T")${white} Wenn Audio Codec eac3 oder dts dann Convertiere Video und Audio Codec zu HEVC ac3" >>"${log[@]}"
       if [ "$acodec" = "eac3" ] || [ "$acodec" = "dts" ]; then
         echo -e "${yellow}$(date +"%d.%m.%y %T")${white} ${purple}""$clear""${white} Encode von ""${acodec^^}"" zu AC3" >>"${log[@]}"
-        ffmpeg -hide_banner -v quiet -stats -nostdin -hwaccel cuda -hwaccel_output_format cuda -i "$i" -c:v copy -preset fast -b:v 1700k -c:a ac3 -map 0 -c:s copy "${out[*]}""${fertig%.*}.mkv" >>"${log[@]}" 2>&1
-        echo -e "${yellow}$(date +"%d.%m.%y %T")${white} ${red}Lösche${white} ${purple}""$clear""${white}" >>"${log[@]}"
-        if [ -f "${out[*]}""${fertig%.*}.mkv" ]; then
+        if ffmpeg -hide_banner -v quiet -stats -nostdin -hwaccel cuda -hwaccel_output_format cuda -i "$i" -c:v copy -preset fast -b:v 1700k -c:a ac3 -map 0 -c:s copy "${out[*]}""${fertig%.*}.mkv" >>"${log[@]}" 2>&1; then
+          echo -e "${yellow}$(date +"%d.%m.%y %T")${white} ${red}Lösche${white} ${purple}""$clear""${white}" >>"${log[@]}"
           rm -f "$i" >>"${log[@]}"
         fi
       else
@@ -131,16 +123,14 @@ find -L "${entpackt[@]}" -name '*.mkv' -or -name '*.mp4' | while IFS= read -r i;
       echo -e "${yellow}$(date +"%d.%m.%y %T")${white} Wenn Audio Codec eac3 oder dts dann Convertiere Video und Audio Codec zu HEVC ac3" >>"${log[@]}"
       if [ "$acodec" = "eac3" ] || [ "$acodec" = "dts" ]; then
         echo -e "${yellow}$(date +"%d.%m.%y %T")${white} ${cyan}Film${white} ${purple}""$clear""${white} Encode von ""$vcodec"" & ""$acodec"" zu HEVC 2M & AC3 500k" >>"${log[@]}"
-        ffmpeg -hide_banner -v quiet -stats -nostdin -hwaccel cuda -hwaccel_output_format cuda -i "$i" -c:v hevc_nvenc -preset fast -b:v 2000k -c:a ac3 -b:a 500k -map 0 -c:s copy "${out[*]}""${fertig%.*}.mkv" >>"${log[@]}" 2>&1 >>"${log[@]}"
-        echo -e "${yellow}$(date +"%d.%m.%y %T")${white} ${red}Lösche${white} ${purple}""$clear""${white}" >>"${log[@]}"
-        if [ -f "${out[*]}""${fertig%.*}.mkv" ]; then
+        if ffmpeg -hide_banner -v quiet -stats -nostdin -hwaccel cuda -hwaccel_output_format cuda -i "$i" -c:v hevc_nvenc -preset fast -b:v 2000k -c:a ac3 -b:a 500k -map 0 -c:s copy "${out[*]}""${fertig%.*}.mkv" >>"${log[@]}" 2>&1 >>"${log[@]}"; then
+          echo -e "${yellow}$(date +"%d.%m.%y %T")${white} ${red}Lösche${white} ${purple}""$clear""${white}" >>"${log[@]}"
           rm -f "$i" >>"${log[@]}"
         fi
       else
         echo -e "${yellow}$(date +"%d.%m.%y %T")${white} ${cyan}Film${white} ${purple}""$clear""${white} Encode von ""$vcodec"" zu HEVC 2M" >>"${log[@]}"
-        ffmpeg -hide_banner -v quiet -stats -nostdin -hwaccel cuda -hwaccel_output_format cuda -i "$i" -c:v hevc_nvenc -preset fast -b:v 2000k -c:a copy -map 0 -c:s copy "${out[*]}""${fertig%.*}.mkv" >>"${log[@]}" 2>&1 >>"${log[@]}"
-        echo -e "${yellow}$(date +"%d.%m.%y %T")${white} ${red}Lösche${white} ${purple}""$clear""${white}" >>"${log[@]}"
-        if [ -f "${out[*]}""${fertig%.*}.mkv" ]; then
+        if ffmpeg -hide_banner -v quiet -stats -nostdin -hwaccel cuda -hwaccel_output_format cuda -i "$i" -c:v hevc_nvenc -preset fast -b:v 2000k -c:a copy -map 0 -c:s copy "${out[*]}""${fertig%.*}.mkv" >>"${log[@]}" 2>&1 >>"${log[@]}"; then
+          echo -e "${yellow}$(date +"%d.%m.%y %T")${white} ${red}Lösche${white} ${purple}""$clear""${white}" >>"${log[@]}"
           rm -f "$i" >>"${log[@]}"
         fi
       fi
@@ -149,9 +139,8 @@ find -L "${entpackt[@]}" -name '*.mkv' -or -name '*.mp4' | while IFS= read -r i;
       echo -e "${yellow}$(date +"%d.%m.%y %T")${white} Wenn Audio Codec eac3 oder dts dann Convertiere Video und Audio Codec zu HEVC ac3" >>"${log[@]}"
       if [ "$acodec" = "eac3" ] || [ "$acodec" = "dts" ]; then
         echo -e "${yellow}$(date +"%d.%m.%y %T")${white} ${purple}""$clear""${white} Encode von ""${acodec^^}"" zu AC3" >>"${log[@]}"
-        ffmpeg -hide_banner -v quiet -stats -nostdin -hwaccel cuda -hwaccel_output_format cuda -i "$i" -c:v copy -preset fast -b:v 1700k -c:a ac3 -map 0 -c:s copy "${out[*]}""${fertig%.*}.mkv" >>"${log[@]}" 2>&1
-        echo -e "${yellow}$(date +"%d.%m.%y %T")${white} ${red}Lösche${white} ${purple}""$clear""${white}" >>"${log[@]}"
-        if [ -f "${out[*]}""${fertig%.*}.mkv" ]; then
+        if ffmpeg -hide_banner -v quiet -stats -nostdin -hwaccel cuda -hwaccel_output_format cuda -i "$i" -c:v copy -preset fast -b:v 1700k -c:a ac3 -map 0 -c:s copy "${out[*]}""${fertig%.*}.mkv" >>"${log[@]}" 2>&1; then
+          echo -e "${yellow}$(date +"%d.%m.%y %T")${white} ${red}Lösche${white} ${purple}""$clear""${white}" >>"${log[@]}"
           rm -f "$i" >>"${log[@]}"
         fi
       else
