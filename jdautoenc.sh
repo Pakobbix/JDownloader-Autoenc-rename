@@ -2,11 +2,14 @@
 
 # Nehme alle Dateien mit einer .mkv oder .mp4 Endung
 
-#entpacktrr=(/mnt/downloads/entpackt/**/**/*.mkv)
-#entpacktr=(/mnt/downloads/entpackt/**/*.mkv)
-entpackt=(/mnt/downloads/entpackt/)
-out=(/mnt/Medien/encode/)
-log=(~/.local/logs/jdautoenc.log)
+entpackt="$1"
+log="$2"
+out="$3"
+rename="$4"
+filebotAnime="$5"
+filebotSerie="$6"
+filebotFilme="$7"
+
 
 red='\033[0;31m' # ${red}
 white='\033[0;37m' # ${white}
@@ -196,4 +199,4 @@ echo -e "${yellow}$(date +"%d.%m.%y %T")${white} ${red}Lösche${white} leere Ord
 find "${entpackt[@]}"* -type d -empty -delete  >> "${log[@]}" 2>&1 >> "${log[@]}"
 
 
-/bin/bash ~/.local/scripts/rename.sh &
+/bin/bash "$rename" "$log" "$out" "filebotAnime" "filebotSerie" "filebotFilme" &

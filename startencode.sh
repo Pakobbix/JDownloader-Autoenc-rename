@@ -4,8 +4,17 @@ green='\033[0;32m'
 white='\033[0;37m'
 yellow='\033[0;33m' # ${yellow}
 
+##### Ordner Pfade: Hier sind nun einige Ordnerpfade, die dann an die anderen
+##### Skripte weitergegeben werden. Ändert ihr hier den Ordnerpfad, sind
+##### diese für alle Skripte geändert. Macht das Bearbeiten leichter.
+##### Ausnahme ist leider filebot. Ich kann die Ordner nicht an filebot
+##### weiterreichen. Diese werden dann als plain text gelesen.
 
-log=(~/.local/logs/jdautoenc.log)
+jdautoenc="$HOME/.local/scripts/jdautoenc.sh"
+entpackt="/mnt/downloads/entpackt/"
+log="$HOME/.local/logs/jdautoenc.log"
+out="/mnt/Medien/encode/"
+rename="$HOME/.local/scripts/rename.sh"
 
 echo -e "${yellow}$(date +"%d.%m.%y %T")${white} Starte ${green}startencode.sh${white} Skript" >> "${log[@]}"
 
@@ -18,4 +27,4 @@ do
 sleep 1m
 done
 
-/bin/bash ~/.local/scripts/jdautoenc.sh &
+/bin/bash "$jdautoenc" "$entpackt" "$log" "$out" "$rename" &

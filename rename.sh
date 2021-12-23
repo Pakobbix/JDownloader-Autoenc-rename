@@ -8,13 +8,13 @@ white='\033[0;37m'
 yellow='\033[0;33m'
 purple='\033[0;35m' # ${purple}
 
-## Ordner Pfade
+#Ordner Pfade
 
-out=(/mnt/Medien/encode/)
+out="$2"
 
 ## Log file Output
 
-log=(~/.local/logs/jdautoenc.log)
+log="$1"
 
 ## Script start
 
@@ -40,7 +40,7 @@ done
 ## und bei zuvielen Dateien mehrere filebot Prozesse versuchen die selbe Datei umzubenennen
 ## (unwahrscheinlich aber lieber vorsichtig als nachher blöd dazustehen)
 
-sleep $[ ( $RANDOM % 10 )  + 1 ]s
+#sleep $[ ( $RANDOM % 10 )  + 1 ]s
 
 for v in "${out[@]}"*.mkv
 do
@@ -68,10 +68,10 @@ do
     filebot -rename "$v" --db TheTVDB -non-strict --lang German --format "/mnt/Medien/Animes/{n} ({y})/Season {s}/{n} - {s00e00} - {t}" --q 399222 >> "${log[@]}" # scarlet nexus
   elif [[ "${v,,}" == *"shaman"*"king"* ]] # shaman king
    then # shaman king
-    filebot -rename "$v" --db TheTVDB -non-strict --lang German --format "/mnt/Medien/Animes/{n}/Season {s}/{n} - {s00e00} - {t}" --q 383837 >> "${log[@]}" # shaman king
-  elif [[ "${v,,}" == *"hawkeye"* ]] # hawkeye
-   then # hawkeye
-    filebot -rename "$v" --db TheTVDB -non-strict --lang German --format "/mnt/Medien/Serien/{n} ({y})/Season {s}/{n} - {s00e00} - {t}" --q 367146 >> "${log[@]}" # hawkeye
+    filebot -rename "$v" --db TheTVDB -non-strict --lang German --format "/mnt/Medien/Animes/{n} ({y})/Season {s}/{n} - {s00e00} - {t}" --q 383837 >> "${log[@]}" # shaman king
+  elif [[ "${v,,}" == *"hawkeye"* ]] # Hawkeye
+   then # Hawkeye
+    filebot -rename "$v" --db TheTVDB -non-strict --lang German --format "/mnt/Medien/Serien/{n} ({y})/Season {s}/{n} - {s00e00} - {t}" --q 367146 >> "${log[@]}" # Hawkeye
   elif [[ "${v,,}" == *"kurokos"*"basketball"* ]] # kurokos basketball
    then # kurokos basketball
     filebot -rename "$v" --db TheTVDB -non-strict --lang German --format "/mnt/Medien/Animes/{n} ({y})/Season {s}/{n} - {s00e00} - {t}" --q 257765 >> "${log[@]}" # kurokos basketball
