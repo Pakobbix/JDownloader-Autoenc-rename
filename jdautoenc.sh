@@ -154,4 +154,4 @@ done
 echo -e "${yellow}$(date +"%d.%m.%y %T")${white} ${red}Lösche${white} leere Ordner im Entpackt verzeichnis" >>"${log[@]}"
 find "${entpackt[@]}"* -type d -empty -delete >>"${log[@]}" 2>&1 >>"${log[@]}"
 
-/bin/bash "$rename" "$log" "$out" "filebotAnime" "filebotSerie" "filebotFilme" &
+/bin/bash "$rename" "$log" "$out" &
