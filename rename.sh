@@ -38,7 +38,7 @@ done
 ## und bei zuvielen Dateien mehrere filebot Prozesse versuchen die selbe Datei umzubenennen
 ## (unwahrscheinlich aber lieber vorsichtig als nachher blöd dazustehen)
 
-#sleep $[ ( $RANDOM % 10 )  + 1 ]s
+sleep $(((RANDOM % 10) + 1))s
 
 for v in "${out[@]}"*.mkv; do
   echo -e "${yellow}$(date +"%d.%m.%y %T")${white} Starte die Umbennenung der encoded Videos" >>"${log[@]}"
