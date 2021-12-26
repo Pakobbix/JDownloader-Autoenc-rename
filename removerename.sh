@@ -8,15 +8,18 @@ yellow='\033[0;33m'
 
 # Rename Skript:
 
+rename=~/.local/scripts/rename.sh
+
 clear
 IFS=$'\n'
 frage="Wähle den zu löschenden Eintrag aus: "
 entrys=($(grep "\-\-q" "$rename" | sed 's/.* # //g'))
 
 PS3="$frage "
-select entry in "${entrys[@]}" "Abbrechen"; do
+select entry in "${entrys[@]}" "Beenden"; do
     if ((REPLY == 1 + ${#entrys[@]})); then
         exit
+        break
 
     elif ((REPLY > 0 && REPLY <= ${#entrys[@]})); then
         tvdbid=$(grep -i "$entry" "$rename" | grep "\-\-q" | sed 's/.*\-\-q //g' | cut -d" " -f1)
@@ -28,15 +31,11 @@ select entry in "${entrys[@]}" "Abbrechen"; do
             mv "$rename".bak "$rename"
             chmod +x "$rename"
             break
-        else
-            exit
         fi
-        echo "$sure"
-        echo "$PWD"
-        restart=$(find "$PWD" -iname "removerename.sh")
-
-        /bin/bash "$restart"
+        /bin/bash "${BASH_SOURCE[0]}"
     else
         echo "Ungültige Eingabe."
     fi
 done
+
+xdg-open >/dev/null 2>&1 "https://www.anisearch.de/anime/index?text=banished+&quick-search=&char=all&q=true"
