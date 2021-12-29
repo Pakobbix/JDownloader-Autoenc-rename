@@ -73,6 +73,7 @@ for v in "${out[@]}"*.mkv; do
     duration=$(ffprobe -hide_banner -loglevel error -v quiet -stats -i "$v" -show_entries format=duration -v quiet -of csv="p=0" | sed -e 's/\..*//g')
     if [ "$duration" -gt "4000" ]; then # ignore
       echo -e "${yellow}$(date +"%d.%m.%y %T")${white} ${purple}$v${white} ist ein Film, extrahiere Namen für Ordner" >>"${log[@]}"
+      movie=$(basename "$v")
       folder=$(basename "$v" .mkv)
       ## Hier wird nun ein Ordner mit dem Namen des Videos erstellt. Dies ist eine Vorsichtsmaßnahme, da mein Ordner (encoded) auch bei eindeutigen Film
       ## Namen immer wieder dazu führte, dass der Film als "ENCODED EXPLODED" umbenannt wurde -.-
@@ -80,12 +81,13 @@ for v in "${out[@]}"*.mkv; do
       echo -e "${yellow}$(date +"%d.%m.%y %T")${white} Erstelle Ordner $folder" "$yellow" "$white" "$folder" >>"${log[@]}"
       mkdir "$folder"
       echo -e "${yellow}$(date +"%d.%m.%y %T")${white} Verschiebe ${purple}$v${white} nach $folder" >>"${log[@]}"
-      mv "$v" "$folder"
+      mv "$v" "$out""$folder" >>"${log[@]}"
       {
         echo -e "${yellow}$(date +"%d.%m.%y %T")${white} Fange an mit der Umbenennung"
-        filebot -rename "$folder"/*.mkv --db TheMovieDB -non-strict --lang German --format "/mnt/Medien/Filme/{n} ({y})"
+        filebot -rename "$out""$folder"/"$movie" --db TheMovieDB -non-strict --lang German --format "/mnt/Medien/Filme/{n} ({y})"
         echo -e "${yellow}$(date +"%d.%m.%y %T")${white} Falls Umbennung erfolgreich,  ${red}Lösche${white} Ordner"
       } >>"${log[@]}"
+      sleep 5s
       rmdir "$folder"
     fi
   fi
