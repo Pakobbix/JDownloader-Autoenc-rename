@@ -1,3 +1,7 @@
+# Work in Progress!!
+
+Dies ist eine Überarbeitung der Skripte. Benutzung auf eigene Gefahr! Tests stehen noch aus.
+
 # JDownloader-Autoenc-rename
 
 Linux Skripte zum automatischen encode zu HEVC und Spezieller Audio Codecs (eac3 & dts) zu AC3 und umbenennen via FileBot.
