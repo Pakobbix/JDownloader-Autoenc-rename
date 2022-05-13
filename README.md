@@ -73,6 +73,4 @@ Allgemein:
 
 - Terminal/Zenity Konfigurationsskript für Leute, die sich nicht auskennen.
 - **addrename**: wenn rename konfiguriert für Filme abgleich, muss addrename auch angepasst werden. 
-- removerename vereinfachen. Einträge Nummerieren und jeweilige Nummer des Eintrages angeben zum Löschen.
-  - Wenn 3 Einträge vorhanden, und man möchte den 2. löschen einfach 2 eingeben, statt keyword.
 - Allgemeine verbesserung und Fehlerbehebungen. Da ich erst noch lerne, muss noch einiges angepasst werden, damit es auf jedem Linux basierten Gerät funktioniert und nicht nur bei mir.
