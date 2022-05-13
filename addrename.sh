@@ -13,8 +13,18 @@ purple='\033[0;35m' # ${purple}
 rename=~/.local/scripts/renamelist
 
 curl_name() {
-  if [[ -z $(curl -sL https://www.thetvdb.com/dereferrer/series/402337 | grep -i -A1 "deu" | grep "data-title" | sed 's/.*="\|"//g' | sed "s/&rsquo;/'/g") ]]; then
-    curl -sL https://www.thetvdb.com/dereferrer/series/402337 | grep -i -A1 "en" | grep "data-title" | sed 's/.*="\|"//g' | sed "s/&rsquo;/'/g"
+  if [[ -z $(curl -sL https://www.thetvdb.com/dereferrer/series/"$thetvdb" | grep -i -A1 "deu" | grep "data-title" | sed 's/.*="\|"//g' | sed "s/&rsquo;/'/g") ]]; then
+    curl -sL https://www.thetvdb.com/dereferrer/series/"$thetvdb" | grep -i -A1 "en" | grep "data-title" | sed 's/.*="\|"//g' | sed "s/&rsquo;/'/g"
+  else
+    curl -sL https://www.thetvdb.com/dereferrer/series/"$thetvdb" | grep -i -A1 "deu" | grep "data-title" | sed 's/.*="\|"//g' | sed "s/&rsquo;/'/g"
+  fi
+}
+
+format_search() {
+  if [[ -z $(curl -sL https://www.thetvdb.com/dereferrer/series/"$thetvdb" | grep -i "genres/\<anime\>" | sed 's/.*anime">\|<\/a>.*//g') ]]; then
+    echo "die Serie:"
+  else
+    echo "den Anime:"
   fi
 }
 
@@ -30,8 +40,8 @@ else
     echo -e "${purple}https://thetvdb.com/search?query=""$key1""%20""$key2""${white}"
   fi
   read -rp "$(echo -e Gebe nun die "${purple}"TheTVDB ID"${white}" ein)  " thetvdb
-  format=$(curl -sL https://www.thetvdb.com/dereferrer/series/"$thetvdb" | grep -i "genres/\<anime\>" | sed 's/.*anime">\|<\/a>.*//g')
-  printf 'Es handelt sich um den %b %b\n' "$format" "$(curl_name)"
+  format=$(format_search)
+  echo "Es handelt sich um $format $(curl_name)"
   read -rp "Ist dies Korrekt? (Y/n)" wrongformat
   if [ "${wrongformat,,}" == "n" ]; then
     echo "Leider konnte deine Anfrage nicht automatisch abgearbeitet werden. Du kannst aber immernoch manuell einen Eintrag hinzufügen"
