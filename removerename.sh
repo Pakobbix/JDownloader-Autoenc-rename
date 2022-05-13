@@ -8,12 +8,12 @@ yellow='\033[0;33m'
 
 # Rename Skript:
 
-rename=~/.local/scripts/renamelist
+renamelist=~/.local/scripts/renamelist
 
 clear
 IFS=$'\n'
 frage="Wähle den zu löschenden Eintrag aus: "
-entrys=($(awk 'NR % 6 == 1' "$rename" | sed 's/#.*/Beispiel Eintrag/g'))
+entrys=($(awk 'NR % 6 == 1' "$renamelist" | sed 's/#.*/Beispiel Eintrag/g'))
 
 PS3="$frage "
 select entry in "${entrys[@]}" "Beenden"; do

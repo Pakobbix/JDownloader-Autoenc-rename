@@ -4,6 +4,7 @@ entpackt="$1"
 log="$2"
 out="$3"
 rename="$4"
+renamelist="$5"
 
 # Bitrate & ffmpeg encode preset für die Unterschiedlichen Formate:
 bitrate_anime=1400
@@ -62,7 +63,7 @@ find -L "${entpackt[@]}" -name '*.mkv' -or -name '*.mp4' | while IFS= read -r i;
   duration=$(ffprobe -hide_banner -loglevel error -v quiet -stats -i "$i" -show_entries format=duration -v quiet -of csv="p=0" | sed 's/\..*//g')
   ## Setze Namen für das fertige Video
   fertig=$(basename "$i")
-  clear=$(basename "$i" .mkv | sed 's/\./ /g;s/AAC\|1080p\|WebDL\|[a-z]26[0-9]\|hevc\|-[t-T]anuki\| dl \| web \|repack\|wayne\|\|[-]\|[gG]er\|[eE]ng\|[sS]ub//g;s/\[[^][]*\]//g;s/_/ /g')
+  clear=$(basename "$i" .mkv | sed 's/\./ /g;s/AAC\|1080p\|WebDL\|[a-z]26[0-9]\|[hH][eE][Vv][Cc]\|[tT]anuki\| dl \| web \|repack\|wayne\|\|[-]\|[gG]er\|[eE]ng\|[sS]ub//g;s/\[[^][]*\]//g;s/_/ /g')
   ## Erstelle eine Logdatei mit Datum und dem jetzigen Vorgang.
   log_msg "Überprüfe ob ${purple}""$clear""${white} ein ${blue}Anime${white} ist (weniger als 24 Minuten)"
 
@@ -159,4 +160,4 @@ done
 log_msg "${red}Lösche${white} leere Ordner im Entpackt verzeichnis"
 find "${entpackt[@]}"* -type d -empty -delete >>"${log[@]}" 2>&1 >>"${log[@]}"
 
-/bin/bash "$rename" "$log" "$out" &
+/bin/bash "$rename" "$log" "$out" "$renamelist" &

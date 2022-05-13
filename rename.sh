@@ -65,13 +65,13 @@ while read -r name; do
 
   find -L "${out[@]}" -name '*.mkv' -or -name '*.mp4' | while IFS= read -r v; do
 
-    if [[ ${v,,} == *"$keyword1"*"$keyword2" ]]; then
-      log_msg "Bennene $v um in $name + Staffel + Episode + Episodentitel"
+    if [[ ${v,,} == *"$keyword1"*"$keyword2"* ]]; then
+      log_msg "Bennene $v um in $name Staffel Episode Episodentitel"
       filebot_rename TheTVDB "$format" "$tvdbid"
     else
-      log_msg "${red}Keine Übereinstimmung in den Vordefinierten Animes/Serien"
-      log_msg "${red}Um Fehler bei der Automatisierten Umbennenung zu verhindern, werden wenn nur Filme automatisch umbennant"
-      log_msg "${red}Überprüfe nun anhand der Länge des Videos ob es ein Film ist. Ansonsten Script beenden"
+      #      log_msg "${red}Keine Übereinstimmung in den Vordefinierten Animes/Serien"
+      #      log_msg "${red}Um Fehler bei der Automatisierten Umbennenung zu verhindern, werden wenn nur Filme automatisch umbennant"
+      #      log_msg "${red}Überprüfe nun anhand der Länge des Videos ob es ein Film ist. Ansonsten Script beenden"
       duration=$(ffprobe -hide_banner -loglevel error -v quiet -stats -i "$v" -show_entries format=duration -v quiet -of csv="p=0" | sed -e 's/\..*//g')
       if [ "$duration" -gt "4000" ]; then # ignore
         log_msg "${purple}$v${white} ist ein Film, extrahiere Namen für Ordner"

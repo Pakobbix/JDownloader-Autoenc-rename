@@ -41,6 +41,7 @@ else
   fi
   read -rp "$(echo -e Gebe nun die "${purple}"TheTVDB ID"${white}" ein)  " thetvdb
   format=$(format_search)
+  typ=$(if [[ $format == "den Anime:" ]]; then echo "Animes"; else echo "Serie"; fi)
   echo "Es handelt sich um $format $(curl_name)"
   read -rp "Ist dies Korrekt? (Y/n)" wrongformat
   if [ "${wrongformat,,}" == "n" ]; then
@@ -51,10 +52,9 @@ else
       curl_name
       echo "$key1"
       echo "$key2"
-      echo "$format"
+      echo "$typ"
       echo "$thetvdb"
       echo ""
     } >>$rename
   fi
-
 fi
