@@ -7,6 +7,9 @@ white='\033[0;37m'
 yellow='\033[0;33m'
 purple='\033[0;35m' # ${purple}
 
+# Message System
+discord="$4"
+
 #Liste für die Umbenennung
 renamelist="$3"
 
@@ -22,8 +25,14 @@ log_msg() {
   echo -e "${yellow}$(date +"%d.%m.%y %T")${white}  $1${white}" >>"${log[@]}"
 }
 
+discord_msg() {
+  curl -s -H "Content-Type: application/json" -X POST -d "{\"content\": \"$1\"}" "$discord"
+}
+
 filebot_rename() {
-  filebot -rename "$v" --db "$1" -non-strict --lang German --format "/mnt/Medien/$2/{n} ({y})/Season {s}/{n} - {s00e00} - {t}" --q "$3" >>"${log[@]}"
+  if ! filebot -rename "$v" --db "$1" -non-strict --lang German --format "/mnt/Medien/$2/{n} ({y})/Season {s}/{n} - {s00e00} - {t}" --q "$3" >>"${log[@]}"; then
+    discord_msg "Fehler bei der Umbenennung von $v."
+  fi
 }
 
 names() {
@@ -69,30 +78,33 @@ while read -r name; do
       log_msg "Bennene $v um in $name Staffel Episode Episodentitel"
       filebot_rename TheTVDB "$format" "$tvdbid"
     else
-      #      log_msg "${red}Keine Übereinstimmung in den Vordefinierten Animes/Serien"
-      #      log_msg "${red}Um Fehler bei der Automatisierten Umbennenung zu verhindern, werden wenn nur Filme automatisch umbennant"
-      #      log_msg "${red}Überprüfe nun anhand der Länge des Videos ob es ein Film ist. Ansonsten Script beenden"
-      duration=$(ffprobe -hide_banner -loglevel error -v quiet -stats -i "$v" -show_entries format=duration -v quiet -of csv="p=0" | sed -e 's/\..*//g')
-      if [ "$duration" -gt "4000" ]; then # ignore
-        log_msg "${purple}$v${white} ist ein Film, extrahiere Namen für Ordner"
-        movie=$(basename "$v")
-        folder=$(basename "$v" .mkv)
-        ## Hier wird nun ein Ordner mit dem Namen des Videos erstellt. Dies ist eine Vorsichtsmaßnahme, da mein Ordner (encoded) auch bei eindeutigen Film
-        ## Namen immer wieder dazu führte, dass der Film als "ENCODED EXPLODED" umbenannt wurde -.-
-
-        log_msg "Erstelle Ordner $folder" "$yellow" "$white" "$folder"
-        mkdir "$out""$folder"
-        log_msg "Verschiebe ${purple}$v${white} nach $folder"
-        mv "$v" "$out""$folder" >>"${log[@]}"
-        log_msg "Fange an mit der Umbenennung"
-        filebot -rename "$out""$folder"/"$movie" --db TheMovieDB -non-strict --lang German --format "/mnt/Medien/Filme/{n} ({y})" >>"${log[@]}"
-        log_msg "Falls Umbennung erfolgreich, ${red}Lösche${white} Ordner"
-        sleep 5s
-        rmdir "$out"*
-      fi
+      log_msg "${red}$v stimmt nicht mit $name überein"
+      log_msg "${red}Gehe zum nächsten Eintrag."
     fi
 
   done
 done <"$renamelist"
+
+find -L "${out[@]}" -name '*.mkv' -or -name '*.mp4' | while IFS= read -r v; do
+  log_msg "${red}Schaue ob Filme zum umbenennen vorliegen."
+  duration=$(ffprobe -hide_banner -loglevel error -v quiet -stats -i "$v" -show_entries format=duration -v quiet -of csv="p=0" | sed -e 's/\..*//g')
+  if [ "$duration" -gt "4000" ]; then # ignore
+    log_msg "${purple}$v${white} ist ein Film, extrahiere Namen für Ordner"
+    movie=$(basename "$v")
+    folder=$(basename "$v" .mkv)
+    ## Hier wird nun ein Ordner mit dem Namen des Videos erstellt. Dies ist eine Vorsichtsmaßnahme, da mein Ordner (encoded) auch bei eindeutigen Film
+    ## Namen immer wieder dazu führte, dass der Film als "ENCODED EXPLODED" umbenannt wurde -.-
+
+    log_msg "Erstelle Ordner $folder" "$yellow" "$white" "$folder"
+    mkdir "$out""$folder"
+    log_msg "Verschiebe ${purple}$v${white} nach $folder"
+    mv "$v" "$out""$folder" >>"${log[@]}"
+    log_msg "Fange an mit der Umbenennung"
+    filebot -rename "$out""$folder"/"$movie" --db TheMovieDB -non-strict --lang German --format "/mnt/Medien/Filme/{n} ({y})" >>"${log[@]}"
+    log_msg "Falls Umbennung erfolgreich, ${red}Lösche${white} Ordner"
+    sleep 5s
+    rmdir "$out"*
+  fi
+done
 
 rm -f /tmp/rename.lock
