@@ -17,6 +17,13 @@ entpackt="/mnt/downloads/entpackt/"
 out="/mnt/Medien/encode/"
 log="$HOME/.local/logs/jdautoenc.log"
 
+# Benachrichtungen.
+# Hier können externe Benachrichtigungen definiert werden. Den Anfang macht Discord.
+# Wozu? Falls es zu fehlern kommt, kann man sich so benachrichtigen lassen.
+# Encodieren/Umbenennen ist schiefgegangen? Sende eine Nachricht, damit du überhaupt bescheid weißt.
+
+discord='https://discord.com/api/webhooks/'
+
 echo -e "${yellow}$(date +"%d.%m.%y %T")${white} Starte ${green}startencode.sh${white} Skript" >>"${log[@]}"
 
 if pgrep -f 'jdautoenc.sh' >/dev/null 2>&1; then
@@ -27,4 +34,4 @@ while pgrep -f 'jdautoenc.sh' >/dev/null 2>&1; do
   sleep 1m
 done
 
-/bin/bash "$jdautoenc" "$entpackt" "$log" "$out" "$rename" "$renamelist" &
+/bin/bash "$jdautoenc" "$entpackt" "$log" "$out" "$rename" "$renamelist" "$discord" &
