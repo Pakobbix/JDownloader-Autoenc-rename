@@ -5,6 +5,7 @@ log="$2"
 out="$3"
 rename="$4"
 renamelist="$5"
+discord="$6"
 
 # Bitrate & ffmpeg encode preset für die Unterschiedlichen Formate:
 bitrate_anime=1400
@@ -46,10 +47,16 @@ log_msg() {
   echo -e "${yellow}$(date +"%d.%m.%y %T")${white}  $1${white}" >>"${log[@]}"
 }
 
+discord_msg() {
+  curl -s -H "Content-Type: application/json" -X POST -d "{\"content\": \"$1\"}" "$discord"
+}
+
 ff_encode() {
   if ffmpeg -hide_banner -v quiet -stats -nostdin -hwaccel "$1" -hwaccel_output_format "$1" -i "$i" -c:v "$2" -preset "$3" -b:v "$4"K -c:a "$5" -map 0 -c:s copy "${out[*]}""${fertig%.*}.mkv" >>"${log[@]}" 2>&1; then
     log_msg "${red}Lösche${white} ${purple}""$clear""${white}" >>"${log[@]}"
     rm -f "$i" >>"${log[@]}"
+  else
+    discord_msg "Konnte $clear nicht mit $2 umwandeln. $?"
   fi
 }
 
@@ -160,4 +167,4 @@ done
 log_msg "${red}Lösche${white} leere Ordner im Entpackt verzeichnis"
 find "${entpackt[@]}"* -type d -empty -delete >>"${log[@]}" 2>&1 >>"${log[@]}"
 
-/bin/bash "$rename" "$log" "$out" "$renamelist" &
+/bin/bash "$rename" "$log" "$out" "$renamelist" "$discord" &
