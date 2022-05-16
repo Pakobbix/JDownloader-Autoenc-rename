@@ -22,6 +22,12 @@ Ihr benötigt dafür einige Tools. Dazu gehören:
  - Bash in der Version 4 oder höher ( bash --version also Kommando im terminal eingeben)
  - Ordner für das einsortieren (Filme, Serien, Animes /mnt/Medien/* als Default im Skript)
 
+# Benachrichtigungen:
+
+Mir fehlte noch eine Möglichkeit, darauf aufmerksam zu werden, falls etwas nicht funktioniert.
+Daher wurden erstmal Discord Nachrichten hinzugefügt. Falls die Encodierung oder das Umbenennen Fehlschlägt, 
+sendet das jeweilige Skript eine Nachricht an einen Discord Channel. Die Webhook URL kann bei startencode.sh hinterlegt werden.
+
 # Was machen die Skripte?
 
 Ich bin bei weitem kein Profi, und es gibt bestimmt eine MENGE!! Dinge, die man verbessern könnte.
@@ -72,5 +78,6 @@ für das **rename** Skript
 Allgemein:
 
 - Terminal/Zenity Konfigurationsskript für Leute, die sich nicht auskennen.
+  - Konfigurationsskript muss nun mal endlich fertig werden.
 - **addrename**: wenn rename konfiguriert für Filme abgleich, muss addrename auch angepasst werden. 
 - Allgemeine verbesserung und Fehlerbehebungen. Da ich erst noch lerne, muss noch einiges angepasst werden, damit es auf jedem Linux basierten Gerät funktioniert und nicht nur bei mir.
