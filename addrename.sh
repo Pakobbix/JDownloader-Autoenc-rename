@@ -10,7 +10,23 @@ purple='\033[0;35m' # ${purple}
 #lblue='\033[1;34m' # ${lblue}
 
 ## Rename Skript Pfad:
-rename=~/.local/scripts/rename.sh
+rename=~/.local/scripts/renamelist
+
+curl_name() {
+  if [[ -z $(curl -sL https://www.thetvdb.com/dereferrer/series/"$thetvdb" | grep -i -A1 "deu" | grep "data-title" | sed 's/.*="\|"//g' | sed "s/&rsquo;/'/g") ]]; then
+    curl -sL https://www.thetvdb.com/dereferrer/series/"$thetvdb" | grep -i -A1 "en" | grep "data-title" | sed 's/.*="\|"//g' | sed "s/&rsquo;/'/g"
+  else
+    curl -sL https://www.thetvdb.com/dereferrer/series/"$thetvdb" | grep -i -A1 "deu" | grep "data-title" | sed 's/.*="\|"//g' | sed "s/&rsquo;/'/g"
+  fi
+}
+
+format_search() {
+  if [[ -z $(curl -sL https://www.thetvdb.com/dereferrer/series/"$thetvdb" | grep -i "genres/\<anime\>" | sed 's/.*anime">\|<\/a>.*//g') ]]; then
+    echo "die Serie:"
+  else
+    echo "den Anime:"
+  fi
+}
 
 read -rp "$(echo -e Möchtest du einen "${green}"neuen Eintrag"${white}" zum umbenennen hinzufügen?) (Y/n)" adding
 if [ "${adding,,}" == "n" ]; then
@@ -24,46 +40,21 @@ else
     echo -e "${purple}https://thetvdb.com/search?query=""$key1""%20""$key2""${white}"
   fi
   read -rp "$(echo -e Gebe nun die "${purple}"TheTVDB ID"${white}" ein)  " thetvdb
-  format=$(curl -sL https://www.thetvdb.com/dereferrer/series/"$thetvdb" | grep -i "genres/\<anime\>" | sed 's/.*anime">\|<\/a>.*//g')
-  if [ "${format,,}" == "anime" ]; then
-    printf 'Es handelt sich um den %b %b\n' "$format" "$(curl -sL https://www.thetvdb.com/dereferrer/series/"""$thetvdb""" | grep -i -A1 "deu" | grep "data-title" | sed 's/.*="\|"//g' | sed "s/&rsquo;/'/g")"
-    read -rp "Ist dies Korrekt? (Y/n)" wrongformat
-    if [ "${wrongformat,,}" == "n" ]; then
-      if [ -z "$key2" ]; then
-        sed -i "47i\ \ elif [[ \"\${v,,}\" == *\"${key1,,}\"* ]]; then \# ""$key1""" -i "$rename"
-        sed -i "48i\ \ \ \ filebot -rename \"\$v\" --db TheTVDB -non-strict --lang German --format \"/mnt/Medien/Serien/{n} ({y})/Season {s}/{n} - {s00e00} - {t}\" --q $thetvdb >> \"\${log[@]}\" \# ""$key1""" -i "$rename"
-      else
-        sed -i "47i\ \ elif [[ \"\${v,,}\" == *\"${key1,,}\"*\"${key2,,}\"* ]]; then \# ""$key1"" ""$key2""" -i "$rename"
-        sed -i "48i\ \ \ \ filebot -rename \"\$v\" --db TheTVDB -non-strict --lang German --format \"/mnt/Medien/Serien/{n} ({y})/Season {s}/{n} - {s00e00} - {t}\" --q $thetvdb >> \"\${log[@]}\" \# ""$key1"" ""$key2""" -i "$rename"
-      fi
-    else
-      if [ -z "$key2" ]; then
-        sed -i "47i\ \ elif [[ \"\${v,,}\" == *\"${key1,,}\"* ]]; then \# ""$key1""" -i "$rename"
-        sed -i "48i\ \ \ \ filebot -rename \"\$v\" --db TheTVDB -non-strict --lang German --format \"/mnt/Medien/Animes/{n} ({y})/Season {s}/{n} - {s00e00} - {t}\" --q $thetvdb >> \"\${log[@]}\" \# ""$key1""" -i "$rename"
-      else
-        sed -i "47i\ \ elif [[ \"\${v,,}\" == *\"${key1,,}\"*\"${key2,,}\"* ]]; then \# ""$key1"" ""$key2""" -i "$rename"
-        sed -i "48i\ \ \ \ filebot -rename \"\$v\" --db TheTVDB -non-strict --lang German --format \"/mnt/Medien/Animes/{n} ({y})/Season {s}/{n} - {s00e00} - {t}\" --q $thetvdb >> \"\${log[@]}\" \# ""$key1"" ""$key2""" -i "$rename"
-      fi
-    fi
-  elif [ -z "$format" ]; then
-    printf 'Es handelt sich um die Serie %b\n' "$(curl -sL https://www.thetvdb.com/dereferrer/series/"""$thetvdb""" | grep -i -A1 "deu" | grep "data-title" | sed 's/.*="\|"//g' | sed "s/&rsquo;/'/g")"
-    read -rp "Ist dies Korrekt? (Y/n)" wrongformat
-    if [ "${wrongformat,,}" == "n" ]; then
-      if [ -z "$key2" ]; then
-        sed -i "47i\ \ elif [[ \"\${v,,}\" == *\"${key1,,}\"* ]]; then \# ""$key1""" -i "$rename"
-        sed -i "48i\ \ \ \ filebot -rename \"\$v\" --db TheTVDB -non-strict --lang German --format \"/mnt/Medien/Animes/{n} ({y})/Season {s}/{n} - {s00e00} - {t}\" --q $thetvdb >> \"\${log[@]}\" \# ""$key1""" -i "$rename"
-      else
-        sed -i "47i\ \ elif [[ \"\${v,,}\" == *\"${key1,,}\"*\"${key2,,}\"* ]]; then \# ""$key1"" ""$key2""" -i "$rename"
-        sed -i "48i\ \ \ \ filebot -rename \"\$v\" --db TheTVDB -non-strict --lang German --format \"/mnt/Medien/Animes/{n} ({y})/Season {s}/{n} - {s00e00} - {t}\" --q $thetvdb >> \"\${log[@]}\" \# ""$key1"" ""$key2""" -i "$rename"
-      fi
-    else
-      if [ -z "$key2" ]; then
-        sed -i "47i\ \ elif [[ \"\${v,,}\" == *\"${key1,,}\"* ]]; then \# ""$key1""" -i "$rename"
-        sed -i "48i\ \ \ \ filebot -rename \"\$v\" --db TheTVDB -non-strict --lang German --format \"/mnt/Medien/Serien/{n} ({y})/Season {s}/{n} - {s00e00} - {t}\" --q $thetvdb >> \"\${log[@]}\" \# ""$key1""" -i "$rename"
-      else
-        sed -i "47i\ \ elif [[ \"\${v,,}\" == *\"${key1,,}\"*\"${key2,,}\"* ]]; then \# ""$key1"" ""$key2""" -i "$rename"
-        sed -i "48i\ \ \ \ filebot -rename \"\$v\" --db TheTVDB -non-strict --lang German --format \"/mnt/Medien/Serien/{n} ({y})/Season {s}/{n} - {s00e00} - {t}\" --q $thetvdb >> \"\${log[@]}\" \# ""$key1"" ""$key2""" -i "$rename"
-      fi
-    fi
+  format=$(format_search)
+  typ=$(if [[ $format == "den Anime:" ]]; then echo "Animes"; else echo "Serien"; fi)
+  echo "Es handelt sich um $format $(curl_name)"
+  read -rp "Ist dies Korrekt? (Y/n)" wrongformat
+  if [ "${wrongformat,,}" == "n" ]; then
+    echo "Leider konnte deine Anfrage nicht automatisch abgearbeitet werden. Du kannst aber immernoch manuell einen Eintrag hinzufügen"
+    exit
+  else
+    {
+      curl_name
+      echo "$key1"
+      echo "$key2"
+      echo "$typ"
+      echo "$thetvdb"
+      echo ""
+    } >>$rename
   fi
 fi

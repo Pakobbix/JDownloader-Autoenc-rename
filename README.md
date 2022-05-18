@@ -1,3 +1,7 @@
+# Work in Progress!!
+
+Dies ist eine Überarbeitung der Skripte. Benutzung auf eigene Gefahr! Tests stehen noch aus.
+
 # JDownloader-Autoenc-rename
 
 Linux Skripte zum automatischen encode zu HEVC und Spezieller Audio Codecs (eac3 & dts) zu AC3 und umbenennen via FileBot.
@@ -17,6 +21,12 @@ Ihr benötigt dafür einige Tools. Dazu gehören:
  - Einen Ordner für das encoden (/mnt/Medien/encode/ als default in den Skripten)
  - Bash in der Version 4 oder höher ( bash --version also Kommando im terminal eingeben)
  - Ordner für das einsortieren (Filme, Serien, Animes /mnt/Medien/* als Default im Skript)
+
+# Benachrichtigungen:
+
+Mir fehlte noch eine Möglichkeit, darauf aufmerksam zu werden, falls etwas nicht funktioniert.
+Daher wurden erstmal Discord Nachrichten hinzugefügt. Falls die Encodierung oder das Umbenennen Fehlschlägt, 
+sendet das jeweilige Skript eine Nachricht an einen Discord Channel. Die Webhook URL kann bei startencode.sh hinterlegt werden.
 
 # Was machen die Skripte?
 
@@ -68,7 +78,6 @@ für das **rename** Skript
 Allgemein:
 
 - Terminal/Zenity Konfigurationsskript für Leute, die sich nicht auskennen.
+  - Konfigurationsskript muss nun mal endlich fertig werden.
 - **addrename**: wenn rename konfiguriert für Filme abgleich, muss addrename auch angepasst werden. 
-- removerename vereinfachen. Einträge Nummerieren und jeweilige Nummer des Eintrages angeben zum Löschen.
-  - Wenn 3 Einträge vorhanden, und man möchte den 2. löschen einfach 2 eingeben, statt keyword.
 - Allgemeine verbesserung und Fehlerbehebungen. Da ich erst noch lerne, muss noch einiges angepasst werden, damit es auf jedem Linux basierten Gerät funktioniert und nicht nur bei mir.
