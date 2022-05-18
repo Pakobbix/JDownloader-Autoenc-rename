@@ -1,7 +1,3 @@
-# Work in Progress!!
-
-Dies ist eine Überarbeitung der Skripte. Benutzung auf eigene Gefahr! Tests stehen noch aus.
-
 # JDownloader-Autoenc-rename
 
 Linux Skripte zum automatischen encode zu HEVC und Spezieller Audio Codecs (eac3 & dts) zu AC3 und umbenennen via FileBot.
@@ -28,15 +24,16 @@ Mir fehlte noch eine Möglichkeit, darauf aufmerksam zu werden, falls etwas nich
 Daher wurden erstmal Discord Nachrichten hinzugefügt. Falls die Encodierung oder das Umbenennen Fehlschlägt, 
 sendet das jeweilige Skript eine Nachricht an einen Discord Channel. Die Webhook URL kann bei startencode.sh hinterlegt werden.
 
-# Was machen die Skripte?
+# Kleine Info
 
 Ich bin bei weitem kein Profi, und es gibt bestimmt eine MENGE!! Dinge, die man verbessern könnte.
 
 Außerdem: Diese Skripte sind nur zum **Teil universell**. Es kann durchaus zu Problemen kommen.
 Per Default ist Nvidia's NVENC zum encoden angegeben, da ich nur Nvidia Grafikkarten habe.
 
-Die Skripte hatte ich erstellt, um so viel wie möglich zu automatisieren.
-Bei mir liegen diese alle in ~/.local/scripts/.
+Die Skripte hatte ich erstellt, um so viel wie möglich zu automatisieren. Und entweder war alles veraltet, oder nur zum teil automatisch.
+
+# Was machen die Skripte?
 
 JDownloader startet nach dem Entpacken das **startencode.sh** Skript. Diese überprüft, ob bereits ein Skript läuft und wartet dann erstmal.
 
