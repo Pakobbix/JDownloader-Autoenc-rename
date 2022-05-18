@@ -145,7 +145,7 @@ find -L "${entpackt[@]}" -name '*.mkv' -or -name '*.mp4' | while IFS= read -r i;
       log_msg "Wenn Audio Codec eac3 oder dts dann Convertiere Video und Audio Codec zu HEVC ac3"
       if [ "$acodec" = "eac3" ] || [ "$acodec" = "dts" ]; then
         log_msg "${cyan}Film${white} ${purple}""$clear""${white} Encode von ""$vcodec"" & ""$acodec"" zu HEVC 2M & AC3 500k"
-        ff_encode "$hw_accel" "$codec" "$preset_filme" "$bitrate_filme" "ac3 -b:a 500k"
+        ff_encode "$hw_accel" "$codec" "$preset_filme" "$bitrate_filme" "ac3"
       else
         log_msg "${cyan}Film${white} ${purple}""$clear""${white} Encode von ""$vcodec"" zu HEVC 2M"
         ff_encode "$hw_accel" "$codec" "$preset_filme" "$bitrate_filme" "copy"
