@@ -22,6 +22,11 @@ preset_filme=fast
 hw_accel="cuda"
 codec="hevc_nvenc"
 
+# nVidia
+
+#hw_accel="cuda"
+#codec="hevc_nvenc"
+
 # AMD:
 
 #hw_accel="auto"
