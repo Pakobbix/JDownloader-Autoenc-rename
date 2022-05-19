@@ -16,7 +16,7 @@ curl_name() {
   if [[ -z $(curl -sL https://www.thetvdb.com/dereferrer/series/"$thetvdb" | grep -i -A1 "deu" | grep "data-title" | sed 's/.*="\|"//g' | sed "s/&rsquo;/'/g") ]]; then
     curl -sL https://www.thetvdb.com/dereferrer/series/"$thetvdb" | grep -i -A1 "en" | grep "data-title" | sed 's/.*="\|"//g' | sed "s/&rsquo;/'/g" | head -n 1
   else
-    curl -sL https://www.thetvdb.com/dereferrer/series/"$thetvdb" | grep -i -A1 "deu" | grep "data-title" | sed 's/.*="\|"//g' | sed "s/&rsquo;/'/g"
+    curl -sL https://www.thetvdb.com/dereferrer/series/"$thetvdb" | grep -i -A1 "deu" | grep "data-title" | sed 's/.*="\|"//g' | sed "s/&rsquo;/'/g" | head -n 1
   fi
 }
 
