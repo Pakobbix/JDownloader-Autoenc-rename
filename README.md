@@ -9,6 +9,7 @@ Ihr benötigt dafür einige Tools. Dazu gehören:
  - [JDownloader](https://jdownloader.org/jdownloader2) + Archive Extractor + Event Scripter
  - FFmpeg (Falls mit Nvidia genutzt wird, [nutzt diese Anleitung für NVENC encoding](https://docs.nvidia.com/video-technologies/video-codec-sdk/ffmpeg-with-nvidia-gpu/))
  - [Filebot](https://www.filebot.net/#download) (Ich selbst nutze Version 4.8.5)
+ - whiptail Ist bei fast allen Linux Distributionen, sowie auf Synology Geräten vorinstalliert.
 
  - Einen Logfile Ordner (/home/$USER/.local/logs als Default in den Skripten)
  - Einen Skript Ordner /home/$USER/.local/scripts als Default in den Skripten)
@@ -54,6 +55,24 @@ Im JDownloader (falls ihr my.jdownloader.org nutzt) fügt einfach den Codeblock 
 ```
 [{"eventTrigger":"ON_ARCHIVE_EXTRACTED", "enabled":true, "name":"AutoENC", "script":"var script = '/home/hhofmann/.local/scripts/startencode.sh'\n\nvar path = archive.getFolder()\nvar name = archive.getName()\nvar label = archive.getDownloadLinks() && archive.getDownloadLinks()[0].getPackage().getComment() ? archive.getDownloadLinks()[0].getPackage().getComment() : 'N/A'\n\nvar command = [script, path, name, label, 'ARCHIVE_EXTRACTED']\n\nlog(command)\nlog(callSync(command))\n", "eventTriggerSettings":{"isSynchronous":false}, "id":1639245703676}]
 ```
+
+# JD im Docker:
+
+Falls ihr JD2 im Docker laufen habt, ist dies auch kein weiteres Problem. Ihr müsst dann ledeglich den Pfad zu den Skripten in die Volume Paramter hinzufügen.
+hinzuzufügen zum docker pull command:
+
+```
+-v /pfad/der/Skripte:/Docker/interner/pfad
+```
+
+oder falls ihr docker-compose verwendet:
+
+```
+volumes:
+  - /Pfad/zu/den/Skripten:/Container/interner/Pfad/zu/den/skripten
+```
+und dann JD2 im Docker angeben, dass dort die Skripte liegen. Ihr müsst dann natürlich die Pfade für die Ordner & weiteren Skripte in der startencode.sh oder per config.sh an die internen Container Pfade anpassen.
+
 # Was noch zu tun ist:
 
 Für das **startencode** Skript:
