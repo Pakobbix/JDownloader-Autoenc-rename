@@ -76,9 +76,10 @@ while true; do
     whiptail --title "Was möchtest du Konfigurieren?" --menu "WIP. Die Möglichkeiten zum Feinjustieren, werden noch erweitert.\nBei Problemen öffnet ein issue unter: shorturl.at/bvDQ6 (Github link, einfacher abzutippen)" 20 100 9 \
       "1)" "Ordnerpfade" \
       "2)" "Log Farben" \
-      "3)" "Encoding Einstellungen" \
-      "4)" "Encoding Hardware" \
-      "5)" "Beenden" 3>&2 2>&1 1>&3
+      "3)" "Discord WebHook" \
+      "4)" "Encoding Einstellungen" \
+      "5)" "Encoding Hardware" \
+      "6)" "Beenden" 3>&2 2>&1 1>&3
   )
   # Zuordnung Funktionen zu Menüpunkten
   case $Wahl in
@@ -158,6 +159,11 @@ while true; do
     whiptail --msgbox "Work in Progress" 20 78
     ;;
   "3)")
+    # Hier werden die Log Farben angepasst. Muss mir noch überlegen, wie ich die definieren kann.
+    dishook=$(whiptail --title "Konfiguration der Discord WebHook" --yesno "Gebe hier die Vollständige Adresse der Discord Webhook an." 16 100 "$4" 3>&2 2>&1 1>&3 | sed -e "s#/#\\\/#g")
+    sed -i "s/discord=.*/discord=$dishook/g" "$startencode"
+    ;;
+  "4)")
     # Einstellungen für das encoden. (noch in der jdautoenc.sh definiert. Wandern vielleicht bald in das startencode.sh skript)
     while true; do
       jdautoencpfad=$(grep "jdautoenc=" "$startencode" | sed 's/jdautoenc=\|["]//g')
@@ -214,7 +220,7 @@ while true; do
       esac
     done
     ;;
-  "4)")
+  "5)")
     jdautoencpfad=$(grep "jdautoenc=" "$startencode" | sed 's/jdautoenc=\|["]//g')
     # Wir schauen, ob wir kompatible Hardware anzeigen lassen können
     gethw=$(lshw -class display 2>/dev/null | grep vendor)
