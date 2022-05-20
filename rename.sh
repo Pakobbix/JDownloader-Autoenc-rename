@@ -77,7 +77,8 @@ while read -r name; do
     if [[ ${v,,} == *"$keyword1"*"$keyword2"* ]]; then
       log_msg "Bennene $v um in $name Staffel Episode Episodentitel"
       if ! filebot_rename TheTVDB "$format" "$tvdbid"; then
-        log_msg "{$red}Fehler bei der Umbenennung. Probiere es erneut."
+        log_msg "${red}Fehler bei der Umbenennung. Probiere es erneut."
+        sleep 5s
         filebot_rename TheTVDB "$format" "$tvdbid"
       fi
     else
