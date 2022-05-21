@@ -161,7 +161,11 @@ while true; do
   "3)")
     # Hier werden die Log Farben angepasst. Muss mir noch überlegen, wie ich die definieren kann.
     dishook=$(whiptail --title "Konfiguration der Discord WebHook" --inputbox "Gebe hier die Vollständige Adresse der Discord Webhook an." 16 100 "$4" 3>&2 2>&1 1>&3 | sed -e "s#/#\\\/#g")
-    sed -i "s/discord=.*/discord=$dishook/g" "$startencode"
+    if [ -z "$dishook" ]; then
+      break
+    else
+      sed -i "s/discord=.*/discord=$dishook/g" "$startencode"
+    fi
     ;;
   "4)")
     # Einstellungen für das encoden. (noch in der jdautoenc.sh definiert. Wandern vielleicht bald in das startencode.sh skript)
