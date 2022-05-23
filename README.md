@@ -9,21 +9,22 @@ Ihr benötigt dafür einige Tools. Dazu gehören:
  - [JDownloader](https://jdownloader.org/jdownloader2) + Archive Extractor + Event Scripter
  - FFmpeg (Falls mit Nvidia genutzt wird, [nutzt diese Anleitung für NVENC encoding](https://docs.nvidia.com/video-technologies/video-codec-sdk/ffmpeg-with-nvidia-gpu/))
  - [Filebot](https://www.filebot.net/#download) (Ich selbst nutze Version 4.8.5)
- - whiptail Ist bei fast allen Linux Distributionen, sowie auf Synology Geräten vorinstalliert.
-
- - Einen Logfile Ordner (/home/$USER/.local/logs als Default in den Skripten)
+ - Bash in der Version 4 oder höher ( bash --version also Kommando im terminal eingeben)
+ - whiptail (Nur für das Config Skript) Ist bei fast allen Linux Distributionen, sowie auf Synology Geräten vorinstalliert.
  - Einen Skript Ordner /home/$USER/.local/scripts als Default in den Skripten)
- - Einen Ordner für den Download (In den JDownloader Einstellungen)
+ - Einen Ordner für den Downloads (In den JDownloader Einstellungen)
  - Einen Ordner für das Entpacken (/mnt/downloads/entpackt/ als Default in den Skripten)
  - Einen Ordner für das encoden (/mnt/Medien/encode/ als default in den Skripten)
- - Bash in der Version 4 oder höher ( bash --version also Kommando im terminal eingeben)
+
+Optional:
+ - Einen Logfile (Ordner) 
  - Ordner für das einsortieren (Filme, Serien, Animes /mnt/Medien/* als Default im Skript)
 
 # Benachrichtigungen:
 
 Mir fehlte noch eine Möglichkeit, darauf aufmerksam zu werden, falls etwas nicht funktioniert.
 Daher wurden erstmal Discord Nachrichten hinzugefügt. Falls die Encodierung oder das Umbenennen Fehlschlägt, 
-sendet das jeweilige Skript eine Nachricht an einen Discord Channel. Die Webhook URL kann bei startencode.sh hinterlegt werden.
+sendet das jeweilige Skript eine Nachricht an einen Discord Channel. Die Webhook URL kann in der JDAutoConfig hinterlegt werden.
 
 # Kleine Info
 
@@ -36,13 +37,13 @@ Die Skripte hatte ich erstellt, um so viel wie möglich zu automatisieren. Und e
 
 # Was machen die Skripte?
 
-JDownloader startet nach dem Entpacken das **startencode.sh** Skript. Diese überprüft, ob bereits ein Skript läuft und wartet dann erstmal.
+JDownloader startet nach dem Entpacken das **jdautoenc.sh** Skript. Diese überprüft, ob bereits ein Skript läuft und wartet dann erstmal.
 
-Danach startet das **startencode.sh** Skript, das **jdautoenc.sh** Skript, das je nach Länge des Videos, benutzter Video Codec und benutzter Audio Codec entscheidet, wie das Video encoded werden soll. Dann löscht es die Quelldatei (falls FFmpeg erfolgreich war)
+Danach überprüft das Skript die länge der Videos im entpackten Ordner, den verwendeten Video Codec und benutzter Audio Codec uund entscheidet, wie das Video encoded werden soll. Dann löscht es die Quelldatei (falls FFmpeg erfolgreich war)
 
 Sobald alle Dateien, die **jdautoenc.sh** im entpackten ordner gefunden hat encoded sind, startet dieser das **rename.sh** Skript.
 
-Das **rename.sh** Skript überprüft wieder erstmal, ob noch eines der anderen beiden Skripte gestartet wurde, und wartet auf die Beendigung.
+Das **rename.sh** Skript überprüft wieder erstmal, ob noch das jdautoenc.sh gestartet wurde, und wartet auf die Beendigung.
 
 Dann fängt das Skript an, die Dateien im encoded Ordner umzubenennen.
 
@@ -53,7 +54,7 @@ Im JDownloader (falls ihr my.jdownloader.org nutzt) fügt einfach den Codeblock 
 
  
 ```
-[{"eventTrigger":"ON_ARCHIVE_EXTRACTED", "enabled":true, "name":"AutoENC", "script":"var script = '/home/hhofmann/.local/scripts/startencode.sh'\n\nvar path = archive.getFolder()\nvar name = archive.getName()\nvar label = archive.getDownloadLinks() && archive.getDownloadLinks()[0].getPackage().getComment() ? archive.getDownloadLinks()[0].getPackage().getComment() : 'N/A'\n\nvar command = [script, path, name, label, 'ARCHIVE_EXTRACTED']\n\nlog(command)\nlog(callSync(command))\n", "eventTriggerSettings":{"isSynchronous":false}, "id":1639245703676}]
+[{"eventTrigger":"ON_ARCHIVE_EXTRACTED", "enabled":true, "name":"AutoENC", "script":"var script = '/home/hhofmann/.local/scripts/jdautoenc.sh'\n\nvar path = archive.getFolder()\nvar name = archive.getName()\nvar label = archive.getDownloadLinks() && archive.getDownloadLinks()[0].getPackage().getComment() ? archive.getDownloadLinks()[0].getPackage().getComment() : 'N/A'\n\nvar command = [script, path, name, label, 'ARCHIVE_EXTRACTED']\n\nlog(command)\nlog(callSync(command))\n", "eventTriggerSettings":{"isSynchronous":false}, "id":1639245703676}]
 ```
 
 # JD im Docker:
@@ -73,27 +74,20 @@ volumes:
 ```
 und dann JD2 im Docker angeben, dass dort die Skripte liegen. Ihr müsst dann natürlich die Pfade für die Ordner & weiteren Skripte in der startencode.sh oder per config.sh an die internen Container Pfade anpassen.
 
-# Was noch zu tun ist:
+Falls FFmpeg nicht im Docker verfügbar ist, oder nur per Software encodiert werden soll/kann, oder gar nicht encodiert werden soll, könnt/solltest ihr in der JDAutoConfig beim Encodieren=yes auf no ändern.
 
-Für das **startencode** Skript:
-- Filebot format in eine variable in das startencode.sh Skript.
-- Hardware-Beschleunigungs Variable für FFmpeg mit verschiedenen Konfigurationen (Nvenc, AMD_amf, Intel QuickSync oder rein Softtware) in das startencode script
-  - Wenn das geschehen, kann man dies auch automatisieren, und das skript schaut selbstständig nach, was benutzt werden kann.  z.B. per ffmpeg -codecs grep if condition (Müsste noch ausgeklügelt werden, da ich quicksync angezeigt bekomme trotz AMD CPU)
+# Was noch zu tun ist:
 
 für das **jdautoenc** Skript:
 - Übersichtlichere FFmpeg stats im log
   - Wrapper wie ffpb funktionieren leider nicht.
 - Skript anpassen, um vielleicht auch Videos, die nicht in Archiven gepackt sind zu Encoden
-- Encoding als auswahl. Ein paar enthusiasten mögen kein Encoding, ich mach das zwecks Festplatten Platz. 
 
 für das **rename** Skript
 - Verbesserter Film abgleich. (auch per TVDB?)
-  - Abgleich vielleicht in eine txt packen? dadurch muss das addrename nicht ständig angepasst werden bei Skript Änderungen
-  - Im Grunde muss die Rename nur die txt auslesen und nach den passenden keywords/TVDB_ID abgleichen
 
 Allgemein:
-
 - Terminal/Zenity Konfigurationsskript für Leute, die sich nicht auskennen.
   - Konfigurationsskript muss nun mal endlich fertig werden.
 - **addrename**: wenn rename konfiguriert für Filme abgleich, muss addrename auch angepasst werden. 
-- Allgemeine verbesserung und Fehlerbehebungen. Da ich erst noch lerne, muss noch einiges angepasst werden, damit es auf jedem Linux basierten Gerät funktioniert und nicht nur bei mir.
+- Allgemeine verbesserung und Fehlerbehebungen. Da ich erst noch lerne, muss noch einiges angepasst werden, damit es auf jedem Linux basierten Gerät oder per WSL funktioniert und nicht nur bei mir.
