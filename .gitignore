@@ -1,2 +1,3 @@
 # ignoriere die Renamelist damit diese nicht überschrieben wird bei einem Update/pullen
 renamelist
+JDAutoConfig
