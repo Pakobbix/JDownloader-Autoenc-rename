@@ -1,0 +1,70 @@
+Hier stehen nun alle Einstellungen für die jdautoenc:
+
+############################################################################################
+####					Skripte-Ordner:					####
+############################################################################################
+
+startencode=/home/hhofmann/.local/scripts/startencode.sh
+jdautoenc=/home/hhofmann/.local/scripts/jdautoenc.sh
+rename=/home/hhofmann/.local/scripts/rename.sh
+renamelist=/home/hhofmann/.local/scripts/renamelist
+
+############################################################################################
+####					Ordner:						####
+############################################################################################
+
+entpackt=/mnt/downloads/entpackt/
+encodes=/mnt/Medien/encode/
+
+############################################################################################
+####				Medien Verzeichnisse:					####
+############################################################################################
+
+Filme=/mnt/Medien/Filme
+Serien=/mnt/Medien/Serien
+Animes=/mnt/Medien/Animes
+
+############################################################################################
+####					Log-File:					####
+############################################################################################
+
+log=/home/hhofmann/.local/logs/jdautoenc.log
+
+############################################################################################
+####				Discord Benachrichtigung:				####
+############################################################################################
+
+discord=https://discord.com/api/webhooks/
+
+############################################################################################
+####					Encoding:					####
+############################################################################################
+
+Hier bitte nur Yes oder No angeben
+Encodieren=yes
+
+bitrate_anime=1400
+preset_anime=fast
+
+bitrate_serie=1700
+preset_serie=fast
+
+bitrate_filme=2000
+preset_filme=fast
+
+Hier auswählen, ob nVidia, AMD, oder Intel genutzt werden soll
+Encoder=nVidia
+
+############################################################################################
+####					FileBot:					####
+############################################################################################
+
+FilmeDB=TheMovieDB
+SerienDB=TheTVDB
+AnimeDB=TheTVDB
+
+FilmName='{n} ({y})'
+SerienName='{n} ({y})/Season {s}/{n} - {s00e00} - {t}'
+AnimeNames='{n} ({y})/Season {s}/{n} - {s00e00} - {t}'
+
+FileBotLang=German
