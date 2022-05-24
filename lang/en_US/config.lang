@@ -1,0 +1,96 @@
+001 Is the path of the JDAutoConfig correct?
+002 What is the correct path?
+003 Enter here the complete path to the JDAutoConfig
+004 Path was not changed
+005 Path was not changed
+006 The path from 
+007 The new path is
+008 Error while changing the path
+009 The new path:
+010 Select the database to use
+011 Exit
+012 Bitrate settings
+013 Select here the Kbits for
+014 select
+015 Preset settings
+016 Enter here the FFmpeg Preset to use for 
+017 Space to select, Enter to confirm
+018 Fastest, lowest quality
+019 Fast Low quality
+020 Fast acceptable quality
+021 Recommended. Relatively fast, quality according to VMAF tool averages 96-99% of the source media.
+022 Balanced
+023 Somewhat slow. Only smaller file sizes, no relevant quality loss anymore.
+024 Even slower.
+025 Really slow.
+026 Maybe better wait for a remux?
+027 Well, best to switch off encoding, huh?
+028 What do you want to configure
+029 WIP. The possibilities for fine tuning, will be extended.\nIf you have problems, open an issue at: shorturl.at/bvDQ6 (Github link, easier to type)
+030 Folder paths
+031 Log colors
+032 Encoding settings
+033 Encoding Hardware
+034 FileBot Settings
+035 If all scripts are in the same location
+036 the JDAutoConfig was found. Is this the path of all scripts?\n\nBeware! Only the scripts are adapted thereby. the Unpacked and the Encodes folder as well as the path for the log must be set manually!
+037 Which folder path you want to adjust
+038 Please select
+039 Unpacked folder
+040 Encodes folder
+041 Log path
+042 Movies
+043 Series
+044 Anime
+045 Change path setting
+046 New path for
+047 Folder path for the folder where videos extracted by JD2 are located
+048 New path for the folder where finished encoded videos are/should be located
+049 Configuration of the Discord WebHook
+050 Specify here the full address of the Discord WebHook. Currently
+051 Switched on
+052 Switched off
+053 Here you can change the FFmpeg Settings
+054 Select here the settings you want to change
+055 Encode
+056 Bitrate Anime Current
+057 FFmpeg Preset Animes Current
+058 Bitrate Series Current
+059 FFmpeg Preset Series Current
+060 Bitrate Movies Current
+061 FFmpeg Preset Movies Current
+062 Encode on/off
+063 Choose if you want to encode
+064 Graphics Card
+065 Discovered
+066 NOT yet IMPLEMENTED
+067 Which hardware do you want to use
+068 Please select the hardware you want to use. The following hardware seems to be installed
+069 The encoding settings have been changed to nVidia.\nThe Cuda processors with the NVENC encoder are used.
+070 The encoding settings have been changed to AMD.\nThe AMD transistors with the amf encoder are used.
+071 The encoding settings are changed to Intel.\nThe Intel QuickSync chip with qsv encoder is used.
+072 Encoding by software is currently not supported
+073 Change FileBot specific settings
+074 What do you want to change
+075 Movie database currently
+076 Series database currently
+077 Anime database currently
+078 Movie naming scheme currently
+079 Series naming scheme currently
+080 Anime naming scheme currently
+081 Language to be deducted at the moment
+082 Change path setting
+083 New movie naming scheme. For examples and possibilities
+084 New name template for series. For examples and possibilities
+085 New name template for anime. For examples and possibilities
+086 The naming scheme has not been changed
+087 Select language to be used by Filebot
+088 Select language to be used by FileBot
+089 Movies
+090 Series
+091 Anime
+092 Was changed
+093 Could not be changed
+094 Choose script language
+095 Here you can force a language for the scripts. All scripts must be restarted for this. Including this config script.
+096 Change script language
