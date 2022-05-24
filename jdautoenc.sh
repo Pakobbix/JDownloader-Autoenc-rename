@@ -51,13 +51,12 @@ purple='\033[0;35m' # ${purple}
 
 # Überprüfung, ob es bereits eine Gestartete Instanz gibt. Falls ja, warte 1 Minute
 
-if pgrep -f 'jdautoenc.sh' >/dev/null 2>&1; then
-  echo -e "${yellow}$(date +"%d.%m.%y %T")${white} Warte auf das beenden vom vorherigen Auto Encode Skript" >>"${log[@]}"
-fi
-
-while pgrep -f 'jdautoenc.sh' >/dev/null 2>&1; do
-  sleep 1m
+while [ -f /tmp/jdautoenc.lock ]; do
+  log_msg "${red} Rename läufts bereits! Warte auf dessen durchlauf"
+  sleep 5
 done
+echo $$ >/tmp/jdautoenc.lock
+sleep 1
 
 # Funktionen:
 
@@ -71,8 +70,8 @@ discord_msg() {
 
 ff_encode() {
   if [[ ${Encodieren,,} == "yes" ]]; then
-    if ffmpeg -hide_banner -v quiet -stats -nostdin -hwaccel "$1" -hwaccel_output_format "$1" -i "$i" -c:v "$2" -preset "$3" -b:v "$4"K -c:a "$5" -map 0 -c:s copy "${encodes[*]}""${fertig%.*}.mkv" >>"${log[@]}"; then
-      log_msg "${red}Lösche${white} ${purple}""$clear""${white}" >>"${log[@]}"
+    if ffmpeg -hide_banner -v quiet -stats -nostdin -hwaccel "$1" -hwaccel_output_format "$1" -i "$i" -c:v "$2" -preset "$3" -b:v "$4" -c:a "$5" -map 0 -c:s copy "${encodes[*]}""${fertig%.*}.mkv" >>"${log[@]}"; then
+      log_msg "${red}Lösche${white} Quelldatei ${purple}""$clear""${white}" >>"${log[@]}"
       rmerror=$(rm -f "$i" 2>&1) || log_msg "$rmerror"
     else
       discord_msg "Konnte $clear nicht mit $2 umwandeln. $?" &>/dev/null
@@ -181,5 +180,7 @@ done
 
 log_msg "${red}Lösche${white} leere Ordner im Entpackt verzeichnis"
 find "${entpackt[@]}"* -type d -empty -delete >>"${log[@]}" 2>&1 >>"${log[@]}"
+
+rm -f /tmp/jdautoenc.lock
 
 /bin/bash "$rename" "$log" "$config" &
