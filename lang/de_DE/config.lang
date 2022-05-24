@@ -1,0 +1,96 @@
+001 Ist der Pfad der JDAutoConfig richtig?
+002 Wie lautet der Richtige Pfad?
+003 Gebe hier den Vollständigen Pfad zum JDAutoConfig an
+004 Pfad wurde nicht geändert
+005 Der Pfad wurde nicht geändert
+006 Der Pfad vom 
+007 Der neue Pfad lautet
+008 Fehler beim ändern des Pfads
+009 Der neue Pfad:
+010 Wähle die zu nutzende Datenbank aus
+011 Beenden
+012 Bitrate Einstellungen
+013 Wähle hier die Kbits für
+014 auswählen
+015 Preset Einstellungen
+016 Gebe hier das zu nutzende FFmpeg Preset für 
+017 Leertaste zum auswählen, Enter zum bestätigen
+018 Am Schnellsten, geringste Qualität
+019 Schnell Geringe Qualität
+020 Schnell annehmbare Qualität
+021 Empfohlen. Relativ schnell, Qualität laut VMAF Tool im schnitt 96-99% vom Quellmedium
+022 Balanced
+023 Etwas langsam. Nur noch kleinere Dateigrößen, keine relevanten Qualitätseinbußen mehr
+024 Noch langsamer.
+025 Wirklich Langsam.
+026 Vielleicht doch lieber auf ein Remux warten?
+027 Naja, am besten encodieren ausschalten, huh?
+028 Was möchtest du Konfigurieren
+029 WIP. Die Möglichkeiten zum Feinjustieren, werden noch erweitert.\nBei Problemen öffnet ein issue unter: shorturl.at/bvDQ6 (Github link, einfacher abzutippen)
+030 Ordnerpfade
+031 Log Farben
+032 Encoding Einstellungen
+033 Encoding Hardware
+034 FileBot Settings
+035 Befinden sich alle Skripte an der selben stelle
+036 wurde die JDAutoConfig gefunden. Ist dies der Pfad von allen Skripten?\n\nACHTUNG! Nur die Skripte werden dadurch angepasst. der Entpackt und der Encodes Ordner sowie der Pfad für das Log müssen manuell gesetzt werden!
+037 Welchen Ordnerpfad möchtest du Anpassen
+038 Bitte Auswahl treffen
+039 Entpackt Ordner
+040 Encodes Ordner
+041 Log Pfad
+042 Filme
+043 Serien
+044 Animes
+045 Pfad Einstellung ändern
+046 Neuer Pfad für
+047 Ordnerpfad für den Ordner in dem vom JD2 entpackte Videos liegen
+048 Neuer Pfad für das Verzeichnis, in dem die Fertig encodierten Videos sind/sollen
+049 Konfiguration der Discord WebHook
+050 Gebe hier die Vollständige Adresse der Discord Webhook an. Momentan
+051 Eingeschaltet
+052 Ausgeschaltet
+053 Hier kannst du die FFmpeg Settings ändern
+054 Wähle hier die zu ändernden Einstellungen
+055 Encodieren
+056 Bitrate Anime Aktuell
+057 FFmpeg Preset Animes Aktuell
+058 Bitrate Serien Aktuell
+059 FFmpeg Preset Serien Aktuell
+060 Bitrate Filme Aktuell
+061 FFmpeg Preset Filme Aktuell
+062 Encodieren ein/ausschalten
+063 Wähle ob du Encodieren möchtest
+064 Grafikkarte
+065 Entdeckt
+066 noch NICHT IMPLEMENTIERT
+067 Welche Hardware möchtest du verwenden
+068 Bitte wähle die zu nutzende Hardware. Folgende Hardware scheint installiert zu sein
+069 Die Encoding Einstellungen wurden zu nVidia geändert.\nEs werden die Cuda Prozessoren mit dem NVENC encoder genutzt
+070 Die Encoding Einstellungen wurden zu AMD geändert.\nEs werden mit der AMD-Transistoren mit dem amf encoder genutzt
+071 Die Encoding Einstellungen wurden zu Intel geändert.\nEs wird der Intel QuickSync Chip mit qsv encoder genutzt
+072 Das Encoding per Software wird zurzeit nicht unterstützt
+073 Ändere FileBot Spezifische Einstellungen
+074 Was möchtest du verändern
+075 Film Datenbank zurzeit
+076 Serien Datenbank zurzeit
+077 Anime Datenbank zurzeit
+078 Film Namensschema zurzeit
+079 Serien Namensschema zurzeit
+080 Anime Namensschema zurzeit
+081 Abzugleichende Sprache zurzeit
+082 Pfad Einstellung ändern
+083 Neue Namensvorlage für Filme. Für Beispiele und Möglichkeiten
+084 Neue Namensvorlage für Serien. Für Beispiele und Möglichkeiten
+085 Neue Namensvorlage für Animes. Für Beispiele und Möglichkeiten
+086 Das Namenschema wurde nicht verändert
+087 Filebot zu nutzende Sprache auswählen
+088 Wähle die von FileBot zu nutzende Sprache aus
+089 Filme
+090 Serien
+091 Animes
+092 wurde geändert
+093 Konnte nicht geändert werden
+094 Wähle Skript Sprache
+095 Hier kannst du eine Sprache für die Skripte erzwingen. Alle Skripte müssen dafür neu gestartet werden. Inklusive diesem Config Skript.
+096 Ändere Skript Sprache
