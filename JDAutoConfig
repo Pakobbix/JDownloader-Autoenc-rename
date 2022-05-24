@@ -1,27 +1,35 @@
 Hier stehen nun alle Einstellungen für die jdautoenc:
 
+
 ############################################################################################
-####					Skripte-Ordner:					####
+####					Script-Settings:				####
 ############################################################################################
 
-startencode=/home/hhofmann/.local/scripts/startencode.sh
+language=de_DE
+language_folder=/home/hhofmann/.local/scripts/lang
+
+
+############################################################################################
+####					Scripts-Folder:					####
+############################################################################################
+
 jdautoenc=/home/hhofmann/.local/scripts/jdautoenc.sh
 rename=/home/hhofmann/.local/scripts/rename.sh
 renamelist=/home/hhofmann/.local/scripts/renamelist
 
 ############################################################################################
-####					Ordner:						####
+####					Folders:					####
 ############################################################################################
 
-entpackt=/mnt/downloads/entpackt/
-encodes=/mnt/Medien/encode/
+extracted=/mnt/downloads/entpackt
+encodes=/mnt/Medien/encode
 
 ############################################################################################
-####				Medien Verzeichnisse:					####
+####				Media Directories:					####
 ############################################################################################
 
-Filme=/mnt/Medien/Filme
-Serien=/mnt/Medien/Serien
+Movies=/mnt/Medien/Filme
+TVShows=/mnt/Medien/Serien
 Animes=/mnt/Medien/Animes
 
 ############################################################################################
@@ -31,40 +39,40 @@ Animes=/mnt/Medien/Animes
 log=/home/hhofmann/.local/logs/jdautoenc.log
 
 ############################################################################################
-####				Discord Benachrichtigung:				####
+####				Discord Notifications:					####
 ############################################################################################
 
-discord=https://discord.com/api/webhooks/
+discord=https://discord.de/domain
 
 ############################################################################################
 ####					Encoding:					####
 ############################################################################################
 
-Hier bitte nur Yes oder No angeben
-Encodieren=yes
+# yes or no
+Encode=yes
 
-bitrate_anime=1400K
+bitrate_anime=1400
 preset_anime=fast
 
-bitrate_serie=1700K
-preset_serie=fast
+bitrate_tvshows=1700
+preset_tvshows=fast
 
-bitrate_filme=2000K
-preset_filme=fast
+bitrate_movies=2000
+preset_movies=fast
 
-Hier auswählen, ob nVidia, AMD, oder Intel genutzt werden soll
-Encoder=nVidia
+Choose nVidia, AMD or Intel
+Encoder=nvidia
 
 ############################################################################################
 ####					FileBot:					####
 ############################################################################################
 
-FilmeDB=TheMovieDB
-SerienDB=TheTVDB
+MovieDB=TheMovieDB
+TVShowDB=TheTVDB
 AnimeDB=TheTVDB
 
-FilmName={n} {y}
-SerienName={n} {y}/Season {s}/{n} - {s00e00} - {t}
-AnimeNames={n} {y}/Season {s}/{n} - {s00e00} - {t}
+MovieName={n} {y}
+TVShowName={n} {y)/Season {s}/{n} - {s00e00} - {t}
+AnimeName={n} {year}/Season {s}/{n} - {s00e00} - {t}
 
 FileBotLang=German
