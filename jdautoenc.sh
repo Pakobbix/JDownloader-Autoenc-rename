@@ -70,7 +70,7 @@ discord_msg() {
 ff_encode() {
   if [[ ${Encodieren,,} == "yes" ]]; then
     if ffmpeg -hide_banner -v quiet -stats -nostdin -hwaccel "$1" -hwaccel_output_format "$1" -i "$i" -c:v "$2" -preset "$3" -b:v "$4"K -c:a "$5" -map 0 -c:s copy "${encodes[*]}""${fertig%.*}.mkv" >>"${log[@]}" 2>&1; then
-      log_msg "${red}Lösche${white} ${purple}""$clear""${white}"
+      log_msg "${red}Lösche${white} Quelldatei${purple}""$clear""${white}"
       rmerror=$(rm -f "$i" 2>&1) || log_msg "$rmerror"
     else
       discord_msg "Konnte $clear nicht mit $2 umwandeln. $?" &>/dev/null
