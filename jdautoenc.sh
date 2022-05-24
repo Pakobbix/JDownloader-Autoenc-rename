@@ -49,8 +49,7 @@ lblue='\033[1;34m'  # ${lblue}
 cyan='\033[0;36m'   # ${cyan}
 purple='\033[0;35m' # ${purple}
 
-# Überprüfung, ob es bereits eine Gestartete Instanz gibt. Falls ja, warte 1 Minute
-
+# Erstelle lock Datei, Warte 5 Sekunden und überprüfe nochmals
 while [ -f /tmp/jdautoenc.lock ]; do
   log_msg "${red} Rename läufts bereits! Warte auf dessen durchlauf"
   sleep 5
@@ -70,8 +69,8 @@ discord_msg() {
 
 ff_encode() {
   if [[ ${Encodieren,,} == "yes" ]]; then
-    if ffmpeg -hide_banner -v quiet -stats -nostdin -hwaccel "$1" -hwaccel_output_format "$1" -i "$i" -c:v "$2" -preset "$3" -b:v "$4" -c:a "$5" -map 0 -c:s copy "${encodes[*]}""${fertig%.*}.mkv" >>"${log[@]}"; then
-      log_msg "${red}Lösche${white} Quelldatei ${purple}""$clear""${white}" >>"${log[@]}"
+    if ffmpeg -hide_banner -v quiet -stats -nostdin -hwaccel "$1" -hwaccel_output_format "$1" -i "$i" -c:v "$2" -preset "$3" -b:v "$4"K -c:a "$5" -map 0 -c:s copy "${encodes[*]}""${fertig%.*}.mkv" >>"${log[@]}" 2>&1; then
+      log_msg "${red}Lösche${white} ${purple}""$clear""${white}"
       rmerror=$(rm -f "$i" 2>&1) || log_msg "$rmerror"
     else
       discord_msg "Konnte $clear nicht mit $2 umwandeln. $?" &>/dev/null
@@ -97,7 +96,7 @@ find -L "${entpackt[@]}" -name '*.mkv' -or -name '*.mp4' | while IFS= read -r i;
 
   ################################################ Anime Sektion ################################################
 
-  ## Falls das Video weniger als 1560 Sekunden beträgt, Kategoriere das Video Als Anime ein
+  ## Falls die $duration weniger als 1560 Sekunden beträgt, Kategoriere das Video Als Anime ein
   if [ -z "$duration" ] || [ "$duration" -lt "1560" ]; then
     log_msg "${purple}""$clear""${white} ist ein ${blue}Anime${white}. Überprüfe nun den Video Codec"
     ## Überprüfe in welchen Codec das Video vorliegt
@@ -123,9 +122,7 @@ find -L "${entpackt[@]}" -name '*.mkv' -or -name '*.mp4' | while IFS= read -r i;
         mv "$i" "${encodes[@]}"
       fi
     fi
-
     ################################################ Serien Sektion ################################################
-
   elif [ "$duration" -gt "1561" ] && [ "$duration" -lt "4000" ]; then
     log_msg "%s""$fertig"" eine ${lblue}Serie${white}. Überprüfe nun den Video Codec"
     vcodec=$(ffprobe -hide_banner -loglevel error -select_streams v:0 -show_entries stream=codec_name -of default=nw=1:nk=1 "$i")
@@ -151,7 +148,6 @@ find -L "${entpackt[@]}" -name '*.mkv' -or -name '*.mp4' | while IFS= read -r i;
     fi
 
     ################################################ Filme Sektion ################################################
-
   elif [ "$duration" -gt "4001" ]; then
     log_msg " Video ist ein ${cyan}Film${white}, überprüfe nun den Video Codec"
     vcodec=$(ffprobe -hide_banner -loglevel error -select_streams v:0 -show_entries stream=codec_name -of default=nw=1:nk=1 "$i")
