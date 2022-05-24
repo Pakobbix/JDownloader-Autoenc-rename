@@ -43,13 +43,13 @@ discord=https://discord.com/api/webhooks/
 Hier bitte nur Yes oder No angeben
 Encodieren=yes
 
-bitrate_anime=1400
+bitrate_anime=1400K
 preset_anime=fast
 
-bitrate_serie=1700
+bitrate_serie=1700K
 preset_serie=fast
 
-bitrate_filme=2000
+bitrate_filme=2000K
 preset_filme=fast
 
 Hier auswählen, ob nVidia, AMD, oder Intel genutzt werden soll
@@ -63,8 +63,8 @@ FilmeDB=TheMovieDB
 SerienDB=TheTVDB
 AnimeDB=TheTVDB
 
-FilmName='{n} ({y})'
-SerienName='{n} ({y})/Season {s}/{n} - {s00e00} - {t}'
-AnimeNames='{n} ({y})/Season {s}/{n} - {s00e00} - {t}'
+FilmName={n} {y}
+SerienName={n} {y}/Season {s}/{n} - {s00e00} - {t}
+AnimeNames={n} {y}/Season {s}/{n} - {s00e00} - {t}
 
 FileBotLang=German
