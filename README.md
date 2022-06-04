@@ -1,93 +1,102 @@
 # JDownloader-Autoenc-rename
 
-Linux Skripte zum automatischen encode zu HEVC und Spezieller Audio Codecs (eac3 & dts) zu AC3 und umbenennen via FileBot.
+Linux scripts to automatically encode to HEVC and special audio codecs (eac3 & dts) to AC3 and rename via FileBot.
 
-# Voraussetzungen
+# Requirements
 
-Ihr benötigt dafür einige Tools. Dazu gehören:
+I try to use as few external programs as possible, so that everyone can use them regardless of hardware. But there are still some tools you'll need: 
 
  - [JDownloader](https://jdownloader.org/jdownloader2) + Archive Extractor + Event Scripter
- - FFmpeg (Falls mit Nvidia genutzt wird, [nutzt diese Anleitung für NVENC encoding](https://docs.nvidia.com/video-technologies/video-codec-sdk/ffmpeg-with-nvidia-gpu/))
- - [Filebot](https://www.filebot.net/#download) (Ich selbst nutze Version 4.8.5)
- - Bash in der Version 4 oder höher ( bash --version also Kommando im terminal eingeben)
- - whiptail (Nur für das Config Skript) Ist bei fast allen Linux Distributionen, sowie auf Synology Geräten vorinstalliert.
- - Einen Skript Ordner /home/$USER/.local/scripts als Default in den Skripten)
- - Einen Ordner für den Downloads (In den JDownloader Einstellungen)
- - Einen Ordner für das Entpacken (/mnt/downloads/entpackt/ als Default in den Skripten)
- - Einen Ordner für das encoden (/mnt/Medien/encode/ als default in den Skripten)
+   - JDownloader obious. Archive Extractor + Event Scripter so the script can be startet if archive is successfully unpacked.
+ - FFmpeg (If used with Nvidia, [use this guide for NVENC encoding](https://docs.nvidia.com/video-technologies/video-codec-sdk/ffmpeg-with-nvidia-gpu/))
+   - For encoding. Also used for checking codecs and duration (via ffprobe command).
+ - [Filebot](https://www.filebot.net/#download) (I use version 4.8.5 myself)
+   - For renaming. Best match rate so unrivaled if you ask me.
+ - Bash version 4 or higher ( bash --version so enter command in terminal)
+   - Some commands need bash v4 like for converting to lower/uppercase. 
+ - whiptail (Only for the config script) Is preinstalled on almost all Linux distributions, as well as on Synology devices.
+   - i choose whiptail for the config script, because it's more available than dialogue and i like the style.
+ - A script folder /home/$USER/.local/scripts as default in the scripts)
+ - A folder for downloads (in the JDownloader settings)
+ - A folder for unpacking (/mnt/downloads/entpack/ as default in the scripts)
+ - A folder for encoding (/mnt/media/encode/ as default in the scripts)
 
 Optional:
- - Einen Logfile (Ordner) 
- - Ordner für das einsortieren (Filme, Serien, Animes /mnt/Medien/* als Default im Skript)
+ - A logfile (folder) 
+ - Folder for sorting (movies, series, anime /mnt/media/* as default in the scripts).
 
-# Benachrichtigungen:
+# Notifications:
 
-Mir fehlte noch eine Möglichkeit, darauf aufmerksam zu werden, falls etwas nicht funktioniert.
-Daher wurden erstmal Discord Nachrichten hinzugefügt. Falls die Encodierung oder das Umbenennen Fehlschlägt, 
-sendet das jeweilige Skript eine Nachricht an einen Discord Channel. Die Webhook URL kann in der JDAutoConfig hinterlegt werden.
+You can setup Discord and/or Nextcloud Talk Notifications if:
+ - File already exists (encoding error)
+ - Duration of encoded video doesn't match sourcefile (encoding error)
+ - FileBot couldn't rename files 3 times in a row
 
-# Kleine Info
+ # Known Bugs:
 
-Ich bin bei weitem kein Profi, und es gibt bestimmt eine MENGE!! Dinge, die man verbessern könnte.
+ - FileBot can't rename files sometimes, even if it restarts the whole process 2 times in a row. Need to manually start jdautoenc.sh again, works first time.. always. Dunno (detects the right anime/series/movie but couldn't move them, or access them. Working on it)
 
-Außerdem: Diese Skripte sind nur zum **Teil universell**. Es kann durchaus zu Problemen kommen.
-Per Default ist Nvidia's NVENC zum encoden angegeben, da ich nur Nvidia Grafikkarten habe.
+# Little info
 
-Die Skripte hatte ich erstellt, um so viel wie möglich zu automatisieren. Und entweder war alles veraltet, oder nur zum teil automatisch.
+I am far from being a professional, and there are definitely a LOT!!! Things that could be improved.
 
-# Was machen die Skripte?
+Also: these scripts are only **part universal**. There may well be some problems.
+By default, Nvidia's NVENC is specified for encoding, since I only have Nvidia graphics cards.
 
-JDownloader startet nach dem Entpacken das **jdautoenc.sh** Skript. Diese überprüft, ob bereits ein Skript läuft und wartet dann erstmal.
+I had created the scripts to automate as much as possible. And either everything was out of date, or only partially automated.
 
-Danach überprüft das Skript die länge der Videos im entpackten Ordner, den verwendeten Video Codec und benutzter Audio Codec uund entscheidet, wie das Video encoded werden soll. Dann löscht es die Quelldatei (falls FFmpeg erfolgreich war)
+# What do the scripts do?
 
-Sobald alle Dateien, die **jdautoenc.sh** im entpackten ordner gefunden hat encoded sind, startet dieser das **rename.sh** Skript.
+JDownloader starts the **jdautoenc.sh** script after unpacking. This checks if a script is already running and then waits.
 
-Das **rename.sh** Skript überprüft wieder erstmal, ob noch das jdautoenc.sh gestartet wurde, und wartet auf die Beendigung.
+After that the script checks the length of the videos in the unpacked folder, the used video codec and audio codec and decides how to encode the video. Then it deletes the source file (if FFmpeg was successful and the encoded video duration match the sourcefile duration).
 
-Dann fängt das Skript an, die Dateien im encoded Ordner umzubenennen.
+Once all files found by **jdautoenc.sh** in the unpacked folder are encoded, it starts the **rename.sh** script.
+
+The **rename.sh** script again first checks if the jdautoenc.sh was still started and waits for the completion.
+
+Then the script starts to rename the files in the encoded folder.
 
 
-Und da ich so eine faule Sau bin, gibts noch ein **addrename** und **removerename** Skript. Durch diese beiden ist es relativ einfach neue rename Optionen hinzuzufügen oder alte zu löschen.
+And because I'm such a lazy pig, there is also a **addrename** and **removerename** script. With these two it is relatively easy to add new rename options or delete old ones.
 
-Im JDownloader (falls ihr my.jdownloader.org nutzt) fügt einfach den Codeblock in das Scripts Feld und ändert den Pfad (/home/hhofmann/.local/scripts/) eurem Pfad entsprechend an:
+In JDownloader (if you use my.jdownloader.org) just add the codeblock in the scripts field and change the path (/home/hhofmann/.local/scripts/) to your path:
 
  
 ```
-[{"eventTrigger":"ON_ARCHIVE_EXTRACTED", "enabled":true, "name":"AutoENC", "script":"var script = '/home/hhofmann/.local/scripts/jdautoenc.sh'\n\nvar path = archive.getFolder()\nvar name = archive.getName()\nvar label = archive.getDownloadLinks() && archive.getDownloadLinks()[0].getPackage().getComment() ? archive.getDownloadLinks()[0].getPackage().getComment() : 'N/A'\n\nvar command = [script, path, name, label, 'ARCHIVE_EXTRACTED']\n\nlog(command)\nlog(callSync(command))\n", "eventTriggerSettings":{"isSynchronous":false}, "id":1639245703676}]
+[{"eventTrigger": "ON_ARCHIVE_EXTRACTED", "enabled":true, "name": "AutoENC", "script": "var script = '/home/hhofmann/.local/scripts/jdautoenc.sh'\n\nvar path = archive.getFolder()\nvar name = archive.getName()\nvar label = archive.getDownloadLinks() && archive.getDownloadLinks()[0]. getPackage().getComment() ? archive.getDownloadLinks()[0].getPackage(). getComment() : 'N/A'\n\nvar command = [script, path, name, label, 'ARCHIVE_EXTRACTED']\n\nlog(command)\nlog(callSync(command))\n", "eventTriggerSettings":{"isSynchronous":false}, "id":1639245703676}]
 ```
 
-# JD im Docker:
+# JD in Docker:
 
-Falls ihr JD2 im Docker laufen habt, ist dies auch kein weiteres Problem. Ihr müsst dann ledeglich den Pfad zu den Skripten in die Volume Paramter hinzufügen.
-hinzuzufügen zum docker pull command:
+If you have JD2 running in Docker, this shouldn't be a problem, as long as ffmpeg is included. You just need to add the path to the scripts in the volume parameters.
+add to the docker pull command:
 
 ```
--v /pfad/der/Skripte:/Docker/interner/pfad
+-v /path/of/scripts:/docker/internal/path
 ```
 
-oder falls ihr docker-compose verwendet:
+or if you use docker-compose:
 
 ```
 volumes:
-  - /Pfad/zu/den/Skripten:/Container/interner/Pfad/zu/den/skripten
+  - /path/to/the/scripts:/container/internal/path/to/the/scripts
 ```
-und dann JD2 im Docker angeben, dass dort die Skripte liegen. Ihr müsst dann natürlich die Pfade für die Ordner & weiteren Skripte in der startencode.sh oder per config.sh an die internen Container Pfade anpassen.
+and then tell JD2 in Docker that's where the scripts are. You will of course then need to adjust the paths for the folders & other scripts in startcode.sh or via config.sh to match the internal container paths.
 
-Falls FFmpeg nicht im Docker verfügbar ist, oder nur per Software encodiert werden soll/kann, oder gar nicht encodiert werden soll, könnt/solltest ihr in der JDAutoConfig beim Encodieren=yes auf no ändern.
+You can disable encoding via JDAutoConfig or config.sh script as long as software encoding isn't available or ffmpeg can't be installed.
 
-# Was noch zu tun ist:
+# What else to do:
 
-für das **jdautoenc** Skript:
-- Übersichtlichere FFmpeg stats im log
-  - Wrapper wie ffpb funktionieren leider nicht.
-- Skript anpassen, um vielleicht auch Videos, die nicht in Archiven gepackt sind zu Encoden
+For the **jdautoenc** script:
+- Clearer FFmpeg stats in the log.
+  - Wrappers like ffpb don't work unfortunately.
+- Adapt script to maybe encode videos that are not packed in archives as well
 
-für das **rename** Skript
-- Verbesserter Film abgleich. (auch per TVDB?)
+for the **rename** script
+- Improved movie matching.
 
-Allgemein:
-- Terminal/Zenity Konfigurationsskript für Leute, die sich nicht auskennen.
-  - Konfigurationsskript muss nun mal endlich fertig werden.
-- **addrename**: wenn rename konfiguriert für Filme abgleich, muss addrename auch angepasst werden. 
-- Allgemeine verbesserung und Fehlerbehebungen. Da ich erst noch lerne, muss noch einiges angepasst werden, damit es auf jedem Linux basierten Gerät oder per WSL funktioniert und nicht nur bei mir.
+General:
+- more stable workflow
+- fixing bugs
+- add more language files
