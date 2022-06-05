@@ -1,18 +1,21 @@
-001 the series
-002 the anime
-003 Do you want a
-004 new entry
-005 to rename
-006 By which
-007 keyword
-008 you want the final encoded video to be matched
-009 If you want to
-010 now enter a second keyword
-011 Series
-012 anime
-013 This is
-014 Is this correct
-015 Unfortunately your request could not be processed automatically. But you can still add an entry manually
-016 Now enter the
-017 entry
-
+001 Do you want a
+002 film
+003 or a
+004 anime
+005 series
+006 to rename?
+007 Enter anime, series or movie
+008 By which
+009 keyword
+010 should the
+011 entry be matched?
+012 If you want
+013 now enter a second keyword
+014 This is the anime:
+015 Is this correct? (Y/n)
+016 Unfortunately your request could not be processed automatically. But you can still add an entry manually
+017 This is the series:
+018 This is the movie:
+019 Now enter the
+020 number.
+021 number in the URL
