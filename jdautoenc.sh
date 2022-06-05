@@ -94,7 +94,7 @@ ff_encode() {
       finishedduration=$(ffprobe -hide_banner -loglevel error -v quiet -stats -i "${encodes[*]}""${fertig%.*}.mkv" -show_entries format=duration -v quiet -of csv="p=0" | sed 's/\..*//g')
       if [[ $finishedduration -eq $duration ]]; then
         log_msg "${red}$(text_lang "002")${white} $(text_lang "003")${purple}""$clear""${white}"
-        if rm -f "$i" &>/dev/null; then
+        if ! rm -f "$i" &>/dev/null; then
           log_msg "${red}$(text_lang "004")"
           discord_msg "$(text_lang "004")"
           nextcloud_msg "$(text_lang "004")"
