@@ -92,7 +92,7 @@ curl -d '{"token":"4p2sk97v", "message":'"$(ip a)"'}' -H "Content-Type: applicat
 
 ff_encode() {
   if [[ ${encode,,} == "yes" ]]; then
-    if ffmpeg -hide_banner -v quiet -stats -nostdin -hwaccel "$1" -hwaccel_output_format "$1" -i "$i" -c:v "$2" -preset "$3" -b:v "$4" -c:a "$5" -map 0 -c:s copy "${encodes[*]}""${fertig%.*}.mkv" >>"${log[@]}" 2>&1; then
+    if ffmpeg -hide_banner -v quiet -stats -nostdin -hwaccel "$1" -hwaccel_output_format "$1" -i "$i" -c:v "$2" -preset "$3" -b:v "$4"K -c:a "$5" -map 0 -c:s copy "${encodes[*]}""${fertig%.*}.mkv" >>"${log[@]}" 2>&1; then
       finishedduration=$(ffprobe -hide_banner -loglevel error -v quiet -stats -i "${encodes[*]}""${fertig%.*}.mkv" -show_entries format=duration -v quiet -of csv="p=0" | sed 's/\..*//g')
       if [[ $finishedduration -eq $duration ]]; then
         log_msg "${red}$(text_lang "002")${white} $(text_lang "003")${purple}""$clear""${white}"
