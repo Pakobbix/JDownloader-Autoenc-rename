@@ -21,8 +21,7 @@ possiblelangfolder=$(find ~ -type f -wholename "*lang/$language/config.lang" 2>/
 
 if ! [ -f "$language_Folder"/"$language"/config.lang ]; then
   real_language_Folder=$(whiptail --title "Could not find language folder" --inputbox "WARNING!! Language folder could not be found. Please type the Path to the language folder or else, the script will try to get the language from Github (could be buggy)\nPossible Path: $possiblelangfolder" 16 100 3>&1 1>&2 2>&3 | sed -e "s#/#\\\/#g")
-  edit_languagefolder=$(echo "$language_Folder" | sed -e "s#/#\\\/#g")
-  sed -i "s/$edit_languagefolder/$real_language_Folder/g" "$JDAutoConfig"
+  sed -i "s/language_folder=.*/language_folder=$real_language_Folder/g" "$JDAutoConfig"
 fi
 
 text_lang() {
