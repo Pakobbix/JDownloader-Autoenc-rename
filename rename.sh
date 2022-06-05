@@ -118,7 +118,7 @@ while read -r name; do
   read -r dbid
   read -r nextentry
 
-  find -L "${encodes[@]}" -name '*.mkv' -or -name '*.mp4' | while IFS= read -r v; do
+  find -L "${encodes[@]}" -name '*.mkv' -or -name '*.mp4' 2>/dev/null | while IFS= read -r v; do
 
     if [[ ${v,,} == *"$keyword1"*"$keyword2"* ]]; then
       log_msg "$(text_lang "005") $(basename "$v" | sed 's/\./ /g;s/AAC\|1080p\|WebDL\|[a-z]26[0-9]\|[hH][eE][Vv][Cc]\|[tT]anuki\| dl \| web \|repack\|wayne\|\|[-]\|[gG]er\|[eE]ng\|[sS]ub//g;s/\[[^][]*\]\|WebDL\|JapDub\|CR\|REPACK\|V2DK\|man\|BluRay\|RSG//g;s/_/ /g;s/\( \)*/\1/g')"
@@ -137,7 +137,7 @@ while read -r name; do
   done
 done <"$renamelist"
 
-find -L "${encodes[@]}" -name '*.mkv' -or -name '*.mp4' | while IFS= read -r v; do
+find -L "${encodes[@]}" -name '*.mkv' -or -name '*.mp4' 2>/dev/null | while IFS= read -r v; do
   duration=$(ffprobe -hide_banner -loglevel error -v quiet -stats -i "$v" -show_entries format=duration -v quiet -of csv="p=0" | sed -e 's/\..*//g')
   if [ "$duration" -gt "4751" ]; then # ignore
     log_msg "${purple}$v${white} $(text_lang "009")"
