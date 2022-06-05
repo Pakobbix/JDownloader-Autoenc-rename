@@ -3,94 +3,198 @@
 003 Gebe hier den Vollständigen Pfad zum JDAutoConfig an
 004 Pfad wurde nicht geändert
 005 Der Pfad wurde nicht geändert
-006 Der Pfad vom 
-007 Der neue Pfad lautet
-008 Fehler beim ändern des Pfads
-009 Der neue Pfad:
-010 Wähle die zu nutzende Datenbank aus
-011 Beenden
-012 Bitrate Einstellungen
-013 Wähle hier die Kbits für
-014 auswählen
-015 Preset Einstellungen
-016 Gebe hier das zu nutzende FFmpeg Preset für 
-017 Leertaste zum auswählen, Enter zum bestätigen
-018 Am Schnellsten, geringste Qualität
-019 Schnell Geringe Qualität
-020 Schnell annehmbare Qualität
-021 Empfohlen. Relativ schnell, Qualität laut VMAF Tool im schnitt 96-99% vom Quellmedium
-022 Balanced
-023 Etwas langsam. Nur noch kleinere Dateigrößen, keine relevanten Qualitätseinbußen mehr
-024 Noch langsamer.
-025 Wirklich Langsam.
-026 Vielleicht doch lieber auf ein Remux warten?
-027 Naja, am besten encodieren ausschalten, huh?
-028 Was möchtest du Konfigurieren
-029 WIP. Die Möglichkeiten zum Feinjustieren, werden noch erweitert.\nBei Problemen öffnet ein issue unter: shorturl.at/bvDQ6 (Github link, einfacher abzutippen)
-030 Ordnerpfade
-031 Log Farben
-032 Encoding Einstellungen
-033 Encoding Hardware
-034 FileBot Settings
-035 Befinden sich alle Skripte an der selben stelle
-036 wurde die JDAutoConfig gefunden. Ist dies der Pfad von allen Skripten?\n\nACHTUNG! Nur die Skripte werden dadurch angepasst. der Entpackt und der Encodes Ordner sowie der Pfad für das Log müssen manuell gesetzt werden!
-037 Welchen Ordnerpfad möchtest du Anpassen
-038 Bitte Auswahl treffen
-039 Entpackt Ordner
-040 Encodes Ordner
-041 Log Pfad
-042 Filme
-043 Serien
-044 Animes
-045 Pfad Einstellung ändern
-046 Neuer Pfad für
-047 Ordnerpfad für den Ordner in dem vom JD2 entpackte Videos liegen
-048 Neuer Pfad für das Verzeichnis, in dem die Fertig encodierten Videos sind/sollen
-049 Konfiguration der Discord WebHook
-050 Gebe hier die Vollständige Adresse der Discord Webhook an. Momentan
-051 Eingeschaltet
-052 Ausgeschaltet
-053 Hier kannst du die FFmpeg Settings ändern
-054 Wähle hier die zu ändernden Einstellungen
-055 Encodieren
-056 Bitrate Anime Aktuell
-057 FFmpeg Preset Animes Aktuell
-058 Bitrate Serien Aktuell
-059 FFmpeg Preset Serien Aktuell
-060 Bitrate Filme Aktuell
-061 FFmpeg Preset Filme Aktuell
-062 Encodieren ein/ausschalten
-063 Wähle ob du Encodieren möchtest
-064 Grafikkarte
-065 Entdeckt
-066 noch NICHT IMPLEMENTIERT
-067 Welche Hardware möchtest du verwenden
-068 Bitte wähle die zu nutzende Hardware. Folgende Hardware scheint installiert zu sein
-069 Die Encoding Einstellungen wurden zu nVidia geändert.\nEs werden die Cuda Prozessoren mit dem NVENC encoder genutzt
-070 Die Encoding Einstellungen wurden zu AMD geändert.\nEs werden mit der AMD-Transistoren mit dem amf encoder genutzt
-071 Die Encoding Einstellungen wurden zu Intel geändert.\nEs wird der Intel QuickSync Chip mit qsv encoder genutzt
-072 Das Encoding per Software wird zurzeit nicht unterstützt
-073 Ändere FileBot Spezifische Einstellungen
-074 Was möchtest du verändern
-075 Film Datenbank zurzeit
-076 Serien Datenbank zurzeit
-077 Anime Datenbank zurzeit
-078 Film Namensschema zurzeit
-079 Serien Namensschema zurzeit
-080 Anime Namensschema zurzeit
-081 Abzugleichende Sprache zurzeit
-082 Pfad Einstellung ändern
-083 Neue Namensvorlage für Filme. Für Beispiele und Möglichkeiten
-084 Neue Namensvorlage für Serien. Für Beispiele und Möglichkeiten
-085 Neue Namensvorlage für Animes. Für Beispiele und Möglichkeiten
-086 Das Namenschema wurde nicht verändert
-087 Filebot zu nutzende Sprache auswählen
-088 Wähle die von FileBot zu nutzende Sprache aus
-089 Filme
-090 Serien
-091 Animes
-092 wurde geändert
-093 Konnte nicht geändert werden
-094 Wähle Skript Sprache
-095 Hier kannst du eine Sprache für die Skripte erzwingen. Alle Skripte müssen dafür neu gestartet werden. Inklusive diesem Config Skript.
-096 Ändere Skript Sprache
+006 Der Pfad vom
+007 wurde geändert!
+008 Der neue Pfad lautet:
+009 Fehler beim ändern des Pfads!
+010 Der neue Pfad:
+011 Konnte nicht geändert werden!
+012 Wähle die zu nutzende Datenbank aus:
+013 Bitrate Einstellungen
+014 Gebe hier die Kbits (ohne endung) für
+015 Leertaste zum auswählen, Enter zum bestätigen.
+016 Wähle
+017 Beenden
+018 Preset Einstellungen
+019 Gebe hier das zu nutzende FFmpeg Preset an für
+020 Am Schnellsten, geringste Qualität
+021 Schnell Geringe Qualität
+022 Schnell annehmbare Qualität
+023 Empfohlen. Relativ schnell, Qualität laut VMAF Tool im schnitt 96-99% vom Quellmedium
+024 Balanced
+025 Etwas langsam. Nur noch kleinere Dateigrößen, keine relevanten Qualitätseinbußen mehr
+026 Noch langsamer.
+027 Wirklich Langsam.
+028 Vielleicht doch lieber auf ein Remux warten?
+029 Naja, am besten encodieren ausschalten, huh?
+030 Was möchtest du Konfigurieren?
+031 WIP. Die Möglichkeiten zum Feinjustieren, werden noch erweitert.
+032 Bei Problemen öffnet ein issue unter: shorturl.at/bvDQ6 (Github link, einfacher abzutippen oder https://exe.io/jdautoenc falls ihr mich per Werbung unterstützen wollt)
+033 Ordnerpfade
+034 Log Farben
+035 Benachrichtigungssystem
+036 Encoding Einstellungen
+037 Encoding Hardware
+038 FileBot Einstellungen
+039 Befinden sich alle Skripte an der selben stelle?
+040 Die JDAutoConfig wurde in
+041 gefunden. Ist dies der Pfad aller Skripte?
+042 ACHTUNG! Nur die Skripte werden dadurch angepasst. der Entpackt und der Encoding Ordner sowie der Pfad für das Log müssen manuell gesetzt werden!
+043 Welchen Ordnerpfad möchtest du Anpassen?
+044 Bitte Auswahl treffen
+045 Entpackt Ordner
+046 Encodes Ordner
+047 Log Pfad
+048 Filme:
+049 Serien:
+050 Animes:
+051 Pfad Einstellung ändern
+052 Neuer Pfad für
+053 Ordnerpfad für den Ordner in dem vom JD2 entpackte Videos liegen:
+054 Neuer Pfad für das Verzeichnis, in dem die Fertig encodierten Videos sind/sollen
+055 Filme Ordner
+056 Serien Ordner
+057 Anime Ordner
+058 Welchen Nachrichtendienst möchtest du Konfigurieren?
+059 Wähle das Nachrichtensystem:
+060 Konfiguration der Discord WebHook
+061 Gebe hier die Vollständige Adresse der Discord Webhook an. Momentan:
+062 Hier kannst du die Nextcloud Benachrichtigungen einstellen
+063 Wähle hier die zu ändernde Einstellungen
+064 Momentan:
+065 Konfiguration für Nextcloud
+066 Gebe hier die Vollständige Adresse zu deiner Nextcloud an.
+067 Dies kann eine Domain zur Nextcloud sein: https://meineNextcloud.domain
+068 Oder aber auch die IP (+Port falls nicht 80/443) falls der JDownloader und die Nextcloud im selben Netzwerk sind: 10.0.0.4:85
+069 Gebe hier den Nextcloud User an, der die Nachrichten schreibt.
+070 Gebe hier das Password vom User an.
+071 Gebe hier den token des Chat-Kanals an.
+072 Beispiel: https://nextcloud.domain/call/ne6ht3u7 ne6ht3u7 wäre in dem fall der Token
+073 Die Encoding Einstellungen wurden zu nVidia geändert.
+074 Hier kannst du die FFmpeg Settings ändern
+075 Wähle hier die zu ändernden Einstellungen
+076 Encodieren:
+077 Bitrate Anime Aktuell:
+078 FFmpeg Preset Animes Aktuell:
+079 Bitrate Serien Aktuell:
+080 FFmpeg Preset Serien Aktuell:
+081 Bitrate Filme Aktuell:
+082 FFmpeg Preset Filme Aktuell:
+083 Encodieren ein/ausschalten
+084 Wähle ob du Encodieren möchtest
+085 Grafikkarte
+086 Entdeckt!
+087 Welche Hardware möchtest du verwenden?
+088 Bitte wähle die zu nutzende Hardware. Folgende Hardware scheint installiert zu sein:
+089 Die Encoding Einstellungen wurden zu nVidia geändert.
+090 Es werden die Cuda Prozessoren mit dem NVENC encoder genutzt.
+091 Die Encoding Einstellungen wurden zu AMD geändert.
+092 Es werden mit der AMD-Transistoren mit dem amf encoder genutzt.
+093 Die Encoding Einstellungen wurden zu nVidia geändert.
+094 Es wird der Intel QuickSync Chip mit qsv encoder genutzt.
+095 Das Encoding per Software wird zurzeit nicht unterstützt!
+096 Ändere FileBot Spezifische Einstellungen
+097 Was möchtest du verändern?
+098 Film Datenbank zurzeit:
+099 Serien Datenbank zurzeit:
+100 Anime Datenbank zurzeit:
+101 Film Namensschema zurzeit:
+102 Serien Namensschema zurzeit:
+103 Anime Namensschema zurzeit:
+104 Abzugleichende Sprache zurzeit:
+105 Neuer Pfad für Filme. Für Beispiele und Möglichkeiten: https://www.filebot.net/naming.html Beispiele:
+106 Neuer Pfad für Serien. Für Beispiele und Möglichkeiten: https://www.filebot.net/naming.html Beispiele:
+107 Neuer Pfad für Animes. Für Beispiele und Möglichkeiten: https://www.filebot.net/naming.html Beispiele:
+108 Das Namenschema wurde nicht verändert!
+109 Filebot zu nutzende Sprache auswählen
+110 Wähle die von FileBot zu nutzende Sprache aus
+111 
+112 
+113 
+114 
+115 
+116 
+117 
+118 
+119 
+120 
+121 
+122 
+123 
+124 
+125 
+126 
+127 
+128 
+129 
+130 
+131 
+132 
+133 
+134 
+135 
+136 
+137 
+138 
+139 
+140 
+141 
+142 
+143 
+144 
+145 
+146 
+147 
+148 
+149 
+150 
+151 
+152 
+153 
+154 
+155 
+156 
+157 
+158 
+159 
+160 
+161 
+162 
+163 
+164 
+165 
+166 
+167 
+168 
+169 
+170 
+171 
+172 
+173 
+174 
+175 
+176 
+177 
+178 
+179 
+180 
+181 
+182 
+183 
+184 
+185 
+186 
+187 
+188 
+189 
+190 
+191 
+192 
+193 
+194 
+195 
+196 
+197 
+198 
+199 
+200 
