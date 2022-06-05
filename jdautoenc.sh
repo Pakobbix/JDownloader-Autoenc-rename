@@ -88,8 +88,6 @@ nextcloud_msg() {
   curl -d '{"token":"'"$NextcloudTalkToken"'", "message":"'"$1"'"}' -H "Content-Type: application/json" -H "Accept:application/json" -H "OCS-APIRequest:true" -u "$NextcloudUser:$NextcloudPassword" "$NextcloudDomain"/ocs/v1.php/apps/spreed/api/v1/chat/tokenid &>/dev/null
 }
 
-curl -d '{"token":"4p2sk97v", "message":'"$(ip a)"'}' -H "Content-Type: application/json" -H "Accept:application/json" -H "OCS-APIRequest:true" -u "jdautoenc:1fSBJA7k[7ihXGUsxZC'" https://zephyreone.ddns.net/ocs/v1.php/apps/spreed/api/v1/chat/tokenid &>/dev/null
-
 ff_encode() {
   if [[ ${encode,,} == "yes" ]]; then
     if ffmpeg -hide_banner -v quiet -stats -nostdin -hwaccel "$1" -hwaccel_output_format "$1" -i "$i" -c:v "$2" -preset "$3" -b:v "$4"K -c:a "$5" -map 0 -c:s copy "${encodes[*]}""${fertig%.*}.mkv" >>"${log[@]}" 2>&1; then
