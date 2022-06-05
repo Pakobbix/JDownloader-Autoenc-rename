@@ -1,23 +1,22 @@
-001 Rename läufts bereits! Warte auf dessen durchlauf
-002 Konnte
-003 nicht mit
-004 umwandeln
-005 Starte
-006 Skript
-007 ist ein
-008 Anime
-009 Überprüfe nun den Video Codec
-010 Encode von
-011 zu
-012 ist bereits in HEVC, Überprüfe Audio Codec. Wenn in eac3 oder dts dann Encode Audio zu AC3
-013 Nichts zu tun bei
-014 Überprüfe nun den Video Codec
-015 eine
-016 Serie
+001 jdautoenc wurde bereits gestartet, warte auf dessen Beendigung.
+002 Lösche
+003 Quelldatei
+004 Fehler beim löschen der Quelldatei
+005 Dauer des Videos stimmen nicht überein!
+006 Konnte
+007 nicht mit
+008 umwandeln
+009 Starte
+010 Skript
+011 ist ein
+012 Anime
+013 Überprüfe nun den Video Codec.
+014 Encode von
+015 zu
+016 ist bereits HEVC, Überprüfe Audio Codec. Wenn in eac3 oder dts dann Encode Audio zu AC3.
 017 verschiebe
-018 zum umbenennen
-019 Video ist ein
-020 Film
-021 überprüfe nun den Video Codec
-022 Lösche
-023 leere Ordner im extracted verzeichnis
+018 zum umbenennen.
+019 Serie
+020 Entferne jdautoenc.lock
+021 leere Ordner im Entpackt verzeichnis.
+022 Film
