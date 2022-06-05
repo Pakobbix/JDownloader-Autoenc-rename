@@ -1,13 +1,11 @@
 Hier stehen nun alle Einstellungen für die jdautoenc:
 
-
 ############################################################################################
 ####					Script-Settings:				####
 ############################################################################################
 
 language=de_DE
 language_folder=/home/hhofmann/.local/scripts/lang
-
 
 ############################################################################################
 ####					Scripts-Folder:					####
@@ -21,15 +19,15 @@ renamelist=/home/hhofmann/.local/scripts/renamelist
 ####					Folders:					####
 ############################################################################################
 
-extracted=/mnt/downloads/entpackt
-encodes=/mnt/Medien/encode
+extracted=/mnt/downloads/entpackt/
+encodes=/mnt/Medien/encode/
 
 ############################################################################################
 ####				Media Directories:					####
 ############################################################################################
 
 Movies=/mnt/Medien/Filme
-TVShows=/mnt/Medien/Serien
+Series=/mnt/Medien/Serien
 Animes=/mnt/Medien/Animes
 
 ############################################################################################
@@ -39,40 +37,45 @@ Animes=/mnt/Medien/Animes
 log=/home/hhofmann/.local/logs/jdautoenc.log
 
 ############################################################################################
-####				Discord Notifications:					####
+####						Notifications:				####
 ############################################################################################
 
-discord=https://discord.de/domain
+discord=https://discord.com/api/webhooks/
+
+NextcloudDomain=https://Nextcloud.domain
+NextcloudUser=jdautoenc
+NextcloudPassword=Password
+NextcloudTalkToken=ChannelTokenID
 
 ############################################################################################
 ####					Encoding:					####
 ############################################################################################
 
-# yes or no
-Encode=yes
+yes or no
+encode=yes
 
 bitrate_anime=1400
 preset_anime=fast
 
-bitrate_tvshows=1700
-preset_tvshows=fast
+bitrate_series=1700
+preset_series=fast
 
-bitrate_movies=2000
-preset_movies=fast
+bitrate_movie=2000
+preset_movie=fast
 
 Choose nVidia, AMD or Intel
-Encoder=nvidia
+Encoder=nVidia
 
 ############################################################################################
 ####					FileBot:					####
 ############################################################################################
 
 MovieDB=TheMovieDB
-TVShowDB=TheTVDB
+SeriesDB=TheTVDB
 AnimeDB=TheTVDB
 
 MovieName={n} {y}
-TVShowName={n} {y)/Season {s}/{n} - {s00e00} - {t}
-AnimeName={n} {year}/Season {s}/{n} - {s00e00} - {t}
+SeriesName={n} {y}/Season {s}/{n} - {s00e00} - {t}
+AnimeName={n} {y}/Season {s}/{n} - {s00e00} - {t}
 
 FileBotLang=German
