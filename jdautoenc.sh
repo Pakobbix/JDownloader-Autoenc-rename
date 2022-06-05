@@ -118,7 +118,7 @@ log_msg "$(text_lang "009") ${green}JDautoenc.sh${white} $(text_lang "010")"
 log_msg "##########################"
 log_msg ""
 
-find -L "${extracted[@]}" -name '*.mkv' -or -name '*.mp4' | while IFS= read -r i; do
+find -L "${extracted[@]}" -name '*.mkv' -or -name '*.mp4' 2>/dev/null | while IFS= read -r i; do
 
   duration=$(ffprobe -hide_banner -loglevel error -v quiet -stats -i "$i" -show_entries format=duration -v quiet -of csv="p=0" | sed 's/\..*//g')
   fertig=$(basename "$i")
@@ -202,6 +202,6 @@ log_msg "$(text_lang "020")"
 rm -f /tmp/jdautoenc.lock
 
 log_msg "${red}$(text_lang "002")${white} $(text_lang "021")"
-find "${extracted[@]}"* -type d -empty -delete >>"${log[@]}" 2>&1 >>"${log[@]}"
+find "${extracted[@]}"* -type d -empty -delete 2>/dev/null >>"${log[@]}"
 
 /bin/bash "$rename" "$log" "$config" &
