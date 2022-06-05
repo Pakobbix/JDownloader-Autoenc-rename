@@ -1,5 +1,6 @@
-001 Wähle den zu löschenden Eintrag aus
+001 Wähle den zu löschenden Eintrag aus:
 002 Beenden
-003 Sicher, dass das der richtige Eintrag zum löschen ist
-004 Ungültige Eingabe
-005 Beispiel Eintrag
+003 Bist du sicher, dass du
+004 löschen
+005 willst?
+006 Ungültige Eingabe.
