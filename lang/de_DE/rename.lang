@@ -1,23 +1,19 @@
-001 Starte
-002 Skript
-003 Warte auf das beenden vom Encoden
-004 Warte 1 Minute vor dem nächsten Versuch
-005 Rename läufts bereits! Warte auf dessen durchlauf
-006 Bennene
-007 um in
-008 Staffel Episode Episodentitel
-009 stimmt nicht überein mit
-010 Gehe zum nächsten Eintrag
-011 Schaue ob Filme zum umbenennen vorliegen
-012 ist ein Film, extrahiere Namen für Ordner
-013 Erstelle Ordner
-014 Verschiebe
-015 Fange an mit der Umbenennung
-016 Falls Umbennung erfolgreich
-017 Lösche
-018 Ordner
-019 Fehler bei der Umbenennung von
-020 Fehler bei der Umbenennung. Probiere es erneut.
-021 anime
-022 serie
-023 film
+001 Warte auf das beenden vom Encoden.
+002 Renaming läuft bereits. Warte auf dessen durchlauf.
+003 Starte
+004 Skript
+005 Bennene
+006 stimmt nicht mit
+007 überein.
+008 Gehe zum nächsten Eintrag.
+009 ist ein Film, extrahiere Namen für Ordner.
+010 Erstelle Ordner:
+011 Verschiebe 
+012 nach
+013 Fange an mit der Umbenennung.
+014 Falls Umbennung erfolgreich,
+015 Lösche
+016 Ordner
+017 Fehler bei der Umbenennung!
+018 Fehlgeschlagene Versuche.
+019 Alles wurde erfolgreich beendet!
