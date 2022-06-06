@@ -87,6 +87,8 @@ while [ -f /tmp/jdautoenc.lock ]; do
   sleep 1m
 done
 
+sleep $(((RANDOM % 6) + 1))s
+
 while [ -f /tmp/jdautoenc.lock ]; do
   sleep 1m
 done
