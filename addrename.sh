@@ -79,68 +79,72 @@ get_db_id() {
   fi
 }
 
-read -rp "$(echo -e "$(text_lang "001")" "${cyan}""$(text_lang "002")""${white}" "$(text_lang "003")" "${blue}""$(text_lang "004")""${white}"/"${lblue}""$(text_lang "005")""${white}" "$(text_lang "006")") ($(text_lang "007")): " adding
-if [[ ${adding,,} == *"anime"* ]]; then
-  read -rp "$(echo -e "$(text_lang "008")" "${purple}""$(text_lang "009")""${white}" "$(text_lang "010")" "$adding" "$(text_lang "011")")  " key1
-  read -rp "$(echo -e "${yellow}""$(text_lang "012")""${white}", "$(text_lang "013")")  " key2
-  dbid=$(get_DB "Anime")
-  get_db_id
-  read -rp "$(echo -e "$(text_lang "019")" "${purple}""$dbid""${white}" "$(text_lang "020")")  " dbentry
-  echo "$(text_lang "014") $(curl_name)"
-  read -rp "$(text_lang "015")" wrongformat
-  if [ "${wrongformat,,}" == "n" ]; then
-    text_lang "016"
-    exit
-  else
-    {
-      curl_name
-      echo "$key1"
-      echo "$key2"
-      echo "Anime"
-      echo "$dbentry"
-      echo ""
-    } >>"$renamelist"
+while true; do
+  read -rp "$(echo -e "$(text_lang "001")" "${cyan}""$(text_lang "002")""${white}" "$(text_lang "003")" "${blue}""$(text_lang "004")""${white}"/"${lblue}""$(text_lang "005")""${white}" "$(text_lang "006")") ($(text_lang "007")): " adding
+  if [[ ${adding,,} == *"anime"* ]]; then
+    read -rp "$(echo -e "$(text_lang "008")" "${purple}""$(text_lang "009")""${white}" "$(text_lang "010")" "$adding" "$(text_lang "011")")  " key1
+    read -rp "$(echo -e "${yellow}""$(text_lang "012")""${white}", "$(text_lang "013")")  " key2
+    dbid=$(get_DB "Anime")
+    get_db_id
+    read -rp "$(echo -e "$(text_lang "019")" "${purple}""$dbid""${white}" "$(text_lang "020")")  " dbentry
+    echo "$(text_lang "014") $(curl_name)"
+    read -rp "$(text_lang "015")" wrongformat
+    if [ "${wrongformat,,}" == "n" ]; then
+      text_lang "016"
+      exit
+    else
+      {
+        curl_name
+        echo "$key1"
+        echo "$key2"
+        echo "Anime"
+        echo "$dbentry"
+        echo ""
+      } >>"$renamelist"
+    fi
+  elif [[ ${adding,,} == *"serie"* ]]; then
+    read -rp "$(echo -e "$(text_lang "008")" "${purple}""$(text_lang "009")""${white}" "$(text_lang "010")" "$adding" "$(text_lang "011")")  " key1
+    read -rp "$(echo -e "${yellow}""$(text_lang "012")""${white}", "$(text_lang "013")")  " key2
+    dbid=$(get_DB "Series")
+    get_db_id
+    read -rp "$(echo -e "$(text_lang "019")" "${purple}""$dbid""${white}" "$(text_lang "020")")  " dbentry
+    echo "$(text_lang "017") $(curl_name)"
+    read -rp "$(text_lang "015")" wrongformat
+    if [ "${wrongformat,,}" == "n" ]; then
+      text_lang "016"
+      exit
+    else
+      {
+        curl_name
+        echo "$key1"
+        echo "$key2"
+        echo "Series"
+        echo "$dbentry"
+        echo ""
+      } >>"$renamelist"
+    fi
+  elif [[ ${adding,,} == *"film"* ]]; then
+    read -rp "$(echo -e "$(text_lang "008")" "${purple}""$(text_lang "009")""${white}" "$(text_lang "010")" "$adding" "$(text_lang "011")")  " key1
+    read -rp "$(echo -e "${yellow}""$(text_lang "012")""${white}", "$(text_lang "013")") " key2
+    dbid=$(get_DB "Movie")
+    get_db_id
+    read -rp "$(echo -e "$(text_lang "019")" "${purple}"TheMovieDB ID"${white}" "$(text_lang "020")""\n($(text_lang "021"))")  " dbentry
+    echo "$(text_lang "018") $(curl_movie_name)"
+    read -rp "$(text_lang "015")" wrongformat
+    if [ "${wrongformat,,}" == "n" ]; then
+      text_lang "016"
+      exit
+    else
+      {
+        curl_movie_name
+        echo "$key1"
+        echo "$key2"
+        echo "Movie"
+        echo "$dbentry"
+        echo ""
+      } >>"$renamelist"
+    fi
+  elif [[ ${adding,,} == *"beenden"* ]] || [[ ${adding,,} == *"exit"* ]]; then
+    break
   fi
-elif [[ ${adding,,} == *"serie"* ]]; then
-  read -rp "$(echo -e "$(text_lang "008")" "${purple}""$(text_lang "009")""${white}" "$(text_lang "010")" "$adding" "$(text_lang "011")")  " key1
-  read -rp "$(echo -e "${yellow}""$(text_lang "012")""${white}", "$(text_lang "013")")  " key2
-  dbid=$(get_DB "Series")
-  get_db_id
-  read -rp "$(echo -e "$(text_lang "019")" "${purple}""$dbid""${white}" "$(text_lang "020")")  " dbentry
-  echo "$(text_lang "017") $(curl_name)"
-  read -rp "$(text_lang "015")" wrongformat
-  if [ "${wrongformat,,}" == "n" ]; then
-    text_lang "016"
-    exit
-  else
-    {
-      curl_name
-      echo "$key1"
-      echo "$key2"
-      echo "Series"
-      echo "$dbentry"
-      echo ""
-    } >>"$renamelist"
-  fi
-elif [[ ${adding,,} == *"film"* ]]; then
-  read -rp "$(echo -e "$(text_lang "008")" "${purple}""$(text_lang "009")""${white}" "$(text_lang "010")" "$adding" "$(text_lang "011")")  " key1
-  read -rp "$(echo -e "${yellow}""$(text_lang "012")""${white}", "$(text_lang "013")") " key2
-  dbid=$(get_DB "Movie")
-  get_db_id
-  read -rp "$(echo -e "$(text_lang "019")" "${purple}"TheMovieDB ID"${white}" "$(text_lang "020")""\n($(text_lang "021"))")  " dbentry
-  echo "$(text_lang "018") $(curl_movie_name)"
-  read -rp "$(text_lang "015")" wrongformat
-  if [ "${wrongformat,,}" == "n" ]; then
-    text_lang "016"
-    exit
-  else
-    {
-      curl_movie_name
-      echo "$key1"
-      echo "$key2"
-      echo "Movie"
-      echo "$dbentry"
-      echo ""
-    } >>"$renamelist"
-  fi
-fi
+done
