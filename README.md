@@ -2,6 +2,8 @@
 
 Linux scripts to automatically encode to HEVC and special audio codecs (eac3 & dts) to AC3 and rename via FileBot.
 
+# Experimental! Only tested with german and english !!
+
 # Requirements
 
 I try to use as few external programs as possible, so that everyone can use them regardless of hardware. But there are still some tools you'll need: 
