@@ -245,7 +245,7 @@ while true; do
       whiptail --title "$(text_lang "058")" --menu "$(text_lang "059")" 20 100 9 \
         "1)" "Discord" \
         "2)" "Nextcloud Talk" \
-        "3)" "coming soon" \
+        "3)" "Apprise Settings" \
         "4)" "coming soon" \
         "5)" "$(text_lang "017")" 3>&2 2>&1 1>&3
     )
@@ -325,7 +325,46 @@ while true; do
         esac
       done
       ;;
-    "3)") ;;
+    "3)")
+      #    _                     _            ____       _   _   _
+      #   / \   _ __  _ __  _ __(_)___  ___  / ___|  ___| |_| |_(_)_ __   __ _ ___
+      #  / _ \ | '_ \| '_ \| '__| / __|/ _ \ \___ \ / _ \ __| __| | '_ \ / _` / __|
+      # / ___ \| |_) | |_) | |  | \__ \  __/  ___) |  __/ |_| |_| | | | | (_| \__ \
+      #/_/   \_\ .__/| .__/|_|  |_|___/\___| |____/ \___|\__|\__|_|_| |_|\__, |___/
+      #        |_|   |_|                                                 |___/
+      #
+      curr_appriseurl=$(grep "appriseurl=" "$JDAutoConfig" | sed 's/.*=//g')
+      curr_apprisetag=$(grep "apprisetag=" "$JDAutoConfig" | sed 's/.*=//g')
+      while true; do
+        apprise_menu=$(
+          whiptail --title "$(text_lang "062")" --menu "$(text_lang "063")" 20 100 13 \
+            "1)" "Apprise URL: $(text_lang "064") $curr_appriseurl" \
+            "2)" "Apprise Tag: $(text_lang "064") $curr_apprisetag" \
+            "3)" "Beenden" 3>&2 2>&1 1>&3
+        )
+        case $apprise_menu in
+        "1)")
+          appriseurl=$(whiptail --title "$(text_lang "065")" --inputbox "$(text_lang "066")\n$(text_lang "067")\n$(text_lang "068")\n\n$(text_lang "064") $curr_appriseurl" 16 100 "$4" 3>&2 2>&1 1>&3 | sed -e "s#/#\\\/#g")
+          if [ -z "$curr_appriseurl" ]; then
+            echo ""
+          else
+            sed -i "s/appriseurl=.*/appriseurl=$appriseurl/g" "$JDAutoConfig"
+          fi
+          ;;
+        "2)")
+          apprisetag=$(whiptail --title "$(text_lang "065")" --inputbox "$(text_lang "066")\n$(text_lang "067")\n$(text_lang "068")\n\n$(text_lang "064") $curr_apprisetag" 16 100 "$4" 3>&2 2>&1 1>&3 | sed -e "s#/#\\\/#g")
+          if [ -z "$apprisetag" ]; then
+            echo ""
+          else
+            sed -i "s/apprisetag=.*/apprisetag=$apprisetag/g" "$JDAutoConfig"
+          fi
+          ;;
+        "3)")
+          break
+          ;;
+        esac
+      done
+      ;;
 
     "4)") ;;
 

@@ -63,15 +63,25 @@ log_msg() {
 }
 
 discord_msg() {
-  curl -s -H "Content-Type: application/json" -X POST -d "{\"content\": \"$1\"}" "$discord"
+  curl -s -H "Content-Type: application/json" -X POST -d "{\"content\": \"$1\"}" "$discord" &>/dev/null
 }
 
 nextcloud_msg() {
   curl -d '{"token":"'"$NextcloudTalkToken"'", "message":"'"$1"'"}' -H "Content-Type: application/json" -H "Accept:application/json" -H "OCS-APIRequest:true" -u "$NextcloudUser:$NextcloudPassword" "$NextcloudDomain"/ocs/v1.php/apps/spreed/api/v1/chat/tokenid &>/dev/null
 }
 
+appriseurl=$(grep "appriseurl=" "$config" | sed 's/.*=//g')
+apprisetag=$(grep "apprisetag=" "$config" | sed 's/.*=//g')
+apprise_msg() {
+  if [[ -n $apprisetag ]]; then
+    curl -d '{"body":"'"$1"'", "title":"#### jdautoenc.sh ####","tag":"'"$apprisetag"'"}' -H "Content-Type: application/json" "$appriseurl" &>/dev/null
+  else
+    curl -d '{"body":"'"$1"'", "title":"#### jdautoenc.sh ####"}' -H "Content-Type: application/json" "$appriseurl" &>/dev/null
+  fi
+}
+
 filebot_rename() {
-  filebot -rename "$v" --db "$1" -non-strict --lang "$2" --format "$3/$4" --q "$5" >>"${log[@]}" 2>/dev/null
+  filebot -rename "$v" --db "$1" -non-strict --lang "$2" --format "$3/$4" --q "$5" >>"${log[@]}" 2>>"${log[@]}"
 }
 
 names() {
@@ -170,6 +180,7 @@ if tail -n 20 "$log" | grep "Failure" &>/dev/null; then
     log_msg "$(text_lang "017") $count $(text_lang "018")"
     discord_msg "$(text_lang "017") $count $(text_lang "018")"
     nextcloud_msg "$(text_lang "017") $count $(text_lang "018")"
+    apprise_msg "$(text_lang "017") $count $(text_lang "018")"
   fi
 else
   log_msg "$(text_lang "019")"

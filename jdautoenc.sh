@@ -77,7 +77,7 @@ log_msg() {
 }
 
 discord_msg() {
-  curl -s -H "Content-Type: application/json" -X POST -d "{\"content\": \"$1\"}" "$discord"
+  curl -s -H "Content-Type: application/json" -X POST -d "{\"content\": \"$1\"}" "$discord" &>/dev/null
 }
 
 NextcloudDomain=$(grep "NextcloudDomain=" "$config" | sed 's/.*=//g')
@@ -86,6 +86,16 @@ NextcloudUser=$(grep "NextcloudUser=" "$config" | sed 's/.*=//g')
 NextcloudPassword=$(grep "NextcloudPassword=" "$config" | sed 's/.*=//g')
 nextcloud_msg() {
   curl -d '{"token":"'"$NextcloudTalkToken"'", "message":"'"$1"'"}' -H "Content-Type: application/json" -H "Accept:application/json" -H "OCS-APIRequest:true" -u "$NextcloudUser:$NextcloudPassword" "$NextcloudDomain"/ocs/v1.php/apps/spreed/api/v1/chat/tokenid &>/dev/null
+}
+
+appriseurl=$(grep "appriseurl=" "$config" | sed 's/.*=//g')
+apprisetag=$(grep "apprisetag=" "$config" | sed 's/.*=//g')
+apprise_msg() {
+  if [[ -n $apprisetag ]]; then
+    curl -d '{"body":"'"$1"'", "title":"#### jdautoenc.sh ####","tag":"'"$apprisetag"'"}' -H "Content-Type: application/json" "$appriseurl" &>/dev/null
+  else
+    curl -d '{"body":"'"$1"'", "title":"#### jdautoenc.sh ####","tag":"all"}' -H "Content-Type: application/json" "$appriseurl" &>/dev/null
+  fi
 }
 
 ff_encode() {
@@ -98,12 +108,14 @@ ff_encode() {
           log_msg "${red}$(text_lang "004")"
           discord_msg "$(text_lang "004")"
           nextcloud_msg "$(text_lang "004")"
+          apprise_msg "$(text_lang "004")"
         fi
       else
         rmencoded=$(rm -f "${encodes[*]}""${fertig%.*}.mkv" 2>&1) || log_msg "$rmencoded"
         log_msg "${red} $(text_lang "006")"
         nextcloud_msg "$(text_lang "006") $clear $(text_lang "007") $2 $(text_lang "008"). $?"
-        discord_msg "$(text_lang "006") $clear $(text_lang "007") $2 $(text_lang "008"). $?" &>/dev/null
+        discord_msg "$(text_lang "006") $clear $(text_lang "007") $2 $(text_lang "008"). $?"
+        apprise_msg "$(text_lang "006") $clear $(text_lang "007") $2 $(text_lang "008"). $?"
       fi
     fi
   else

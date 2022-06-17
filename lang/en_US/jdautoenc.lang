@@ -10,7 +10,7 @@
 010 script
 011 is a
 012 anime
-013 Now check the video codec.
+013 Checking video codec.
 014 Encode from
 015 to
 016 is already HEVC, check audio codec. If in eac3 or dts then encode audio to AC3.
