@@ -54,7 +54,7 @@ text_lang() {
   if [ -f "$language_Folder"/"$language"/rename.lang ]; then
     grep "$1" "$language_Folder"/"$language"/rename.lang | sed 's/^....//'
   else
-    curl -s https://raw.githubusercontent.com/Pakobbix/JDownloader-Autoenc-rename/Multilanguage/lang/en_US/rename.lang | grep "$1" | sed 's/^....//'
+    curl -s https://raw.githubusercontent.com/Pakobbix/JDownloader-Autoenc-rename/main/lang/en_US/rename.lang | grep "$1" | sed 's/^....//'
   fi
 }
 
