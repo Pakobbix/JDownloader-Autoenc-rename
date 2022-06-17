@@ -66,6 +66,12 @@ preset_series=fast
 bitrate_movie=2000
 preset_movie=fast
 
+bitrate_serie=1700
+preset_serie=fast
+
+bitrate_filme=2000
+preset_filme=fast
+
 Choose nVidia, AMD or Intel
 Encoder=nVidia
 
