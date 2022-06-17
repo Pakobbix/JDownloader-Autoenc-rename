@@ -1,0 +1,22 @@
+001 jdautoenc has already been started, wait for it to finish.
+002 Delete
+003 source file
+004 Error deleting source file
+005 Duration of the video does not match!
+006 Could
+007 not with
+008 convert
+009 Start
+010 script
+011 is a
+012 anime
+013 Checking video codec.
+014 Encode from
+015 to
+016 is already HEVC, check audio codec. If in eac3 or dts then encode audio to AC3.
+017 move
+018 to rename.
+019 Series
+020 remove jdautoenc.lock
+021 empty folder in unpack directory.
+022 Movie
