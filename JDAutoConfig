@@ -47,7 +47,7 @@ NextcloudUser=jdautoenc
 NextcloudPassword=Password
 NextcloudTalkToken=ChannelTokenID
 
-appriseurl=192.168.0.3/notify/apprise
+appriseurl=192.168.0.3:8000/notify/apprise
 apprisetag=
 
 ############################################################################################

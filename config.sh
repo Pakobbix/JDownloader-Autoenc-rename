@@ -338,7 +338,7 @@ while true; do
       while true; do
         apprise_menu=$(
           whiptail --title "$(text_lang "062")" --menu "$(text_lang "063")" 20 100 13 \
-            "1)" "Apprise URL: $(text_lang "064") $curr_appriseurl" \
+            "1)" "Apprise URL+Port: $(text_lang "064") $curr_appriseurl" \
             "2)" "Apprise Tag: $(text_lang "064") $curr_apprisetag" \
             "3)" "Beenden" 3>&2 2>&1 1>&3
         )
