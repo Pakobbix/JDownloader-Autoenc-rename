@@ -29,7 +29,7 @@ Optional:
 
 # Notifications:
 
-You can setup Discord and/or Nextcloud Talk Notifications if:
+You can setup Discord Nextcloud Talk and/or Apprise Notifications if:
  - File already exists (encoding error)
  - Duration of encoded video doesn't match sourcefile (encoding error)
  - FileBot couldn't rename files 3 times in a row
