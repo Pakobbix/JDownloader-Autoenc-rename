@@ -4,7 +4,7 @@ Hier stehen nun alle Einstellungen für die jdautoenc:
 ####					Script-Settings:				####
 ############################################################################################
 
-language=de_DE
+language=
 language_folder=/home/hhofmann/.local/scripts/lang
 
 ############################################################################################
