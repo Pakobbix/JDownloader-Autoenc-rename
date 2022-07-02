@@ -1,0 +1,200 @@
+001 Is the path of the JDAutoConfig correct?
+002 What is the correct path?
+003 Enter here the complete path to the JDAutoConfig
+004 Path was not changed
+005 Path was not changed
+006 The path from
+007 was changed!
+008 The new path is:
+009 Error changing the path!
+010 The new path:
+011 Could not be changed!
+012 Select the database to use:
+013 Bitrate settings
+014 Enter here the Kbits (without ending) for
+015 Space to select, Enter to confirm.
+016 Select
+017 Exit
+018 Preset settings
+019 Enter here the FFmpeg preset to use for
+020 Fastest, Lowest Quality
+021 Fast Low quality
+022 Fast acceptable quality
+023 Recommended. Relatively fast, quality according to VMAF tool averages 96-99% of source media.
+024 Balanced
+025 Somewhat slow. Only smaller file sizes, no relevant quality loss anymore.
+026 Even slower.
+027 Really slow.
+028 Maybe better wait for a remux?
+029 Well, best to switch off encoding, huh?
+030 What do you want to configure?
+031 WIP. The possibilities for fine tuning will be extended.
+032 If you have problems, open an issue at: shorturl.at/bvDQ6 (Github link, easier to type or https://exe.io/jdautoenc if you want to support me via advertisement)
+033 Folder paths
+034 Log colors
+035 Notification system
+036 Encoding settings
+037 Encoding hardware
+038 FileBot settings
+039 Are all scripts in the same place?
+040 The JDAutoConfig was
+041 found. Is this the path of all scripts?
+042 ATTENTION! Only the scripts are adapted thereby. the Unpacked and the Encoding folder as well as the path for the log must be set manually!
+043 Which folder path do you want to adjust?
+044 Please select
+045 Unpacked folder
+046 Encodes folder
+047 Log path
+048 Movies:
+049 Series:
+050 Anime:
+051 Change path setting
+052 New path for
+053 Folder path for the folder where videos unzipped by JD2 are located:
+054 New path for the folder where the Finished encoded videos are/should be.
+055 Movies folder
+056 Series folder
+057 Anime folder
+058 Which messaging service do you want to configure?
+059 Choose the messaging system:
+060 Configure the Discord WebHook
+061 Enter the full address of the Discord Webhook here. Currently:
+062 Here you can set the Nextcloud notifications.
+063 Choose here the settings you want to change
+064 Currently:
+065 Configuration for Nextcloud
+066 Enter here the full address to your Nextcloud.
+067 This can be a domain to Nextcloud: https://meineNextcloud.domain
+068 Or IP (+Port if not 80/443) if JDownloader and Nextcloud are in the same network: 10.0.0.4:85
+069 Enter here the Nextcloud user who writes the messages.
+070 Enter the password of the user.
+071 Specify here the token of the chat channel.
+072 Example: https://nextcloud.domain/call/ne6ht3u7 ne6ht3u7 would be the token in this case.
+073 The encoding settings have been changed to nVidia.
+074 Here you can change the FFmpeg Settings
+075 Select here the settings to change
+076 Encoding:
+077 Bitrate Anime Current:
+078 FFmpeg Preset Animes Current:
+079 Bitrate Series Current:
+080 FFmpeg Preset Series Current:
+081 Bitrate Movies Current:
+082 FFmpeg Preset Movies Current:
+083 Encode on/off
+084 Choose if you want to encode
+085 Graphics card
+086 Discover!
+087 Which hardware do you want to use?
+088 Please select the hardware you want to use. The following hardware seems to be installed:
+089 The encoding settings have been changed to nVidia.
+090 The Cuda processors with the NVENC encoder are used.
+091 The encoding settings have been changed to AMD.
+092 AMD transistors with the amf encoder are used.
+093 The encoding settings have been changed to nVidia.
+094 The Intel QuickSync chip with qsv encoder is used.
+095 Encoding by software is currently not supported!
+096 Change FileBot specific settings
+097 What do you want to change?
+098 Movie database currently:
+099 Series database currently:
+100 Anime database currently:
+101 Movie naming scheme currently:
+102 Series naming scheme currently:
+103 Anime naming scheme currently:
+104 Language to be deducted currently:
+105 New path for movies. For examples and possibilities: https://www.filebot.net/naming.html examples:
+106 New path for series. For examples and possibilities: https://www.filebot.net/naming.html Examples:
+107 New path for anime. For examples and possibilities: https://www.filebot.net/naming.html Examples:
+108 The naming scheme has not been changed!
+109 Select language to be used by Filebot
+110 Select the language to be used by FileBot
+111 
+112 
+113 
+114 
+115 
+116 
+117 
+118 
+119 
+120 
+121 
+122 
+123 
+124 
+125 
+126 
+127 
+128 
+129 
+130 
+131 
+132 
+133 
+134 
+135 
+136 
+137 
+138 
+139 
+140 
+141 
+142 
+143 
+144 
+145 
+146 
+147 
+148 
+149 
+150 
+151 
+152 
+153 
+154 
+155 
+156 
+157 
+158 
+159 
+160 
+161 
+162 
+163 
+164 
+165 
+166 
+167 
+168 
+169 
+170 
+171 
+172 
+173 
+174 
+175 
+176 
+177 
+178 
+179 
+180 
+181 
+182 
+183 
+184 
+185 
+186 
+187 
+188 
+189 
+190 
+191 
+192 
+193 
+194 
+195 
+196 
+197 
+198 
+199 
+200
