@@ -100,9 +100,14 @@ apprise_msg() {
 
 ff_encode() {
   if [[ ${encode,,} == "yes" ]]; then
-    total_frames=$(ffprobe -v error -show_format -select_streams v:0 -show_streams mp-glor7-1080p.mkv | grep TAG:NUMBER_OF_FRAMES= | sed 's/.*=\|\..*//g')
-    fps=$(grep fps= /home/hhofmann/.local/logs/jdautoenc.log | tail -n 1 | sed 's/.*fps=\| q=.*\|\..*//g')
-    log_msg "Estimated Encoding Time: $((total_frames / fps / 60)) Minutes"
+    total_frames=$(ffprobe -v error -show_format -select_streams v:0 -show_streams "$i" | grep TAG:NUMBER_OF_FRAMES= | sed 's/.*=\|\..*//g')
+    fps=$(grep "fps=" /home/hhofmann/.local/logs/jdautoenc.log | tail -n 1 | sed 's/.*fps=\| q=.*\|\..*//g')
+    eta_encoding=$((total_frames / fps))
+    if [[ $eta_encoding -gt "60" ]]; then
+      log_msg "Estimated Encoding Time: $((total_frames / fps / 60)) Minutes (based on last encoding speed)"
+    else
+      log_msg "Estimated Encoding Time: $((total_frames / fps)) Minutes (based on last encoding speed)"
+    fi
     if ffmpeg -hide_banner -v quiet -stats -nostdin -hwaccel "$1" -hwaccel_output_format "$1" -i "$i" -c:v "$2" -preset "$3" -b:v "$4"K -c:a "$5" -map 0 -c:s copy "${encodes[*]}""${fertig%.*}.mkv" >>"${log[@]}" 2>&1; then
       finishedduration=$(ffprobe -hide_banner -loglevel error -v quiet -stats -i "${encodes[*]}""${fertig%.*}.mkv" -show_entries format=duration -v quiet -of csv="p=0" | sed 's/\..*//g')
       if [[ $finishedduration -eq $duration ]]; then
