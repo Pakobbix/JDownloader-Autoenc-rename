@@ -3,35 +3,27 @@
 config=$(find ~ -type f -name "JDAutoConfig" 2>/dev/null)
 log=$(grep "log=" "$config" | sed 's/.*=//g')
 
-extracted=$(grep "extracted=" "$config" | sed 's/.*=//g')
-encodes=$(grep "encodes=" "$config" | sed 's/.*=//g')
-rename=$(grep "rename=" "$config" | sed 's/.*=//g')
-discord=$(grep "discord=" "$config" | sed 's/.*=//g')
+# shellcheck disable=SC1090
+source "$config"
 
-bitrate_anime=$(grep "bitrate_anime=" "$config" | sed 's/.*=//g')
-preset_anime=$(grep "preset_anime=" "$config" | sed 's/.*=//g')
-bitrate_series=$(grep "bitrate_series=" "$config" | sed 's/.*=//g')
-preset_series=$(grep "preset_series=" "$config" | sed 's/.*=//g')
-bitrate_movie=$(grep "bitrate_movie=" "$config" | sed 's/.*=//g')
-preset_movie=$(grep "preset_movie=" "$config" | sed 's/.*=//g')
-
-encode=$(grep "encode=" "$config" | sed 's/.*=//g')
-encoder=$(grep "Encoder=" "$config" | sed 's/.*=//g')
-discord=$(grep "discord=" "$config" | sed 's/.*=//g')
-
-if [[ ${encoder,,} == "nvidia" ]]; then
+case "${Encoder,,}" in
+nvidia)
   hw_accel="cuda"
   codec="hevc_nvenc"
-elif [[ ${encoder,,} == "amd" ]]; then
+  ;;
+amd)
   hw_accel="auto"
   codec="hevc_amf"
-elif [[ ${encoder,,} == "intel" ]]; then
+  ;;
+intel)
   hw_accel="qsv"
   codec="hevc_qsf"
-elif [[ ${encoder,,} == "software" ]]; then
+  ;;
+software)
   hw_accel="qsv"
   codec="hevc_qsf"
-fi
+  ;;
+esac
 
 red='\033[0;31m'    # ${red}
 white='\033[0;37m'  # ${white}
@@ -42,10 +34,7 @@ lblue='\033[1;34m'  # ${lblue}
 cyan='\033[0;36m'   # ${cyan}
 purple='\033[0;35m' # ${purple}
 
-language_Folder=$(grep "language_folder=" "$config" | sed 's/.*=//g')
-if [[ -n $(grep "language=" "$config" | sed 's/.*=//g') ]]; then
-  language=$(grep "language=" "$config" | sed 's/.*=//g')
-else
+if [[ -z $language ]]; then
   language=$(locale | head -n 1 | sed 's/.*=\|\..*//g')
 fi
 
@@ -80,16 +69,10 @@ discord_msg() {
   curl -s -H "Content-Type: application/json" -X POST -d "{\"content\": \"$1\"}" "$discord" &>/dev/null
 }
 
-NextcloudDomain=$(grep "NextcloudDomain=" "$config" | sed 's/.*=//g')
-NextcloudTalkToken=$(grep "NextcloudTalkToken=" "$config" | sed 's/.*=//g')
-NextcloudUser=$(grep "NextcloudUser=" "$config" | sed 's/.*=//g')
-NextcloudPassword=$(grep "NextcloudPassword=" "$config" | sed 's/.*=//g')
 nextcloud_msg() {
   curl -d '{"token":"'"$NextcloudTalkToken"'", "message":"'"$1"'"}' -H "Content-Type: application/json" -H "Accept:application/json" -H "OCS-APIRequest:true" -u "$NextcloudUser:$NextcloudPassword" "$NextcloudDomain"/ocs/v1.php/apps/spreed/api/v1/chat/tokenid &>/dev/null
 }
 
-appriseurl=$(grep "appriseurl=" "$config" | sed 's/.*=//g')
-apprisetag=$(grep "apprisetag=" "$config" | sed 's/.*=//g')
 apprise_msg() {
   if [[ -n $apprisetag ]]; then
     curl -d '{"body":"'"$1"'", "title":"#### jdautoenc.sh ####","tag":"'"$apprisetag"'"}' -H "Content-Type: application/json" "$appriseurl" &>/dev/null
@@ -101,7 +84,7 @@ apprise_msg() {
 ff_encode() {
   if [[ ${encode,,} == "yes" ]]; then
     total_frames=$(ffprobe -v error -show_format -select_streams v:0 -show_streams "$i" | grep TAG:NUMBER_OF_FRAMES= | sed 's/.*=\|\..*//g')
-    fps=$(grep "fps=" /home/hhofmann/.local/logs/jdautoenc.log | tail -n 1 | sed 's/.*fps=\| q=.*\|\..*//g')
+    fps=$(grep "fps=" "$log" | tail -n 1 | sed 's/.*fps=\| q=.*\|\..*//g')
     eta_encoding=$((total_frames / fps))
     if [[ $eta_encoding -gt "60" ]]; then
       log_msg "Estimated Encoding Time: $((total_frames / fps / 60)) Minutes (based on last encoding speed)"
