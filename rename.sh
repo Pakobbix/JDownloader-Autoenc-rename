@@ -11,38 +11,10 @@ log="$1"
 config="$2"
 count=$(($3 + 1))
 
-# Message System
-discord=$(grep "discord=" "$config" | sed 's/.*=//g')
-NextcloudDomain=$(grep "NextcloudDomain=" "$config" | sed 's/.*=//g')
-NextcloudTalkToken=$(grep "NextcloudTalkToken=" "$config" | sed 's/.*=//g')
-NextcloudUser=$(grep "NextcloudUser=" "$config" | sed 's/.*=//g')
-NextcloudPassword=$(grep "NextcloudPassword=" "$config" | sed 's/.*=//g')
+# shellcheck disable=SC1090
+source "$config"
 
-#Liste für die Umbenennung
-renamelist=$(grep "renamelist=" "$config" | sed 's/.*=//g')
-
-#Ordner Pfade
-
-encodes=$(grep "encodes=" "$config" | sed 's/.*=//g')
-
-Movies=$(grep "Movies=" "$config" | sed 's/.*=//g')
-Series=$(grep "Series=" "$config" | sed 's/.*=//g')
-Animes=$(grep "Animes=" "$config" | sed 's/.*=//g')
-
-FilmDB=$(grep "MovieDB=" "$config" | sed 's/.*=//g')
-SerienDB=$(grep "SeriesDB=" "$config" | sed 's/.*=//g')
-AnimeDB=$(grep "AnimeDB=" "$config" | sed 's/.*=//g')
-
-FilmName=$(grep "MovieName=" "$config" | sed 's/.*=//g')
-SerienName=$(grep "SeriesName=" "$config" | sed 's/.*=//g')
-AnimeNames=$(grep "AnimeName=" "$config" | sed 's/.*=//g')
-
-FileBotLang=$(grep "FileBotLang=" "$config" | sed 's/.*=//g')
-
-language_Folder=$(grep "language_folder=" "$config" | sed 's/.*=//g')
-if [[ -n $(grep "language=" "$config" | sed 's/.*=//g') ]]; then
-  language=$(grep "language=" "$config" | sed 's/.*=//g')
-else
+if [[ -z $language ]]; then
   language=$(locale | head -n 1 | sed 's/.*=\|\..*//g')
 fi
 
@@ -70,8 +42,6 @@ nextcloud_msg() {
   curl -d '{"token":"'"$NextcloudTalkToken"'", "message":"'"$1"'"}' -H "Content-Type: application/json" -H "Accept:application/json" -H "OCS-APIRequest:true" -u "$NextcloudUser:$NextcloudPassword" "$NextcloudDomain"/ocs/v1.php/apps/spreed/api/v1/chat/tokenid &>/dev/null
 }
 
-appriseurl=$(grep "appriseurl=" "$config" | sed 's/.*=//g')
-apprisetag=$(grep "apprisetag=" "$config" | sed 's/.*=//g')
 apprise_msg() {
   if [[ -n $apprisetag ]]; then
     curl -d '{"body":"'"$1"'", "title":"#### jdautoenc.sh ####","tag":"'"$apprisetag"'"}' -H "Content-Type: application/json" "$appriseurl" &>/dev/null
@@ -134,16 +104,21 @@ while read -r name; do
 
     if [[ ${v,,} == *"$keyword1"*"$keyword2"* ]]; then
       log_msg "$(text_lang "005") $(basename "$v" | sed 's/\./ /g;s/AAC\|1080p\|WebDL\|[a-z]26[0-9]\|[hH][eE][Vv][Cc]\|[tT]anuki\| dl \| web \|repack\|wayne\|\|[-]\|[gG]er\|[eE]ng\|[sS]ub//g;s/\[[^][]*\]\|WebDL\|JapDub\|CR\|REPACK\|V2DK\|man\|BluRay\|RSG//g;s/_/ /g;s/\( \)*/\1/g')"
-      if [[ ${format,,} == "anime" ]]; then
-        filebot_rename "$AnimeDB" "$FileBotLang" "$Animes" "$AnimeNames" "$dbid"
-      elif [[ ${format,,} == "series" ]]; then
-        filebot_rename "$SerienDB" "$FileBotLang" "$Series" "$SerienName" "$dbid"
-      elif [[ ${format,,} == "movie" ]]; then
-        filebot_rename "$FilmDB" "$FileBotLang" "$Movies" "$FilmName" "$dbid"
-      else
+      case ${format,,} in
+      anime)
+        filebot_rename "$AnimeDB" "$FileBotLang" "$Animes" "$AnimeName" "$dbid"
+        ;;
+      series)
+        filebot_rename "$SeriesDB" "$FileBotLang" "$Series" "$SeriesName" "$dbid"
+        ;;
+      movie)
+        filebot_rename "$MovieDB" "$FileBotLang" "$Movies" "$MovieName" "$dbid"
+        ;;
+      *)
         log_msg "${red}$v $(text_lang "006") $name $(text_lang "007")"
         log_msg "${red}$(text_lang "008")"
-      fi
+        ;;
+      esac
     fi
 
   done
