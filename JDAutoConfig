@@ -1,0 +1,90 @@
+# Hier stehen nun alle Einstellungen für die jdautoenc:
+
+############################################################################################
+####					Script-Settings:				####
+############################################################################################
+
+language=
+language_folder=/home/hhofmann/.local/scripts/lang
+
+############################################################################################
+####					Scripts-Folder:					####
+############################################################################################
+
+jdautoenc=/home/hhofmann/.local/scripts/jdautoenc.sh
+rename=/home/hhofmann/.local/scripts/rename.sh
+renamelist=/home/hhofmann/.local/scripts/renamelist
+
+############################################################################################
+####					Folders:					####
+############################################################################################
+
+extracted=/mnt/downloads/entpackt/
+encodes=/mnt/Medien/encode/
+
+############################################################################################
+####				Media Directories:					####
+############################################################################################
+
+Movies=/mnt/Medien/Filme
+Series=/mnt/Medien/Serien
+Animes=/mnt/Medien/Animes
+
+############################################################################################
+####					Log-File:					####
+############################################################################################
+
+log=/home/hhofmann/.local/logs/jdautoenc.log
+
+############################################################################################
+####						Notifications:				####
+############################################################################################
+
+discord=https://discord.com/api/webhooks/
+
+NextcloudDomain=https://Nextcloud.domain
+NextcloudUser=jdautoenc
+NextcloudPassword=Password
+NextcloudTalkToken=ChannelTokenID
+
+appriseurl=192.168.0.3:8000/notify/apprise
+apprisetag=
+
+############################################################################################
+####					Encoding:					####
+############################################################################################
+
+# yes or no
+encode=yes
+
+bitrate_anime=1400
+preset_anime=fast
+
+bitrate_series=1700
+preset_series=fast
+
+bitrate_movie=2000
+preset_movie=fast
+
+bitrate_serie=1700
+preset_serie=fast
+
+bitrate_filme=2000
+preset_filme=fast
+
+# Choose nVidia, AMD or Intel
+Encoder=nVidia
+
+############################################################################################
+####					FileBot:					####
+############################################################################################
+
+MovieDB=TheMovieDB
+SeriesDB=TheTVDB
+AnimeDB=TheTVDB
+
+MovieName={n} {y}
+SeriesName={n} {y}/Season {s}/{n} - {s00e00} - {t}
+AnimeName={n} {y}/Season {s}/{n} - {s00e00} - {t}
+
+FileBotLang=German
