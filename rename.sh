@@ -102,7 +102,7 @@ while read -r name; do
 
   find -L "${encodes[@]}" -name '*.mkv' -or -name '*.mp4' 2>/dev/null | while IFS= read -r v; do
 
-    if [[ ${v,,} == *"$keyword1"*"$keyword2"* ]]; then
+    if [[ ${v,,} == *"${keyword1,,}"*"${keyword2,,}"* ]]; then
       log_msg "$(text_lang "005") $(basename "$v" | sed 's/\./ /g;s/AAC\|1080p\|WebDL\|[a-z]26[0-9]\|[hH][eE][Vv][Cc]\|[tT]anuki\| dl \| web \|repack\|wayne\|\|[-]\|[gG]er\|[eE]ng\|[sS]ub//g;s/\[[^][]*\]\|WebDL\|JapDub\|CR\|REPACK\|V2DK\|man\|BluRay\|RSG//g;s/_/ /g;s/\( \)*/\1/g')"
       case ${format,,} in
       anime)
