@@ -125,77 +125,94 @@ find -L "${extracted[@]}" -name '*.mkv' -or -name '*.mp4' 2>/dev/null | while IF
   fertig=$(basename "$i")
   clear=$(basename "$i" .mkv | sed 's/\./ /g;s/AAC\|1080p\|WebDL\|[a-z]26[0-9]\|[hH][eE][Vv][Cc]\|[tT]anuki\| dl \| web \|repack\|wayne\|\|[-]\|[gG]er\|[eE]ng\|[sS]ub//g;s/\[[^][]*\]\|WebDL\|JapDub\|CR\|REPACK\|V2DK\|man\|BluRay\|RSG//g;s/_/ /g;s/\( \)*/\1/g')
   ################################################ Anime Sektion ################################################
-  if [ -z "$duration" ] || [ "$duration" -lt "1560" ]; then
+  if [[ -z $duration || $duration -lt "1560" ]]; then
     log_msg "${purple}$clear${white} $(text_lang "011") ${blue}$(text_lang "012")${white}. $(text_lang "013")"
     vcodec=$(ffprobe -hide_banner -loglevel error -select_streams v:0 -show_entries stream=codec_name -of default=nw=1:nk=1 "$i")
-    if ! [ "$vcodec" == "hevc" ]; then
-      acodec=$(ffprobe -hide_banner -loglevel error -select_streams a:0 -show_entries stream=codec_name -of default=nw=1:nk=1 "$i")
-      if [ "$acodec" = "eac3" ] || [ "$acodec" = "dts" ]; then
-        log_msg "${blue}$(text_lang "012")${white} ${purple}""$clear""${white} $(text_lang "014") ${vcodec^^} & ${acodec^^} $(text_lang "015") HEVC & AC3"
-        ff_encode "$hw_accel" "$codec" "$preset_anime" "$bitrate_anime" ac3
+    HDR_test=$(ffprobe -v quiet -show_streams -select_streams v:0 "$i" | grep ^color_transfer= | awk -F'=' '{print $2}')
+    if [[ $HDR_test == *"smpte2084" || $HDR_test == *"arib-std-b67" ]]; then
+      if ! [ "$vcodec" == "hevc" ]; then
+        acodec=$(ffprobe -hide_banner -loglevel error -select_streams a:0 -show_entries stream=codec_name -of default=nw=1:nk=1 "$i")
+        if [[ $acodec == "eac3" || $acodec == "dts" ]]; then
+          log_msg "${blue}$(text_lang "012")${white} ${purple}""$clear""${white} $(text_lang "014") ${vcodec^^} & ${acodec^^} $(text_lang "015") HEVC & AC3"
+          ff_encode "$hw_accel" "$codec" "$preset_anime" "$bitrate_anime" ac3
+        else
+          log_msg "${blue}$(text_lang "012")${white} ${purple}""$clear""${white} $(text_lang "014") ${vcodec^^} $(text_lang "015") HEVC"
+          ff_encode "$hw_accel" "$codec" "$preset_anime" "$bitrate_anime" "copy"
+        fi
       else
-        log_msg "${blue}$(text_lang "012")${white} ${purple}""$clear""${white} $(text_lang "014") ${vcodec^^} $(text_lang "015") HEVC"
-        ff_encode "$hw_accel" "$codec" "$preset_anime" "$bitrate_anime" "copy"
+        acodec=$(ffprobe -hide_banner -loglevel error -select_streams a:0 -show_entries stream=codec_name -of default=nw=1:nk=1 "$i")
+        log_msg "${purple}""$clear""${white} $(text_lang "016")"
+        if [[ $acodec == "eac3" || $acodec == "dts" ]]; then
+          log_msg "${purple}""$clear""${white} $(text_lang "014") ${acodec^^} $(text_lang "015") AC3"
+          ff_encode "$hw_accel" "copy" "$preset_anime" "$bitrate_anime" "ac3"
+        else
+          log_msg "$(text_lang "017") ${purple}$clear${white} $(text_lang "018")"
+          mv "$i" "${encodes[@]}"
+        fi
       fi
     else
-      acodec=$(ffprobe -hide_banner -loglevel error -select_streams a:0 -show_entries stream=codec_name -of default=nw=1:nk=1 "$i")
-      log_msg "${purple}""$clear""${white} $(text_lang "016")"
-      if [ "$acodec" = "eac3" ] || [ "$acodec" = "dts" ]; then
-        log_msg "${purple}""$clear""${white} $(text_lang "014") ${acodec^^} $(text_lang "015") AC3"
-        ff_encode "$hw_accel" "copy" "$preset_anime" "$bitrate_anime" "ac3"
-      else
-        log_msg "$(text_lang "017") ${purple}$clear${white} $(text_lang "018")"
-        mv "$i" "${encodes[@]}"
-      fi
+      log_msg "$(text_lang "017") ${purple}$clear${white} $(text_lang "018")"
+      mv "$i" "${encodes[@]}"
     fi
     ################################################ Serien Sektion ################################################
   elif [ "$duration" -gt "1561" ] && [ "$duration" -lt "4750" ]; then
     log_msg "${purple}$fertig${white} $(text_lang "011") ${lblue}$(text_lang "019")${white}. $(text_lang "013")"
     vcodec=$(ffprobe -hide_banner -loglevel error -select_streams v:0 -show_entries stream=codec_name -of default=nw=1:nk=1 "$i")
-    if ! [ "$vcodec" = "hevc" ]; then
-      acodec=$(ffprobe -hide_banner -loglevel error -select_streams a:0 -show_entries stream=codec_name -of default=nw=1:nk=1 "$i")
-      if [ "$acodec" = "eac3" ] || [ "$acodec" = "dts" ]; then
-        log_msg "${lblue}$(text_lang "019")${white} ${purple}$clear${white} $(text_lang "014") ${vcodec^^} & ${acodec^^} $(text_lang "015") HEVC 1700k & AC3"
-        ff_encode "$hw_accel" "$codec" "$preset_series" "$bitrate_series" "ac3"
+    HDR_test=$(ffprobe -v quiet -show_streams -select_streams v:0 "$i" | grep ^color_transfer= | awk -F'=' '{print $2}')
+    if [[ $HDR_test == *"smpte2084" || $HDR_test == *"arib-std-b67" ]]; then
+      if ! [ "$vcodec" = "hevc" ]; then
+        acodec=$(ffprobe -hide_banner -loglevel error -select_streams a:0 -show_entries stream=codec_name -of default=nw=1:nk=1 "$i")
+        if [[ $acodec == "eac3" || $acodec == "dts" ]]; then
+          log_msg "${lblue}$(text_lang "019")${white} ${purple}$clear${white} $(text_lang "014") ${vcodec^^} & ${acodec^^} $(text_lang "015") HEVC 1700k & AC3"
+          ff_encode "$hw_accel" "$codec" "$preset_series" "$bitrate_series" "ac3"
+        else
+          log_msg "${lblue}$(text_lang "019")${white} $fertig $(text_lang "014") ${vcodec^^} $(text_lang "015") HEVC 1700k"
+          ff_encode "$hw_accel" "$codec" "$preset_series" "$bitrate_series" "copy"
+        fi
       else
-        log_msg "${lblue}$(text_lang "019")${white} $fertig $(text_lang "014") ${vcodec^^} $(text_lang "015") HEVC 1700k"
-        ff_encode "$hw_accel" "$codec" "$preset_series" "$bitrate_series" "copy"
+        acodec=$(ffprobe -hide_banner -loglevel error -select_streams a:0 -show_entries stream=codec_name -of default=nw=1:nk=1 "$i")
+        if [[ $acodec == "eac3" || $acodec == "dts" ]]; then
+          log_msg "${purple}$clear${white} $(text_lang "014") ${acodec^^} $(text_lang "015") AC3"
+          ff_encode "$hw_accel" "copy" "$preset_series" "$bitrate_series" "ac3"
+        else
+          log_msg "$(text_lang "017") ${purple}$clear${white} $(text_lang "018")"
+          mv "$i" "${encodes[@]}"
+        fi
       fi
     else
-      acodec=$(ffprobe -hide_banner -loglevel error -select_streams a:0 -show_entries stream=codec_name -of default=nw=1:nk=1 "$i")
-      if [ "$acodec" = "eac3" ] || [ "$acodec" = "dts" ]; then
-        log_msg "${purple}$clear${white} $(text_lang "014") ${acodec^^} $(text_lang "015") AC3"
-        ff_encode "$hw_accel" "copy" "$preset_series" "$bitrate_series" "ac3"
-      else
-        log_msg "$(text_lang "017") ${purple}$clear${white} $(text_lang "018")"
-        mv "$i" "${encodes[@]}"
-      fi
+      log_msg "$(text_lang "017") ${purple}$clear${white} $(text_lang "018")"
+      mv "$i" "${encodes[@]}"
     fi
-
     ################################################ Filme Sektion ################################################
   elif [ "$duration" -gt "4751" ]; then
     log_msg "${purple}$fertig${white} $(text_lang "011") ${cyan}$(text_lang "022")${white}, $(text_lang "013")"
     vcodec=$(ffprobe -hide_banner -loglevel error -select_streams v:0 -show_entries stream=codec_name -of default=nw=1:nk=1 "$i")
-    if ! [ "$vcodec" = "hevc" ]; then
-      acodec=$(ffprobe -hide_banner -loglevel error -select_streams a:0 -show_entries stream=codec_name -of default=nw=1:nk=1 "$i")
-      if [ "$acodec" = "eac3" ] || [ "$acodec" = "dts" ]; then
-        log_msg "${cyan}$(text_lang "022")${white} ${purple}$clear${white} $(text_lang "014") $vcodec & $acodec $(text_lang "015") HEVC 2M & AC3 500k"
-        ff_encode "$hw_accel" "$codec" "$preset_movie" "$bitrate_movie" "ac3"
+    HDR_test=$(ffprobe -v quiet -show_streams -select_streams v:0 "$i" | grep ^color_transfer= | awk -F'=' '{print $2}')
+    if [[ $HDR_test == *"smpte2084" || $HDR_test == *"arib-std-b67" ]]; then
+      if ! [ "$vcodec" = "hevc" ]; then
+        acodec=$(ffprobe -hide_banner -loglevel error -select_streams a:0 -show_entries stream=codec_name -of default=nw=1:nk=1 "$i")
+        if [[ $acodec == "eac3" || $acodec == "dts" ]]; then
+          log_msg "${cyan}$(text_lang "022")${white} ${purple}$clear${white} $(text_lang "014") $vcodec & $acodec $(text_lang "015") HEVC 2M & AC3 500k"
+          ff_encode "$hw_accel" "$codec" "$preset_movie" "$bitrate_movie" "ac3"
+        else
+          log_msg "${cyan}$(text_lang "022")${white} ${purple}$clear${white} $(text_lang "014") $vcodec $(text_lang "015") HEVC 2M"
+          ff_encode "$hw_accel" "$codec" "$preset_movie" "$bitrate_movie" "copy"
+        fi
       else
-        log_msg "${cyan}$(text_lang "022")${white} ${purple}$clear${white} $(text_lang "014") $vcodec $(text_lang "015") HEVC 2M"
-        ff_encode "$hw_accel" "$codec" "$preset_movie" "$bitrate_movie" "copy"
-      fi
-    else
-      acodec=$(ffprobe -hide_banner -loglevel error -select_streams a:0 -show_entries stream=codec_name -of default=nw=1:nk=1 "$i")
-      log_msg "${purple}$clear${white} $(text_lang "016")"
-      if [ "$acodec" = "eac3" ] || [ "$acodec" = "dts" ]; then
-        log_msg "${purple}$clear${white} $(text_lang "014") ${acodec^^} $(text_lang "015") AC3"
-        ff_encode "$hw_accel" "copy" "$preset_movie" "$bitrate_movie" "ac3"
-      else
-        log_msg "$(text_lang "017") ${purple}$clear${white} $(text_lang "018")"
-        mv "$i" "${encodes[@]}"
+        acodec=$(ffprobe -hide_banner -loglevel error -select_streams a:0 -show_entries stream=codec_name -of default=nw=1:nk=1 "$i")
+        log_msg "${purple}$clear${white} $(text_lang "016")"
+        if [[ $acodec == "eac3" || $acodec == "dts" ]]; then
+          log_msg "${purple}$clear${white} $(text_lang "014") ${acodec^^} $(text_lang "015") AC3"
+          ff_encode "$hw_accel" "copy" "$preset_movie" "$bitrate_movie" "ac3"
+        else
+          log_msg "$(text_lang "017") ${purple}$clear${white} $(text_lang "018")"
+          mv "$i" "${encodes[@]}"
+        fi
       fi
     fi
+  else
+    log_msg "$(text_lang "017") ${purple}$clear${white} $(text_lang "018")"
+    mv "$i" "${encodes[@]}"
   fi
 done
 
