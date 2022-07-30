@@ -18,13 +18,13 @@ if [[ -z $language ]]; then
   language=$(locale | head -n 1 | sed 's/.*=\|\..*//g')
 fi
 
-if [[ $language == "C" ]] || [[ ! -d $language_Folder/$language ]]; then
+if [[ $language == "C" ]] || [[ ! -d $language_folder/$language ]]; then
   language=en_US
 fi
 
 text_lang() {
-  if [ -f "$language_Folder"/"$language"/rename.lang ]; then
-    grep "$1" "$language_Folder"/"$language"/rename.lang | sed 's/^....//'
+  if [ -f "$language_folder"/"$language"/rename.lang ]; then
+    grep "$1" "$language_folder"/"$language"/rename.lang | sed 's/^....//'
   else
     curl -s https://raw.githubusercontent.com/Pakobbix/JDownloader-Autoenc-rename/main/lang/en_US/rename.lang | grep "$1" | sed 's/^....//'
   fi

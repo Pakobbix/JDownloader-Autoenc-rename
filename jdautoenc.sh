@@ -27,6 +27,7 @@ esac
 
 red='\033[0;31m'    # ${red}
 white='\033[0;37m'  # ${white}
+bold='\033[1;37m'   # ${white}
 yellow='\033[0;33m' # ${yellow}
 green='\033[0;32m'  # ${green}
 blue='\033[0;34m'   # ${blue}
@@ -38,13 +39,13 @@ if [[ -z $language ]]; then
   language=$(locale | head -n 1 | sed 's/.*=\|\..*//g')
 fi
 
-if [[ $language == "C" ]] || [[ ! -d $language_Folder/$language ]]; then
+if [[ $language == "C" ]] || [[ ! -d $language_folder/$language ]]; then
   language=en_US
 fi
 
 text_lang() {
-  if [ -f "$language_Folder"/"$language"/jdautoenc.lang ]; then
-    grep "$1" "$language_Folder"/"$language"/jdautoenc.lang | sed 's/^....//'
+  if [ -f "$language_folder"/"$language"/jdautoenc.lang ]; then
+    grep "$1" "$language_folder"/"$language"/jdautoenc.lang | sed 's/^....//'
   else
     curl -s https://raw.githubusercontent.com/Pakobbix/JDownloader-Autoenc-rename/main/lang/en_US/jdautoenc.lang | grep "$1" | sed 's/^....//'
   fi
@@ -130,6 +131,10 @@ find -L "${extracted[@]}" -name '*.mkv' -or -name '*.mp4' 2>/dev/null | while IF
     vcodec=$(ffprobe -hide_banner -loglevel error -select_streams v:0 -show_entries stream=codec_name -of default=nw=1:nk=1 "$i")
     HDR_test=$(ffprobe -v quiet -show_streams -select_streams v:0 "$i" | grep ^color_transfer= | awk -F'=' '{print $2}')
     if [[ $HDR_test == *"smpte2084" || $HDR_test == *"arib-std-b67" ]]; then
+      log_msg "${bold}HDR Video detected! Enconding not supported"
+      log_msg "$(text_lang "017") ${purple}$clear${white} $(text_lang "018")"
+      mv "$i" "${encodes[@]}" 2>/dev/null
+    else
       if ! [ "$vcodec" == "hevc" ]; then
         acodec=$(ffprobe -hide_banner -loglevel error -select_streams a:0 -show_entries stream=codec_name -of default=nw=1:nk=1 "$i")
         if [[ $acodec == "eac3" || $acodec == "dts" ]]; then
@@ -147,12 +152,9 @@ find -L "${extracted[@]}" -name '*.mkv' -or -name '*.mp4' 2>/dev/null | while IF
           ff_encode "$hw_accel" "copy" "$preset_anime" "$bitrate_anime" "ac3"
         else
           log_msg "$(text_lang "017") ${purple}$clear${white} $(text_lang "018")"
-          mv "$i" "${encodes[@]}"
+          mv "$i" "${encodes[@]}" 2>/dev/null
         fi
       fi
-    else
-      log_msg "$(text_lang "017") ${purple}$clear${white} $(text_lang "018")"
-      mv "$i" "${encodes[@]}"
     fi
     ################################################ Serien Sektion ################################################
   elif [ "$duration" -gt "1561" ] && [ "$duration" -lt "4750" ]; then
@@ -160,6 +162,10 @@ find -L "${extracted[@]}" -name '*.mkv' -or -name '*.mp4' 2>/dev/null | while IF
     vcodec=$(ffprobe -hide_banner -loglevel error -select_streams v:0 -show_entries stream=codec_name -of default=nw=1:nk=1 "$i")
     HDR_test=$(ffprobe -v quiet -show_streams -select_streams v:0 "$i" | grep ^color_transfer= | awk -F'=' '{print $2}')
     if [[ $HDR_test == *"smpte2084" || $HDR_test == *"arib-std-b67" ]]; then
+      log_msg "${bold}HDR Video detected! Enconding not supported"
+      log_msg "$(text_lang "017") ${purple}$clear${white} $(text_lang "018")"
+      mv "$i" "${encodes[@]}" 2>/dev/null
+    else
       if ! [ "$vcodec" = "hevc" ]; then
         acodec=$(ffprobe -hide_banner -loglevel error -select_streams a:0 -show_entries stream=codec_name -of default=nw=1:nk=1 "$i")
         if [[ $acodec == "eac3" || $acodec == "dts" ]]; then
@@ -176,12 +182,9 @@ find -L "${extracted[@]}" -name '*.mkv' -or -name '*.mp4' 2>/dev/null | while IF
           ff_encode "$hw_accel" "copy" "$preset_series" "$bitrate_series" "ac3"
         else
           log_msg "$(text_lang "017") ${purple}$clear${white} $(text_lang "018")"
-          mv "$i" "${encodes[@]}"
+          mv "$i" "${encodes[@]}" 2>/dev/null
         fi
       fi
-    else
-      log_msg "$(text_lang "017") ${purple}$clear${white} $(text_lang "018")"
-      mv "$i" "${encodes[@]}"
     fi
     ################################################ Filme Sektion ################################################
   elif [ "$duration" -gt "4751" ]; then
@@ -189,6 +192,10 @@ find -L "${extracted[@]}" -name '*.mkv' -or -name '*.mp4' 2>/dev/null | while IF
     vcodec=$(ffprobe -hide_banner -loglevel error -select_streams v:0 -show_entries stream=codec_name -of default=nw=1:nk=1 "$i")
     HDR_test=$(ffprobe -v quiet -show_streams -select_streams v:0 "$i" | grep ^color_transfer= | awk -F'=' '{print $2}')
     if [[ $HDR_test == *"smpte2084" || $HDR_test == *"arib-std-b67" ]]; then
+      log_msg "${bold}HDR Video detected! Enconding not supported"
+      log_msg "$(text_lang "017") ${purple}$clear${white} $(text_lang "018")"
+      mv "$i" "${encodes[@]}" 2>/dev/null
+    else
       if ! [ "$vcodec" = "hevc" ]; then
         acodec=$(ffprobe -hide_banner -loglevel error -select_streams a:0 -show_entries stream=codec_name -of default=nw=1:nk=1 "$i")
         if [[ $acodec == "eac3" || $acodec == "dts" ]]; then
@@ -206,13 +213,10 @@ find -L "${extracted[@]}" -name '*.mkv' -or -name '*.mp4' 2>/dev/null | while IF
           ff_encode "$hw_accel" "copy" "$preset_movie" "$bitrate_movie" "ac3"
         else
           log_msg "$(text_lang "017") ${purple}$clear${white} $(text_lang "018")"
-          mv "$i" "${encodes[@]}"
+          mv "$i" "${encodes[@]}" 2>/dev/null
         fi
       fi
     fi
-  else
-    log_msg "$(text_lang "017") ${purple}$clear${white} $(text_lang "018")"
-    mv "$i" "${encodes[@]}"
   fi
 done
 
